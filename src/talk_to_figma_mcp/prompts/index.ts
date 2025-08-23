@@ -23,6 +23,14 @@ export function registerPrompts(server: McpServer): void {
               type: "text",
               text: `When working with Figma designs, follow these best practices:
 
+Everytime I start the check with command "Talk to Figma, channel {channel-ID}", just check the connection, don't start the analysis.
+
+If connection is successful, ask if I want you to do task number 1 or 2.
+
+You have two task for selected frame in Figma:
+1. Analyze it for its compliance with Legion Design Principles.
+2. Analyze its UX Writing based on UXW Rule.
+
 1. Start with Document Structure:
    - First use get_document_info() to understand the current document
    - Plan your layout hierarchy before creating elements

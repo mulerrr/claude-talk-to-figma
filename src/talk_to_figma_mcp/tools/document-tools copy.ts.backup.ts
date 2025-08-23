@@ -1,156 +1,13 @@
 import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { sendCommandToFigma, joinChannel } from "../utils/websocket.js";
-
-import fs from "node:fs/promises";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { filterFigmaNode } from "../utils/figma-helpers.js";
-
-const __FILEDIR = path.dirname(fileURLToPath(import.meta.url));
-
-// Optional runtime override from env (doesn't require touching other files)
-let GUIDES_DIR_OVERRIDE: string | undefined = process.env.GUIDES_DIR;
-
-function buildCandidateDirs(): string[] {
-  const candidates: string[] = [];
-
-  // 1) explicit override
-  if (GUIDES_DIR_OVERRIDE) candidates.push(GUIDES_DIR_OVERRIDE);
-
-  // 2) env
-  if (process.env.GUIDES_DIR) candidates.push(process.env.GUIDES_DIR as string);
-
-  // 3) common CWD spots
-  candidates.push(
-    path.resolve(process.cwd(), "guides"),
-    path.resolve(process.cwd(), "context/guides")
-  );
-
-  // 4) walk up from this file up to 8 levels and try guides & context/guides
-  let cur = __FILEDIR;
-  for (let i = 0; i < 8; i++) {
-    candidates.push(
-      path.resolve(cur, "guides"),
-      path.resolve(cur, "context/guides")
-    );
-    const parent = path.dirname(cur);
-    if (parent === cur) break;
-    cur = parent;
-  }
-
-  // de-dupe while preserving order
-  return [...new Set(candidates)];
-}
-
-async function readGuideFile(basenameOrSlug: string): Promise<{ text: string; from: string; tried: string[] }> {
-  const tried: string[] = [];
-  const candidates = buildCandidateDirs();
-
-  // normalize filename candidates (accept slug or filename)
-  const base = basenameOrSlug.replace(/\.(md|markdown|json)$/i, "");
-  const nameCandidates = [
-    `${base}.md`,
-    `${base}.markdown`,
-    `${base}.json`,
-    base // allow full filename passed in
-  ];
-
-  for (const dir of candidates) {
-    for (const name of nameCandidates) {
-      const full = path.join(dir, name);
-      tried.push(full);
-      try {
-        const buf = await fs.readFile(full);
-        let text: string;
-
-        // UTF-16 LE BOM
-        if (buf.length >= 2 && buf[0] === 0xFF && buf[1] === 0xFE) {
-          text = Buffer.from(buf).toString("utf16le");
-
-        // UTF-16 BE BOM -> byte-swap, then decode as LE
-        } else if (buf.length >= 2 && buf[0] === 0xFE && buf[1] === 0xFF) {
-          const swapped = Buffer.allocUnsafe(buf.length);
-          for (let i = 0; i < buf.length; i += 2) {
-            swapped[i] = buf[i + 1];
-            swapped[i + 1] = buf[i];
-          }
-          text = swapped.toString("utf16le");
-
-        // UTF-8 (with or without BOM)
-        } else {
-          text = buf.toString("utf8");
-          // strip UTF-8 BOM if present
-          if (text.charCodeAt(0) === 0xFEFF) {
-            text = text.slice(1);
-          }
-        }
-
-        // Normalize CRLF to LF for consistent rendering
-        text = text.replace(/\r\n/g, "\n");
-
-        return { text, from: dir, tried };
-      } catch (e: any) {
-        if (e?.code !== "ENOENT") {
-          // escalate non-not-found errors (permissions, EISDIR, etc.)
-          throw new Error(`Failed to read "${full}": ${e.message}`);
-        }
-      }
-    }
-  }
-
-  throw new Error(
-    `Guide "${basenameOrSlug}" not found. Tried:\n` + tried.map(p => `- ${p}`).join("\n") +
-    `\nTip: place your files under a "guides" folder in the repo root, or set GUIDES_DIR env to an absolute path.`
-  );
-}
 
 /**
  * Register document-related tools to the MCP server
  * @param server - The MCP server instance
  */
 export function registerDocumentTools(server: McpServer): void {
-  // --- Guide utilities (local file references) ---
-  server.tool(
-    "list_guides",
-    "List markdown/json guides discovered by the server (first 50 files per directory).",
-    {},
-    async () => {
-      const dirs = buildCandidateDirs();
-      const out: any[] = [];
-      for (const d of dirs) {
-        try {
-          const entries = await fs.readdir(d);
-          const md = entries.filter(f => /\.md$|\.markdown$|\.json$/i.test(f)).slice(0, 50);
-          if (md.length) out.push({ dir: d, files: md });
-        } catch {
-          // ignore non-existent dirs
-        }
-      }
-      if (!out.length) {
-        return { content: [{ type: "text", text: "No guides found in any candidate directory." }] };
-      }
-      return { content: [{ type: "text", text: JSON.stringify(out, null, 2) }] };
-    }
-  );
-
-  server.tool(
-    "read_guide",
-    "Read a guide file by slug or filename (e.g., 'legion-design-principles', 'uxw-rule', or 'general_uxw_rule.json').",
-    { slug: z.string().describe("Slug or filename inside the guides folder") },
-    async ({ slug }) => {
-      const { text, from } = await readGuideFile(slug);
-      // choose mime based on extension for client hints
-      const isJson = /\.json$/i.test(slug);
-      return {
-        content: [
-          { type: "text", text: isJson ? text : text }, // clients interpret markdown from text
-          { type: "text", text: `(Loaded from: ${from})` },
-        ],
-      };
-    }
-  );
-  // --- end Guide utilities ---
   // Document Info Tool
   server.tool(
     "get_document_info",
@@ -501,69 +358,72 @@ export function registerDocumentTools(server: McpServer): void {
 
         // Use joinChannel instead of sendCommandToFigma to ensure currentChannel is updated
         await joinChannel(channel);
+        
         return {
           content: [
             {
               type: "text",
+              //text: `Successfully joined channel: ${channel}`,
               text: [
-                `Successfully joined channel: ${channel}`,
-                "",
-                "Next step (do NOT start analysis yet):",
-                "- Read for reference (local file): guide://legion-design-principles.json",
-                "- Read for reference (local file): guide://uxw-rule.md",
-                "- Optional JSON rules (local file): guide://general_uxw_rule.json",
-                "- Only use the documents above as reference. If a read fails, you may retry a few times.",
-                "Please ask the user which task to run:",
-                "1) Analyze the selected frame for compliance with Legion Design Principles.",
-                "2) Analyze the selected frame’s UX Writing based on UXW Rule. Suggest to add additional resource if available.",
-                "",
-                "When the user picks a task:",
-                "- Use existing tools from code.js to build the analysis frame, replace text (if Task 2), and add annotations.",
-                "- Place the analysis frame next to the selected frame; place annotations on top of the selected frame.",
-                "",
-                "For task number 1 follow step below:",
-                "- Read for reference: guide://legion-design-principles.json",
-                "- Analyze design compliance with Legion Design Principles (read the document above)",
-                "- Add annotations with appropriate category",
-                "- Make the result in Figma, it contains Overall Analysis, Each value analysis, Key Improvement Made, and Legion Design Principles that Applied",
-                "",
-                "For task number 2 follow step below:",
-                "- Read for reference: guide://uxw-rule.md",
-                "- Optionally also read: guide://general_uxw_rule.json",
-                "- Analyze all text in the frame based on UXW Rule (read the document above)",
-                "- Make the analysis result in Figma, it contains Overall Analysis, Key Improvement Made, and UX Writing Principles that Applied",
-                "- Replace the text from analysis result",
-                "- Add annotations with appropriate category, annotation contains Title (Improvement), Original Text, Improved Text, Reason text is replaced. Add category that relevant to it(Interaction, Accessibility, Content, Guideline, Tips)",
-                "",
-                "If I ask you to analyze the selected frame in Figma and make the result in Figma, always follow the frame structure below:",
-                "Main Frame Auto Layout:",
-                "Position: Next to selected frame",
-                "Add Analysis Title on Main Frame (Width: Fill)",
-                "Direction: Vertical",
-                "Width: Fixed (480px)",
-                "Height: Hug",
-                "Spacing: 20px between sections",
-                "Padding: 20px on all sides",
-                "Alignment: Left-aligned content",
-                "Text Height: Hug",
-                "Text Width: Fill Width",
-                "Behavior: Height adjusts automatically based on content",
-                "",
-                "Section Frames Auto Layout:",
-                "Direction: Vertical",
-                "Width: Fill",
-                "Height: Hug",
-                "Spacing: 15px between elements",
-                "Padding: 15px on all sides",
-                "Border radius: 12 px",
-                "Alignment: Left-aligned content",
-                "Text Content: List, not long paragraph",
-                "Text Height: Hug",
-                "Text Width: Fill Width",
-                "Behavior: Each section grows/shrinks based on content",
-                "",
-                "Reminder: Only check connection when the user says “Talk to Figma, channel {channel-ID}”. Ask which task to run if connected."
-              ].join("\n"),
+    `Successfully joined channel: ${channel}`,
+    "",
+    "Next step (do NOT start analysis yet):",
+    "- Read for reference: https://gist.githubusercontent.com/mulerrr/a5679a13ca0d7e78180b655a027f87fe/raw/5dc74dc8d833511aa32e685518f6189ddd259c22/legion-design-principles.md",
+    "- Read for reference: https://gist.githubusercontent.com/mulerrr/3055762e0b7bf20628cb567c50b14928/raw/30b8d84e8f4f24c3c55e11c92bb74e921232cedc/general_uxw_rule.json",
+    "- Only use the document above as reference, do not use other resources. If failed to fetch, keep retry fo 10 times with 1 second interval",
+    "Please ask the user which task to run:",
+    "1) Analyze the selected frame for compliance with Legion Design Principles.",
+    "2) Analyze the selected frame’s UX Writing based on UXW Rule. Suggest to add additional resource if available. Or can download template from: https://github.com/mulerrr/simple-design-review/blob/main/02_UXWReview/uxw_product_template.json",
+    "",
+    "When the user picks a task:",
+    "- Use existing tools from code.js to build the analysis frame, replace text (if Task 2), and add annotations.",
+    "- Place the analysis frame next to the selected frame; place annotations on top of the selected frame.",
+    "",
+    "For task number 1 follow step below:",
+    "- Read for reference: https://gist.githubusercontent.com/mulerrr/a5679a13ca0d7e78180b655a027f87fe/raw/5dc74dc8d833511aa32e685518f6189ddd259c22/legion-design-principles.md",
+    "- Only use the document above as reference, do not use other resources. If failed to fetch, keep retry fo 10 times with 1 second interval",
+    "- Analyze design compliance with Legion Design Principles (read the document above)",
+    "- Add annotations with appropriate category",
+    "- Make the result in Figma, it contains Overall Analysis, Each value analysis, Key Improvement Made, and Legion Design Principles that Applied",
+    "",
+    "For task number 2 follow step below:",
+    "- Read for reference: https://gist.githubusercontent.com/mulerrr/3055762e0b7bf20628cb567c50b14928/raw/30b8d84e8f4f24c3c55e11c92bb74e921232cedc/general_uxw_rule.json",
+    "- Only use the document above as reference, do not use other resources. If failed to fetch, keep retry fo 10 times with 1 second interval",
+    "- Read attached document for additional resource for analysis if any",
+    "- Analyze all text in the frame based on UXW Rule (read the document above)",
+    "- Make the analysis result in Figma, it contains Overall Analysis, Key Improvement Made, and UX Writing Principles that Applied",
+    "- Replace the text from analysis result",
+    "- Add annotations with appropriate category, annotation contains Title (Improvement), Original Text, Improved Text, Reason text is replaced. Add category that relevant to it(Interaction, Accessibility, Content, Guideline, Tips)",     
+    "",
+    "If I ask you to analyze the selected frame in Figma and make the result in Figma, always follow the frame structure below:",
+    "Main Frame Auto Layout:",
+    "Position: Next to selected frame",
+    "Add Analysis Title on Main Frame (Width: Fill)",
+    "Direction: Vertical",
+    "Width: Fixed (480px)",
+    "Height: Hug",
+    "Spacing: 20px between sections",
+    "Padding: 20px on all sides",
+    "Alignment: Left-aligned content",
+    "Text Height: Hug",
+    "Text Width: Fill Width",
+    "Behavior: Height adjusts automatically based on content",
+    "",
+    "Section Frames Auto Layout:",
+    "Direction: Vertical",
+    "Width: Fill",
+    "Height: Hug",
+    "Spacing: 15px between elements",
+    "Padding: 15px on all sides",
+    "Border radius: 12 px",
+    "Alignment: Left-aligned content",
+    "Text Content: List, not long paragraph",
+    "Text Height: Hug",
+    "Text Width: Fill Width",
+    "Behavior: Each section grows/shrinks based on content",
+    "",
+    "Reminder: Only check connection when the user says “Talk to Figma, channel {channel-ID}”. Ask which task to run if connected."
+  ].join("\n"),
             },
           ],
         };
@@ -622,85 +482,4 @@ export function registerDocumentTools(server: McpServer): void {
       }
     }
   );
-  // --- Local guide resources (URI-based) ---
-  server.resource(
-    "guide-legion",
-    "guide://legion-design-principles.md",
-    {
-      title: "Legion Design Principles",
-      description: "Markdown guide for design-principles analysis (local file)",
-      mimeType: "text/plain",
-    },
-    async (uri) => {
-      const { text } = await readGuideFile("legion-design-principles");
-      return {
-        contents: [{
-          uri: uri.href,
-          mimeType: "text/plain",
-          text,
-        }],
-      };
-    }
-  );
-
-  server.resource(
-    "legion-design-principles-json",
-    "guide://legion_design_principles.json",
-    {
-      title: "Legion Design Principles (JSON)",
-      description: "JSON rules for design analysis compliance with Legion Design Principles (local file)",
-      mimeType: "application/json",
-    },
-    async (uri) => {
-      const { text } = await readGuideFile("legion_design_principles.json");
-      return {
-        contents: [{
-          uri: uri.href,
-          mimeType: "application/json",
-          text,
-        }],
-      };
-    }
-  );
-
-  server.resource(
-    "guide-uxw",
-    "guide://uxw-rule.md",
-    {
-      title: "UX Writing Rules",
-      description: "Markdown guide for UX writing analysis (local file)",
-      mimeType: "text/plain",
-    },
-    async (uri) => {
-      const { text } = await readGuideFile("uxw-rule");
-      return {
-        contents: [{
-          uri: uri.href,
-          mimeType: "text/plain",
-          text,
-        }],
-      };
-    }
-  );
-
-  server.resource(
-    "guide-uxw-json",
-    "guide://general_uxw_rule.json",
-    {
-      title: "UX Writing Rules (JSON)",
-      description: "JSON rules for UX writing analysis (local file)",
-      mimeType: "application/json",
-    },
-    async (uri) => {
-      const { text } = await readGuideFile("general_uxw_rule.json");
-      return {
-        contents: [{
-          uri: uri.href,
-          mimeType: "application/json",
-          text,
-        }],
-      };
-    }
-  );
-  // --- end Local guide resources ---
 }

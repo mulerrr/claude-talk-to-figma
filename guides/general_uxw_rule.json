@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "updated_at": "2025-08-16",
+    "owner": "Design Lab Â· UX Writing",
+    "audience_locales": ["id-ID", "en-US"],
+    "priority_order": ["compliance", "clarity", "actionability", "consistency", "tone", "brand"]
+  },
+  "voice": {
+    "principles": ["Warm", "Concise", "Trustworthy", "Human, not chatty", "Conversational", "Helpful", "encouraging"],
+    "do": ["Use everyday words", "Active voice", "One idea per sentence"],
+    "dont": ["Jargon", "Shamey/blaming phrasing", "Overpromising outcomes"]
+  },
+  "tone_ladder": {
+    "success": "brief, appreciative",
+    "neutral": "matter-of-fact, minimal",
+    "warning": "calm, solution-first",
+    "error_sensitive": "empathetic, no blame, clear next step",
+    "high_risk": "reassuring, transparent about limits"
+  },
+  "lexicon": {
+    "preferred": {
+      "PIN": "PIN",
+      "OTP": "kode OTP",
+      "Sign in": "Masuk",
+      "Log out": "Keluar"
+    },
+    "banned": ["Proceed", "OK", "Password untuk PIN", "Gagal total"],
+    "casing": {
+      "buttons": "Title Case in Indonesian, Sentence case in Indonesian, don't more tha 5 words",
+      "labels": "Sentence case"
+    }
+  },
+  "a11y_and_readability": {
+    "reading_level": "G6-8",
+    "inclusive_language": true,
+    "numeracy_and_format": {
+      "id-ID": {"date": "DD/MM/YYYY", "time": "24h", "number": "1.234,56"},
+      "en-US": {"date": "MM/DD/YYYY", "time": "12h", "number": "1,234.56"}
+    }
+  },
+  "negative_case_policy": {
+    "steps": ["Acknowledge briefly", "Neutral cause (no blame)", "Offer one next step", "Set expectation (time/limits)"],
+    "phrasing": {
+      "avoid": ["Kamu salah memasukkanâ€¦", "Gagal karena kamuâ€¦"],
+      "prefer": ["Kode tidak cocok", "Tidak dapat diproses saat ini"]
+    }
+  },
+  "compliance": {
+    "privacy": ["Do not expose personal data in messages", "Never confirm sensitive info in errors"],
+    "legal_required_clauses": [],
+    "must_not_claim": ["Guaranteed approval", "Instant recovery"]
+  },
+  "evaluation_requirements": {
+    "heuristics": ["clarity", "empathy", "actionability", "consistency", "a11y"],
+    "output_variants": ["short", "standard", "extra_clear"],
+    "fit_checks": ["character_limits", "tone_match", "reading_level", "placeholder_safety"],
+    "edge_states": ["empty", "error", "offline", "rate_limited", "permission", "payment_fail"]
+  },
+  "telemetry": {
+    "primary": ["task_completion", "error_recovery_rate"],
+    "secondary": ["resend_click_rate", "support_contact_rate"]
+  }
+}
