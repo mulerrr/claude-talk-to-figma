@@ -2957,7 +2957,9 @@ async function setAutoLayout(params) {
     primaryAxisAlignItems, 
     counterAxisAlignItems, 
     layoutWrap, 
-    strokesIncludedInLayout 
+    strokesIncludedInLayout,
+    layoutSizingHorizontal,
+    layoutSizingVertical
   } = params || {};
 
   if (!nodeId) {
@@ -3012,6 +3014,15 @@ async function setAutoLayout(params) {
     if (strokesIncludedInLayout !== undefined) {
       node.strokesIncludedInLayout = strokesIncludedInLayout;
     }
+    
+    // Configure layout sizing (how the node sizes itself within auto layout)
+    if (layoutSizingHorizontal !== undefined) {
+      node.layoutSizingHorizontal = layoutSizingHorizontal;
+    }
+    
+    if (layoutSizingVertical !== undefined) {
+      node.layoutSizingVertical = layoutSizingVertical;
+    }
   }
 
   return {
@@ -3026,7 +3037,9 @@ async function setAutoLayout(params) {
     primaryAxisAlignItems: node.primaryAxisAlignItems,
     counterAxisAlignItems: node.counterAxisAlignItems,
     layoutWrap: node.layoutWrap,
-    strokesIncludedInLayout: node.strokesIncludedInLayout
+    strokesIncludedInLayout: node.strokesIncludedInLayout,
+    layoutSizingHorizontal: node.layoutSizingHorizontal,
+    layoutSizingVertical: node.layoutSizingVertical
   };
 }
 

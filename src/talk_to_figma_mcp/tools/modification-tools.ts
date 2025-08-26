@@ -271,10 +271,13 @@ export function registerModificationTools(server: McpServer): void {
       primaryAxisAlignItems: z.enum(["MIN", "CENTER", "MAX", "SPACE_BETWEEN"]).optional().describe("Alignment along primary axis"),
       counterAxisAlignItems: z.enum(["MIN", "CENTER", "MAX"]).optional().describe("Alignment along counter axis"),
       layoutWrap: z.enum(["WRAP", "NO_WRAP"]).optional().describe("Whether items wrap to new lines"),
-      strokesIncludedInLayout: z.boolean().optional().describe("Whether strokes are included in layout calculations")
+      strokesIncludedInLayout: z.boolean().optional().describe("Whether strokes are included in layout calculations"),
+      layoutSizingHorizontal: z.enum(["FIXED", "HUG", "FILL"]).optional().describe("How the node sizes itself horizontally in auto layout"),
+      layoutSizingVertical: z.enum(["FIXED", "HUG", "FILL"]).optional().describe("How the node sizes itself vertically in auto layout")
     },
     async ({ nodeId, layoutMode, paddingTop, paddingBottom, paddingLeft, paddingRight, 
-             itemSpacing, primaryAxisAlignItems, counterAxisAlignItems, layoutWrap, strokesIncludedInLayout }) => {
+             itemSpacing, primaryAxisAlignItems, counterAxisAlignItems, layoutWrap, strokesIncludedInLayout,
+             layoutSizingHorizontal, layoutSizingVertical }) => {
       try {
         const result = await sendCommandToFigma("set_auto_layout", { 
           nodeId, 
@@ -287,7 +290,9 @@ export function registerModificationTools(server: McpServer): void {
           primaryAxisAlignItems, 
           counterAxisAlignItems, 
           layoutWrap, 
-          strokesIncludedInLayout 
+          strokesIncludedInLayout,
+          layoutSizingHorizontal,
+          layoutSizingVertical
         });
         
         const typedResult = result as { name: string };
