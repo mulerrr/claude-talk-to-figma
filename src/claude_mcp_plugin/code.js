@@ -173,6 +173,8 @@ async function handleCommand(command, params) {
       return await getStyledTextSegments(params);
     case "load_font_async":
       return await loadFontAsyncWrapper(params);
+    case "set_text_layout_sizing":
+      return await setTextLayoutSizing(params);
     case "get_remote_components":
       return await getRemoteComponents(params);
     case "set_effects":
@@ -417,6 +419,10 @@ async function createText(params) {
     fontColor = { r: 0, g: 0, b: 0, a: 1 }, // Default to black
     name = "Text",
     parentId,
+    horizontalSizing = "HUG", // Default to HUG (auto-width)
+    verticalSizing = "HUG",   // Default to HUG (auto-height)
+    width,                    // Only used if horizontalSizing is FIXED
+    height,                   // Only used if verticalSizing is FIXED
   } = params || {};
 
   // Map common font weights to Figma font styles
@@ -487,6 +493,48 @@ async function createText(params) {
     figma.currentPage.appendChild(textNode);
   }
 
+  // Apply layout sizing settings
+  // Configure text auto-resize based on horizontal and vertical sizing
+  if (horizontalSizing === "HUG" && verticalSizing === "HUG") {
+    textNode.textAutoResize = "WIDTH_AND_HEIGHT";
+  } else if (horizontalSizing === "HUG" && verticalSizing !== "HUG") {
+    textNode.textAutoResize = "WIDTH_ONLY";
+  } else if (horizontalSizing !== "HUG" && verticalSizing === "HUG") {
+    textNode.textAutoResize = "HEIGHT";
+  } else {
+    textNode.textAutoResize = "NONE";
+  }
+
+  // Handle FIXED sizing
+  if (horizontalSizing === "FIXED" && width !== undefined) {
+    // For fixed width, we need to resize the node and ensure text wrapping is enabled
+    textNode.resize(width, textNode.height);
+  }
+
+  if (verticalSizing === "FIXED" && height !== undefined) {
+    // For fixed height, we need to resize the node
+    textNode.resize(textNode.width, height);
+    // Set text truncation to handle overflow
+    textNode.textTruncation = "OVERFLOW";
+  }
+
+  // Handle FILL sizing (requires parent with auto layout)
+  if (horizontalSizing === "FILL" && parentId) {
+    const parent = await figma.getNodeByIdAsync(parentId);
+    if (parent && "layoutMode" in parent && parent.layoutMode !== "NONE") {
+      // Set the text node to fill the container horizontally
+      textNode.layoutAlign = "STRETCH";
+    }
+  }
+
+  if (verticalSizing === "FILL" && parentId) {
+    const parent = await figma.getNodeByIdAsync(parentId);
+    if (parent && "layoutMode" in parent && parent.layoutMode !== "NONE") {
+      // Set the text node to fill the container vertically
+      textNode.layoutAlignSelf = "STRETCH";
+    }
+  }
+
   return {
     id: textNode.id,
     name: textNode.name,
@@ -501,6 +549,11 @@ async function createText(params) {
     fontName: textNode.fontName,
     fills: textNode.fills,
     parentId: textNode.parent ? textNode.parent.id : undefined,
+    horizontalSizing: horizontalSizing,
+    verticalSizing: verticalSizing,
+    textAutoResize: textNode.textAutoResize,
+    layoutAlign: textNode.layoutAlign,
+    layoutAlignSelf: textNode.layoutAlignSelf
   };
 }
 
@@ -3394,6 +3447,170 @@ async function loadFontAsyncWrapper(params) {
     };
   } catch (error) {
     throw new Error(`Error loading font: ${error.message}`);
+  }
+}
+
+// Function to set text layout sizing (FIXED, HUG, FILL)
+async function setTextLayoutSizing(params) {
+  const { nodeId, horizontalSizing, verticalSizing, width, height, parentId } = params || {};
+  
+  if (!nodeId) {
+    throw new Error("Missing nodeId parameter");
+  }
+  
+  if (!horizontalSizing && !verticalSizing) {
+    throw new Error("At least one of horizontalSizing or verticalSizing must be provided");
+  }
+  
+  const node = await figma.getNodeByIdAsync(nodeId);
+  if (!node) {
+    throw new Error(`Node not found with ID: ${nodeId}`);
+  }
+  
+  if (node.type !== "TEXT") {
+    throw new Error(`Node is not a text node: ${nodeId}`);
+  }
+  
+  try {
+    // Load the font to ensure we can modify the text
+    await figma.loadFontAsync(node.fontName);
+    
+    // Store original values for reporting
+    const originalWidth = node.width;
+    const originalHeight = node.height;
+    const originalAutoResize = node.textAutoResize;
+    
+    // Handle horizontal sizing
+    if (horizontalSizing) {
+      switch (horizontalSizing) {
+        case "HUG":
+          // For horizontal hugging, reset any fixed width and enable text auto-resizing
+          if (verticalSizing === "HUG" || !verticalSizing) {
+            node.textAutoResize = "WIDTH_AND_HEIGHT";
+          } else {
+            node.textAutoResize = "WIDTH_ONLY";
+          }
+          break;
+          
+        case "FIXED":
+          if (!width) {
+            throw new Error("Width parameter is required for FIXED horizontal sizing");
+          }
+          
+          // Set fixed width and enable text wrapping
+          if (verticalSizing === "HUG" || !verticalSizing) {
+            node.textAutoResize = "HEIGHT";
+          } else {
+            node.textAutoResize = "NONE";
+          }
+          
+          // Resize to specified width but maintain height unless it's also being set
+          node.resize(width, verticalSizing === "FIXED" ? height : node.height);
+          break;
+          
+        case "FILL":
+          if (!parentId) {
+            throw new Error("Parent ID is required for FILL sizing");
+          }
+          
+          const parent = await figma.getNodeByIdAsync(parentId);
+          if (!parent) {
+            throw new Error(`Parent node not found with ID: ${parentId}`);
+          }
+          
+          // Check if parent has auto layout
+          if (!("layoutMode" in parent) || parent.layoutMode === "NONE") {
+            throw new Error("Parent must have auto layout enabled for FILL sizing");
+          }
+          
+          // Set the text node to fill the container horizontally
+          node.layoutAlign = "STRETCH";
+          
+          // Ensure text wrapping is enabled for horizontal fill
+          if (verticalSizing === "HUG" || !verticalSizing) {
+            node.textAutoResize = "HEIGHT";
+          } else {
+            node.textAutoResize = "NONE";
+          }
+          break;
+      }
+    }
+    
+    // Handle vertical sizing
+    if (verticalSizing) {
+      switch (verticalSizing) {
+        case "HUG":
+          // For vertical hugging, ensure auto height is enabled
+          if (horizontalSizing === "HUG" || !horizontalSizing) {
+            node.textAutoResize = "WIDTH_AND_HEIGHT";
+          } else if (horizontalSizing === "FIXED" || horizontalSizing === "FILL") {
+            node.textAutoResize = "HEIGHT";
+          }
+          break;
+          
+        case "FIXED":
+          if (!height) {
+            throw new Error("Height parameter is required for FIXED vertical sizing");
+          }
+          
+          // Set fixed height
+          if (horizontalSizing === "HUG" || !horizontalSizing) {
+            node.textAutoResize = "WIDTH_ONLY";
+          } else {
+            node.textAutoResize = "NONE";
+          }
+          
+          // Resize to specified height but maintain width unless it's also being set
+          node.resize(horizontalSizing === "FIXED" ? width : node.width, height);
+          
+          // Handle text overflow
+          node.textTruncation = "OVERFLOW";
+          break;
+          
+        case "FILL":
+          if (!parentId) {
+            throw new Error("Parent ID is required for FILL sizing");
+          }
+          
+          const parent = await figma.getNodeByIdAsync(parentId);
+          if (!parent) {
+            throw new Error(`Parent node not found with ID: ${parentId}`);
+          }
+          
+          // Check if parent has auto layout
+          if (!("layoutMode" in parent) || parent.layoutMode === "NONE") {
+            throw new Error("Parent must have auto layout enabled for FILL sizing");
+          }
+          
+          // Set the text node to fill the container vertically
+          node.layoutAlignSelf = "STRETCH";
+          
+          // For vertical fill, we need to handle text differently
+          if (horizontalSizing === "HUG" || !horizontalSizing) {
+            node.textAutoResize = "WIDTH_ONLY";
+          } else {
+            node.textAutoResize = "NONE";
+          }
+          break;
+      }
+    }
+    
+    return {
+      id: node.id,
+      name: node.name,
+      horizontalSizing: horizontalSizing || "HUG", // Default is HUG
+      verticalSizing: verticalSizing || "HUG", // Default is HUG
+      width: node.width,
+      height: node.height,
+      textAutoResize: node.textAutoResize,
+      layoutAlign: node.layoutAlign,
+      layoutAlignSelf: node.layoutAlignSelf,
+      widthChange: node.width - originalWidth,
+      heightChange: node.height - originalHeight,
+      autoResizeChange: originalAutoResize !== node.textAutoResize
+    };
+  } catch (error) {
+    throw new Error(`Error setting text layout sizing: ${error.message}`);
   }
 }
 

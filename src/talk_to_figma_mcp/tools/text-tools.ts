@@ -8,6 +8,61 @@ import { sendCommandToFigma } from "../utils/websocket";
  * @param server - The MCP server instance
  */
 export function registerTextTools(server: McpServer): void {
+  // Set Text Layout Sizing Tool
+  server.tool(
+    "set_text_layout_sizing",
+    "Set the layout sizing behavior of a text node in Figma",
+    {
+      nodeId: z.string().describe("The ID of the text node to modify"),
+      horizontalSizing: z.enum(["FIXED", "HUG", "FILL"]).describe("How the text node sizes itself horizontally"),
+      verticalSizing: z.enum(["FIXED", "HUG", "FILL"]).optional().describe("How the text node sizes itself vertically (optional)"),
+      width: z.number().optional().describe("Width value when using FIXED sizing (in pixels)"),
+      height: z.number().optional().describe("Height value when using FIXED sizing (in pixels)"),
+      parentId: z.string().optional().describe("ID of the parent frame/auto-layout container (required for FILL)"),
+    },
+    async ({ nodeId, horizontalSizing, verticalSizing, width, height, parentId }) => {
+      try {
+        const result = await sendCommandToFigma("set_text_layout_sizing", {
+          nodeId,
+          horizontalSizing,
+          verticalSizing,
+          width,
+          height,
+          parentId
+        });
+        
+        const typedResult = result as { 
+          id: string; 
+          name: string;
+          horizontalSizing: string;
+          verticalSizing: string;
+          width: number;
+          height: number;
+          textAutoResize: string;
+          layoutAlign: string;
+          layoutAlignSelf: string;
+        };
+        
+        return {
+          content: [
+            {
+              type: "text",
+              text: `Updated layout sizing of text node "${typedResult.name}" to horizontal: ${typedResult.horizontalSizing}, vertical: ${typedResult.verticalSizing || 'HUG'}`
+            }
+          ]
+        };
+      } catch (error) {
+        return {
+          content: [
+            {
+              type: "text",
+              text: `Error setting text layout sizing: ${error instanceof Error ? error.message : String(error)}`
+            }
+          ]
+        };
+      }
+    }
+  );
   // Set Text Content Tool
   server.tool(
     "set_text_content",
