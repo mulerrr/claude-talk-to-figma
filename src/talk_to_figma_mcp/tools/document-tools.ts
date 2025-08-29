@@ -508,28 +508,32 @@ export function registerDocumentTools(server: McpServer): void {
               text: [
                 `Successfully joined channel: ${channel}`,
                 "",
-                "Next step (do NOT start analysis yet):",
-                "- Read for reference (local file): guide://legion-design-principles.json",
-                "- Read for reference (local file): guide://uxw-rule.md",
-                "- Optional JSON rules (local file): guide://general_uxw_rule.json",
-                "- Only use the documents above as reference. If a read fails, you may retry a few times.",
+                "Next step (do NOT start analysis yet)",
+                // "- Read for reference (local file): guide://legion-design-principles.json",
+                // "- Read for reference (local file): guide://general_uxw_rule.json",
+                // "- Read for reference (website): https://www.nngroup.com/articles/ten-usability-heuristics/",
+                // "- Only use the documents above as reference. If a read fails, you may retry a few times.",
                 "Please ask the user which task to run:",
-                "1) Analyze the selected frame for compliance with Legion Design Principles.",
-                "2) Analyze the selected frame’s UX Writing based on UXW Rule. Suggest to add additional resource if available.",
+                "1) Analyze the selected frame for NNG Heuristic Evaluation analysis.",
+                "2) Analyze the selected frame for compliance with Legion Design Principles.",
+                "3) Analyze the selected frame’s UX Writing based on UXW Rule. Suggest to add additional resource if available.",
                 "",
                 "When the user picks a task:",
                 "- Use existing tools from code.js to build the analysis frame, replace text (if Task 2), and add annotations.",
                 "- Place the analysis frame next to the selected frame; place annotations on top of the selected frame.",
                 "",
                 "For task number 1 follow step below:",
+                "- Read for reference (website): https://www.nngroup.com/articles/ten-usability-heuristics/",
+                "- Analyze selected frame in figma (please recheck, ignore previous selected frame), follow the instruction in JSON file at guide://instruction/heuristic_evaluation_task.json",
+                "",
+                "For task number 2 follow step below:",
                 "- Read for reference: guide://legion-design-principles.json",
                 "- Analyze design compliance with Legion Design Principles (read the document above)",
                 "- Add annotations with appropriate category",
                 "- Make the result in Figma, it contains Overall Analysis, Each value analysis, Key Improvement Made, and Legion Design Principles that Applied",
                 "",
-                "For task number 2 follow step below:",
-                "- Read for reference: guide://uxw-rule.md",
-                "- Optionally also read: guide://general_uxw_rule.json",
+                "For task number 3 follow step below:",
+                "- Read for reference: guide://general_uxw_rule.json",
                 "- Analyze all text in the frame based on UXW Rule (read the document above)",
                 "- Make the analysis result in Figma, it contains Overall Analysis, Key Improvement Made, and UX Writing Principles that Applied",
                 "- Replace the text from analysis result",
@@ -693,6 +697,26 @@ export function registerDocumentTools(server: McpServer): void {
     },
     async (uri) => {
       const { text } = await readGuideFile("general_uxw_rule.json");
+      return {
+        contents: [{
+          uri: uri.href,
+          mimeType: "application/json",
+          text,
+        }],
+      };
+    }
+  );
+
+  server.resource(
+    "heuristic-evaluation-task-json",
+    "guide://instructios/heuristic_evaluation_task.json",
+    {
+      title: "NNG Heuristic Evaluation Analysis Task (JSON)",
+      description: "JSON contains prompt and task detail to heuristic evaluation (local file)",
+      mimeType: "application/json",
+    },
+    async (uri) => {
+      const { text } = await readGuideFile("instructions/heuristic_evaluation_task.json");
       return {
         contents: [{
           uri: uri.href,
