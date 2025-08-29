@@ -1,0 +1,892 @@
+{
+  "template": {
+    "name": "Nielsen's Heuristic Evaluation Framework - Multi-Output Format",
+    "version": "2.0",
+    "description": "Comprehensive template for conducting NNG heuristic evaluations with flexible output options: Figma frame, Markdown report, or annotations only"
+  },
+  "userChoicePrompt": {
+    "title": "🔍 Nielsen's Heuristic Evaluation - Output Format Selection",
+    "description": "I'll conduct a comprehensive Nielsen's 10 Usability Heuristics evaluation of your selected Figma frame. Please choose your preferred output format:",
+    "options": [
+      {
+        "id": "figma_frame",
+        "emoji": "🎨",
+        "title": "Figma Frame + Annotations",
+        "description": "Create a detailed analysis frame in Figma with structured sections (Overall Assessment, Critical Issues, Recommendations, Detailed Scores, Implementation Roadmap) plus annotations on UI elements",
+        "deliverables": [
+          "Structured analysis frame in Figma (1000px width, auto-layout)",
+          "Comprehensive annotations on relevant UI elements", 
+          "Color-coded sections for different finding types",
+          "Visual score breakdown and recommendations"
+        ],
+        "bestFor": "Presentations, design reviews, stakeholder sharing, visual documentation"
+      },
+      {
+        "id": "markdown_report",
+        "emoji": "📄",
+        "title": "Markdown Report + Annotations", 
+        "description": "Generate a detailed markdown evaluation report with executive summary, findings, and implementation roadmap, plus annotations in Figma",
+        "deliverables": [
+          "Comprehensive markdown report file",
+          "Executive summary with key findings",
+          "Detailed heuristic analysis with scores",
+          "Prioritized action items and implementation roadmap",
+          "Targeted annotations on UI elements in Figma"
+        ],
+        "bestFor": "Documentation, developer handoff, detailed analysis, project records"
+      },
+      {
+        "id": "annotations_only",
+        "emoji": "📌",
+        "title": "Annotations Only",
+        "description": "Place targeted usability annotations directly on UI elements without additional frames or reports",
+        "deliverables": [
+          "Focused annotations on specific UI elements",
+          "Color-coded by issue severity (Critical/Warning/Good)",
+          "Concise findings with actionable recommendations",
+          "Clean, minimal approach for quick reviews"
+        ],
+        "bestFor": "Quick reviews, developer feedback, iterative design improvements"
+      }
+    ],
+    "selectionPrompt": "Which output format would you prefer for this heuristic evaluation?",
+    "followupQuestions": {
+      "component_context": "What is the primary purpose/context of this component or page?",
+      "target_users": "Who are the primary users of this interface?", 
+      "evaluation_focus": "Are there any specific usability concerns or areas you'd like me to focus on?"
+    }
+  },
+  "mandatoryWorkflowSteps": {
+    "preAnalysisValidation": {
+      "step": "Frame Selection Validation",
+      "description": "CRITICAL: Always verify the selected frame before starting any heuristic analysis",
+      "implementation": [
+        "1. Call get_selection() to check current Figma selection",
+        "2. Parse selection results to identify frame name, type, and count",
+        "3. Present frame details to user: 'Selected Frame: [Name] (Type: [Type])'",
+        "4. Ask explicit confirmation: 'Is this the correct frame to analyze? (YES/NO)'",
+        "5. Only proceed after user confirms 'YES'",
+        "6. If 'NO' or wrong selection, guide user to select correct frame and repeat validation"
+      ],
+      "errorHandling": {
+        "noSelection": "❌ No frame selected. Please select a frame in Figma first, then try again.",
+        "multipleSelection": "❌ Multiple items selected. Please select only ONE frame to analyze.",
+        "invalidSelection": "❌ Selected item is not a frame. Please select a frame (not component instance or other object).",
+        "userRejectsFrame": "Please select the correct frame in Figma, then let me know when ready to proceed."
+      }
+    },
+    "postAnalysisWorkflow": {
+      "step": "Continue or End Session",
+      "description": "After completing heuristic evaluation, always offer next action options",
+      "implementation": [
+        "1. Present completion message with summary of delivered results",
+        "2. Display next action menu with clear options",
+        "3. Wait for user selection of next action",
+        "4. For new analysis: restart from frame validation step",
+        "5. For different format on same frame: skip to format selection",
+        "6. For other tasks: transition to appropriate workflow"
+      ],
+      "nextActionOptions": {
+        "newFrameAnalysis": "🔍 Analyze Another Frame - I'll help you select and analyze a different frame",
+        "differentFormat": "📋 Change Output Format - Re-analyze current frame with different output (Figma/Markdown/Annotations)",
+        "focusedAnalysis": "🎯 Deep Dive Analysis - Focus on specific heuristics or problem areas",
+        "otherTasks": "✨ Other Analysis - Switch to Legion Design Principles, UX Writing review, or other tasks",
+        "endSession": "✅ End Session - Complete current analysis session"
+      }
+    }
+  },
+  "analysisFramework": {
+    "methodology": {
+      "scoringSystem": {
+        "scale": "1-5 points per heuristic",
+        "maxScore": 50,
+        "ratings": {
+          "5": "Excellent - No issues identified, exceeds expectations",
+          "4": "Good - Minor issues that don't significantly impact usability",
+          "3": "Acceptable - Some issues present but usable",
+          "2": "Poor - Significant usability problems that hinder user experience",
+          "1": "Critical - Major usability failures, unusable in current state"
+        }
+      },
+      "severityLevels": {
+        "critical": { "emoji": "⛔", "range": "1-2", "color": "#fceded", "category": "Guidelines" },
+        "warning": { "emoji": "⚠️", "range": "3", "color": "#fcf7ed", "category": "Tips" },
+        "good": { "emoji": "✅", "range": "4-5", "color": "#edfced", "category": "Content" }
+      },
+      "overallAssessment": {
+        "excellent": { "range": "45-50", "label": "Excellent - Industry Leading UX" },
+        "good": { "range": "35-44", "label": "Good with Areas for Improvement" },
+        "acceptable": { "range": "25-34", "label": "Acceptable but Needs Significant Work" },
+        "poor": { "range": "15-24", "label": "Poor - Major Usability Issues" },
+        "critical": { "range": "1-14", "label": "Critical - Unusable Interface" }
+      }
+    },
+    "heuristicDefinitions": [
+      {
+        "id": 1,
+        "name": "Visibility of System Status",
+        "description": "The design should always keep users informed about what is going on, through appropriate feedback within a reasonable amount of time.",
+        "evaluationCriteria": [
+          "Loading states and progress indicators present",
+          "Clear feedback for user actions",
+          "System status communicated effectively",
+          "Response time appropriate for context"
+        ],
+        "commonIssues": [
+          "Missing loading indicators",
+          "No feedback after user actions",
+          "Unclear system state",
+          "Long waits without communication"
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Match Between System and Real World",
+        "description": "The system should speak the users' language, with words, phrases and concepts familiar to the user, rather than system-oriented terms.",
+        "evaluationCriteria": [
+          "Familiar language and terminology used",
+          "Logical information architecture",
+          "Follows real-world conventions",
+          "Icons and metaphors are recognizable"
+        ],
+        "commonIssues": [
+          "Technical jargon used",
+          "Illogical navigation structure",
+          "Unfamiliar icons or symbols",
+          "System-oriented language"
+        ]
+      },
+      {
+        "id": 3,
+        "name": "User Control and Freedom",
+        "description": "Users often choose system functions by mistake and will need a clearly marked emergency exit to leave the unwanted state.",
+        "evaluationCriteria": [
+          "Clear navigation and exit options",
+          "Undo/redo functionality available",
+          "Users can cancel operations",
+          "Back button or breadcrumb navigation"
+        ],
+        "commonIssues": [
+          "No way to go back or cancel",
+          "Missing undo functionality",
+          "Users trapped in workflows",
+          "No clear escape routes"
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Consistency and Standards",
+        "description": "Users should not have to wonder whether different words, situations, or actions mean the same thing. Follow platform conventions.",
+        "evaluationCriteria": [
+          "Consistent design system usage",
+          "Standard UI patterns followed",
+          "Uniform language and terminology",
+          "Predictable interactions"
+        ],
+        "commonIssues": [
+          "Inconsistent component usage",
+          "Different terms for same actions",
+          "Non-standard UI patterns",
+          "Unpredictable behavior"
+        ]
+      },
+      {
+        "id": 5,
+        "name": "Error Prevention",
+        "description": "Even better than good error messages is a careful design which prevents a problem from occurring in the first place.",
+        "evaluationCriteria": [
+          "Input validation and constraints",
+          "Clear format requirements",
+          "Confirmation dialogs for destructive actions",
+          "Prevention of common user errors"
+        ],
+        "commonIssues": [
+          "No input validation",
+          "Easy to make mistakes",
+          "No confirmation for important actions",
+          "Unclear input requirements"
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Recognition Rather Than Recall",
+        "description": "Minimize the user's memory load by making elements, actions, and options visible.",
+        "evaluationCriteria": [
+          "Clear labels and instructions",
+          "Visible options and actions",
+          "Contextual help available",
+          "Reduced cognitive load"
+        ],
+        "commonIssues": [
+          "Hidden or unclear options",
+          "Users must remember information",
+          "Complex mental models required",
+          "Insufficient visual cues"
+        ]
+      },
+      {
+        "id": 7,
+        "name": "Flexibility and Efficiency of Use",
+        "description": "Shortcuts may speed up the interaction for the expert user such that the design can cater to both inexperienced and experienced users.",
+        "evaluationCriteria": [
+          "Shortcuts for power users",
+          "Customization options available",
+          "Efficient workflows",
+          "Accommodates different skill levels"
+        ],
+        "commonIssues": [
+          "No shortcuts or advanced features",
+          "One-size-fits-all approach",
+          "Inefficient workflows",
+          "No personalization options"
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Aesthetic and Minimalist Design",
+        "description": "Interfaces should not contain information that is irrelevant or rarely needed. Focus on essential elements.",
+        "evaluationCriteria": [
+          "Clean, focused design",
+          "Proper visual hierarchy",
+          "Relevant content only",
+          "Good use of white space"
+        ],
+        "commonIssues": [
+          "Cluttered interface",
+          "Too much information displayed",
+          "Poor visual hierarchy",
+          "Distracting elements"
+        ]
+      },
+      {
+        "id": 9,
+        "name": "Help Users Recognize, Diagnose, and Recover from Errors",
+        "description": "Error messages should be expressed in plain language, precisely indicate the problem, and constructively suggest a solution.",
+        "evaluationCriteria": [
+          "Clear, helpful error messages",
+          "Specific problem identification",
+          "Actionable recovery suggestions",
+          "User-friendly language"
+        ],
+        "commonIssues": [
+          "Generic or unclear error messages",
+          "Technical error codes shown",
+          "No recovery suggestions",
+          "Blame-oriented language"
+        ]
+      },
+      {
+        "id": 10,
+        "name": "Help and Documentation",
+        "description": "It's best if the system doesn't need documentation, but it may be necessary to provide help that is easy to search and focused on the user's task.",
+        "evaluationCriteria": [
+          "Contextual help available",
+          "Easy to find assistance",
+          "Task-focused guidance",
+          "Searchable documentation"
+        ],
+        "commonIssues": [
+          "No help system available",
+          "Hard to find assistance",
+          "Generic, unhelpful documentation",
+          "Not contextually relevant"
+        ]
+      }
+    ]
+  },
+  "analysisPrompts": {
+    "preAnalysisValidation": "🚨 CRITICAL FIRST STEP: Before conducting any heuristic analysis, you MUST:\n1. Call get_selection() to verify the currently selected frame\n2. Display frame name and type to user for confirmation\n3. Wait for user confirmation that this is the correct frame to analyze\n4. Only proceed with analysis after explicit user confirmation\n\nThis prevents analyzing the wrong frame and ensures accuracy.",
+    "mainPrompt": "Conduct a comprehensive Nielsen's 10 Usability Heuristics evaluation of the CONFIRMED selected Figma frame. For each heuristic:\n\n1. **Score from 1-5** based on the evaluation criteria\n2. **Identify specific issues or strengths** with evidence from the interface\n3. **Provide actionable recommendations** for improvements\n4. **Create targeted annotations** on relevant UI elements (if applicable to chosen output format)\n5. **Generate output in selected format** (Figma frame/Markdown report/Annotations only)\n\n**Focus Areas:**\n- Visual design elements and layout\n- Interaction patterns and user flows\n- Content quality and messaging\n- Navigation and wayfinding\n- Error handling and feedback mechanisms\n- Accessibility and inclusivity\n- Information architecture\n- Performance implications\n\n**Analysis Requirements:**\n- Use specific evidence from the interface, not generic observations\n- Include both critical issues and positive findings\n- Prioritize recommendations by user impact\n- Reference specific UI elements in annotations\n- Provide concrete examples for each heuristic violation or success\n\n**Post-Analysis:** After completing the evaluation, always offer next action options to continue the workflow.",
+    "evaluationSteps": [
+      "1. Scan the selected frame and identify all interactive elements, content areas, and visual components",
+      "2. Evaluate each of the 10 heuristics systematically using the defined criteria", 
+      "3. Score each heuristic from 1-5 and document specific evidence",
+      "4. Calculate total usability score and determine overall assessment level",
+      "5. Identify critical issues (scores 1-2), warnings (score 3), and strengths (scores 4-5)",
+      "6. Create output based on user's selected format preference",
+      "7. For annotations: place on UI elements that demonstrate heuristic violations or successes",
+      "8. For reports/frames: organize findings into structured, actionable format"
+    ],
+    "contextualConsiderations": [
+      "Consider the target user persona and use context",
+      "Evaluate mobile vs desktop appropriateness", 
+      "Assess brand consistency and design system adherence",
+      "Review accessibility standards compliance",
+      "Consider cultural and localization factors",
+      "Evaluate performance and technical constraints"
+    ]
+  },
+  "outputFormats": {
+    "figmaFrame": {
+      "structure": {
+        "mainFrame": {
+          "name": "NNG Heuristic Evaluation - {ComponentName}",
+          "type": "FRAME",
+          "layout": {
+            "direction": "VERTICAL",
+            "width": "FIXED",
+            "width_value": 1000,
+            "height": "HUG",
+            "spacing": 20,
+            "padding": {
+              "top": 20,
+              "right": 20,
+              "bottom": 20,
+              "left": 20
+            },
+            "alignment": "MIN",
+            "counter_axis_alignment": "MIN",
+            "horizontalAlign": "LEFT",
+            "verticalAlign": "TOP"
+          }
+        },
+        "sectionTemplates": {
+          "titleSection": {
+            "name": "Analysis Title Wrapper",
+            "type": "FRAME",
+            "layout": {
+              "direction": "VERTICAL",
+              "width": "FILL",
+              "height": "HUG",
+              "spacing": 4,
+              "padding": { "all": 0 },
+              "alignment": "MIN",
+              "counter_axis_alignment": "MIN",
+              "horizontalAlign": "LEFT",
+              "verticalAlign": "TOP"
+            },
+            "children": [
+              {
+                "name": "Analysis Title",
+                "type": "TEXT",
+                "content": "{analysisTitle}",
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 700,
+                  "fontSize": 32,
+                  "lineHeight": 40,
+                  "fill": "#000000"
+                }
+              },
+              {
+                "name": "Page",
+                "type": "TEXT",
+                "content": "{componentName}",
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 500,
+                  "fontSize": 24,
+                  "lineHeight": 30,
+                  "fill": "#000000"
+                }
+              }
+            ]
+          },
+          "overallAssessmentSection": {
+            "name": "Overall Assessment",
+            "type": "FRAME",
+            "layout": {
+              "direction": "VERTICAL",
+              "width": "FILL",
+              "height": "HUG",
+              "spacing": 15,
+              "padding": { "all": 15 },
+              "alignment": "MIN",
+              "counter_axis_alignment": "MIN",
+              "horizontalAlign": "LEFT",
+              "verticalAlign": "TOP"
+            },
+            "styling": { "cornerRadius": 12 },
+            "children": [
+              {
+                "name": "Section Title",
+                "type": "TEXT",
+                "layout": { "width": "FILL", "height": "HUG" },
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 700,
+                  "fontSize": 20,
+                  "lineHeight": 24,
+                  "fill": "#000000"
+                }
+              },
+              {
+                "name": "Section Score", 
+                "type": "TEXT",
+                "layout": { "width": "FILL", "height": "HUG" },
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 800,
+                  "fontSize": 22,
+                  "lineHeight": 24,
+                  "fill": "#000000"
+                }
+              },
+              {
+                "name": "Section Content",
+                "type": "TEXT", 
+                "layout": { "width": "FILL", "height": "HUG" },
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 400,
+                  "fontSize": 16,
+                  "lineHeight": 20,
+                  "fill": "#000000"
+                }
+              }
+            ]
+          },
+          "contentSection": {
+            "type": "FRAME",
+            "layout": {
+              "direction": "VERTICAL",
+              "width": "FILL",
+              "height": "HUG",
+              "spacing": 15,
+              "padding": { "all": 15 },
+              "alignment": "MIN",
+              "counter_axis_alignment": "MIN",
+              "horizontalAlign": "LEFT",
+              "verticalAlign": "TOP"
+            },
+            "styling": { "cornerRadius": 12 },
+            "children": [
+              {
+                "name": "Section Title",
+                "type": "TEXT",
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 700,
+                  "fontSize": 20,
+                  "lineHeight": 24,
+                  "fill": "#000000"
+                }
+              },
+              {
+                "name": "Section Content",
+                "type": "TEXT",
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 400,
+                  "fontSize": 16,
+                  "lineHeight": 20,
+                  "fill": "#000000"
+                }
+              }
+            ]
+          }
+        },
+        "colorSystem": {
+          "background": "#fafafa",
+          "overallAssessment": "#ebf2fc",
+          "criticalIssues": "#fceded",
+          "positiveFindings": "#edfced",
+          "recommendations": "#fcf7ed",
+          "detailedScores": "#f5f5fc",
+          "implementationRoadmap": "#f2f2f2",
+          "text": "#000000"
+        },
+        "typography": {
+          "titleSize": 32,
+          "subtitleSize": 24,
+          "sectionTitleSize": 20,
+          "bodySize": 16,
+          "fontFamily": "Inter",
+          "lineHeightMultiplier": 1.25
+        }
+      },
+      "contentTemplates": {
+        "titleSection": {
+          "titleTemplate": "NNG Heuristic Evaluation",
+          "subtitleTemplate": "[Page/Component Name]"
+        },
+        "overallAssessmentSection": {
+          "title": "Overall Assessment",
+          "scoreFormat": "Score: {totalScore}/50 ({percentage}%) - {assessmentLevel}",
+          "contentStructure": [
+            "• [Key strength summary with specific examples]",
+            "• [Critical issues summary with impact description]",
+            "• [Overall recommendation with priority focus areas]"
+          ]
+        },
+        "summarySection": {
+          "criticalIssues": {
+            "title": "🚨 Critical & High Priority Issues",
+            "backgroundColor": "#fceded",
+            "contentStructure": [
+              "[Heuristic Name] - [Issue Title]:",
+              "• [Specific issue 1 with user impact]",
+              "• [Specific issue 2 with user impact]",
+              "• [Specific issue 3 with user impact]",
+              "",
+              "[Second Heuristic] - [Issue Title]:",
+              "• [Additional critical issues...]"
+            ]
+          },
+          "positiveFindings": {
+            "title": "✅ Strong Areas",
+            "backgroundColor": "#edfced",
+            "contentStructure": [
+              "[Heuristic Name] - [Strength Title]:",
+              "• [Specific strength 1 with evidence]",
+              "• [Specific strength 2 with evidence]",
+              "• [Specific strength 3 with evidence]",
+              "",
+              "[Second Heuristic] - [Strength Title]:",
+              "• [Additional strengths...]"
+            ]
+          },
+          "recommendations": {
+            "title": "💡 Key Recommendations",
+            "backgroundColor": "#fcf7ed",
+            "contentStructure": [
+              "Priority 1: [Highest impact recommendation]",
+              "Priority 2: [Second priority recommendation]",
+              "Priority 3: [Third priority recommendation]",
+              "Priority 4: [Fourth priority recommendation]",
+              "Priority 5: [Fifth priority recommendation]",
+              "",
+              "Overall: [Holistic improvement strategy]"
+            ]
+          }
+        },
+        "detailedScoreSection": {
+          "title": "📊 Detailed Heuristic Scores",
+          "backgroundColor": "#f5f5fc",
+          "scoreFormat": "{number}. {heuristicName}: {score}/5 {emoji}",
+          "contentStructure": [
+            "{number}. {heuristicName}: {score}/5 {emoji}",
+            "• [Key finding 1]",
+            "• [Key finding 2]",
+            "",
+            "[Repeat for all 10 heuristics...]"
+          ]
+        },
+        "implementationRoadmapSection": {
+          "title": "🚀 Implementation Roadmap",
+          "backgroundColor": "#f2f2f2",
+          "contentStructure": [
+            "Immediate (Sprint 1): [Critical fixes needed now]",
+            "Short-term (Sprint 2-3): [Important improvements for next iteration]",
+            "Medium-term (Next Release): [Enhancement features]",
+            "Long-term (Roadmap): [Strategic UX improvements]"
+          ]
+        },
+        "finalAssessment": {
+          "contentStructure": "Overall Assessment: [Summary of current state and primary recommendation focus]"
+        }
+      }
+    },
+    "markdownReport": {
+      "structure": {
+        "header": {
+          "title": "# Nielsen's Heuristic Evaluation Report",
+          "metadata": [
+            "**Component/Page:** {componentName}",
+            "**Evaluation Date:** {currentDate}",
+            "**Evaluator:** UX Analysis Assistant",
+            "**Overall Score:** {totalScore}/50 ({percentage}%) - {assessmentLevel}"
+          ]
+        },
+        "executiveSummary": {
+          "title": "## Executive Summary",
+          "content": [
+            "### Overall Assessment",
+            "{overallAssessmentDescription}",
+            "",
+            "### Key Findings",
+            "- **Critical Issues:** {criticalIssueCount} issues requiring immediate attention",
+            "- **Warnings:** {warningCount} issues needing improvement", 
+            "- **Strengths:** {strengthCount} areas performing well",
+            "",
+            "### Top Recommendations",
+            "1. {topRecommendation1}",
+            "2. {topRecommendation2}",
+            "3. {topRecommendation3}"
+          ]
+        },
+        "detailedFindings": {
+          "title": "## Detailed Heuristic Analysis",
+          "heuristicTemplate": [
+            "### {number}. {heuristicName} - Score: {score}/5 {emoji}",
+            "",
+            "**Description:** {heuristicDescription}",
+            "",
+            "**Findings:**",
+            "{detailedFindings}",
+            "",
+            "**Evidence:**",
+            "{specificEvidence}",
+            "",
+            "**Recommendations:**",
+            "{actionableRecommendations}",
+            "",
+            "---"
+          ]
+        },
+        "prioritizedActions": {
+          "title": "## Prioritized Action Items",
+          "sections": [
+            {
+              "title": "### 🚨 Critical Issues (Immediate Action Required)",
+              "content": "{criticalIssuesList}"
+            },
+            {
+              "title": "### ⚠️ High Priority Issues (Next Sprint)",
+              "content": "{highPriorityIssuesList}"
+            },
+            {
+              "title": "### 💡 Enhancement Opportunities (Future Iterations)",
+              "content": "{enhancementOpportunitiesList}"
+            }
+          ]
+        },
+        "implementationRoadmap": {
+          "title": "## Implementation Roadmap",
+          "timeline": [
+            {
+              "phase": "### Immediate (Week 1-2)",
+              "content": [
+                "- {criticalFix1}",
+                "- {criticalFix2}",
+                "- {criticalFix3}"
+              ]
+            },
+            {
+              "phase": "### Short-term (Sprint 1-2)",
+              "content": [
+                "- {shortTermFix1}",
+                "- {shortTermFix2}",
+                "- {shortTermFix3}"
+              ]
+            },
+            {
+              "phase": "### Medium-term (Next Quarter)",
+              "content": [
+                "- {mediumTermEnhancement1}",
+                "- {mediumTermEnhancement2}"
+              ]
+            },
+            {
+              "phase": "### Long-term (Roadmap)",
+              "content": [
+                "- {longTermEnhancement1}",
+                "- {longTermEnhancement2}"
+              ]
+            }
+          ]
+        }
+      },
+      "formatting": {
+        "useMarkdownSyntax": true,
+        "includeTableOfContents": true,
+        "addTimestamp": true,
+        "includeScoreVisualization": true,
+        "addActionItemCheckboxes": true
+      }
+    },
+    "annotations": {
+      "annotationTypes": {
+        "critical": {
+          "title": "🚨 Critical Usability Issue",
+          "format": "**Heuristic:** {heuristicName}\n**Issue:** {specificProblem}\n**User Impact:** {impactDescription}\n**Recommendation:** {actionableSolution}\n**Priority:** High",
+          "category": "Guidelines",
+          "placement": "On UI elements with major usability failures"
+        },
+        "warning": {
+          "title": "⚠️ Usability Concern",
+          "format": "**Heuristic:** {heuristicName}\n**Issue:** {specificProblem}\n**User Impact:** {impactDescription}\n**Recommendation:** {actionableSolution}\n**Priority:** Medium",
+          "category": "Tips",
+          "placement": "On UI elements with moderate usability issues"
+        },
+        "strength": {
+          "title": "✅ Usability Strength",
+          "format": "**Heuristic:** {heuristicName}\n**Strength:** {positiveAspect}\n**Evidence:** {specificExample}\n**User Benefit:** {benefitDescription}",
+          "category": "Content",
+          "placement": "On UI elements that excel in usability"
+        },
+        "improvement": {
+          "title": "💡 Enhancement Opportunity",
+          "format": "**Heuristic:** {heuristicName}\n**Current State:** {currentImplementation}\n**Enhancement:** {improvementSuggestion}\n**Expected Benefit:** {benefitDescription}\n**Priority:** Low-Medium",
+          "category": "Tips",
+          "placement": "On UI elements with improvement potential"
+        }
+      },
+      "annotationGuidelines": {
+        "placement": [
+          "Place annotations directly on the UI elements they reference",
+          "Use multiple annotations for complex components with multiple issues",
+          "Avoid overlapping annotations - spread them strategically",
+          "Ensure annotations don't obscure important UI elements"
+        ],
+        "content": [
+          "Be specific about the heuristic violation or success",
+          "Include concrete evidence from the interface",
+          "Provide actionable, implementable recommendations",
+          "Consider user impact and business value in recommendations"
+        ]
+      }
+    }
+  },
+  "workflowConfiguration": {
+    "step0_frameValidation": {
+      "critical_instruction": "⚠️ ALWAYS VERIFY SELECTED FRAME BEFORE ANALYSIS",
+      "validation_process": [
+        "Use get_selection() to confirm current selection in Figma",
+        "Display the selected frame name and type to user for confirmation",
+        "If no frame is selected, ask user to select the target frame",
+        "If multiple items selected, ask user to select a single frame",
+        "Only proceed with analysis after confirming correct frame selection"
+      ],
+      "confirmation_prompt": "I've detected your selected frame: **{frameName}** (Type: {frameType})\n\nIs this the correct frame you want me to analyze? Please confirm **YES** to proceed or **NO** to select a different frame."
+    },
+    "step1_userChoice": {
+      "prompt": "I'll conduct a Nielsen's Heuristic Evaluation of your selected frame. Which output format would you prefer?\n\n🎨 **Option 1: Figma Frame + Annotations**\n- Structured analysis frame with visual sections\n- Color-coded findings and recommendations\n- Perfect for design reviews and presentations\n\n📄 **Option 2: Markdown Report + Annotations**\n- Detailed written analysis report\n- Executive summary and implementation roadmap\n- Great for documentation and developer handoff\n\n📌 **Option 3: Annotations Only**\n- Clean, focused annotations on UI elements\n- Quick and minimal approach\n- Ideal for iterative improvements\n\nPlease respond with: **1**, **2**, or **3**"
+    },
+    "step2_contextGathering": {
+      "questions": [
+        "What is the primary purpose of this component/page?",
+        "Who are the target users?", 
+        "Any specific usability concerns to focus on?"
+      ]
+    },
+    "step3_analysis": {
+      "process": [
+        "Reconfirm selected frame before starting analysis",
+        "Scan selected frame structure and identify UI elements",
+        "Evaluate each heuristic systematically with evidence",
+        "Score each heuristic 1-5 and calculate total",
+        "Identify critical issues, warnings, and strengths",
+        "Generate output in selected format",
+        "Create targeted annotations on UI elements"
+      ]
+    },
+    "step4_completion": {
+      "completion_message": "✅ **Heuristic Evaluation Complete!**\n\nI've finished analyzing your design using Nielsen's 10 Usability Heuristics and delivered the results in your requested format.",
+      "next_action_prompt": "Would you like me to:\n\n🔍 **Analyze Another Frame** - Select a different frame for heuristic evaluation\n📋 **Change Output Format** - Re-analyze the same frame with a different output format\n🎯 **Focus Analysis** - Deep dive into specific heuristics or UI elements\n✨ **Other Task** - Switch to Legion Design Principles analysis, UX Writing review, or other tasks\n\nWhat would you like to do next?"
+    }
+  },
+  "outputConfiguration": {
+    "option1_figmaFrame": {
+      "createAnalysisFrame": true,
+      "createAnnotations": true,
+      "frameWidth": 1000,
+      "frameLayout": "vertical_autolayout",
+      "includeColorCoding": true,
+      "includeSections": [
+        "titleSection",
+        "overallAssessment", 
+        "criticalIssues",
+        "positiveFindings",
+        "recommendations",
+        "detailedScores",
+        "implementationRoadmap"
+      ],
+      "annotationCategories": ["Guidelines", "Tips", "Content", "Accessibility", "Interaction"]
+    },
+    "option2_markdownReport": {
+      "createAnalysisFrame": false,
+      "createAnnotations": true,
+      "generateMarkdownReport": true,
+      "reportSections": [
+        "header",
+        "executiveSummary",
+        "detailedFindings", 
+        "prioritizedActions",
+        "implementationRoadmap"
+      ],
+      "annotationCategories": ["Guidelines", "Tips", "Content", "Accessibility", "Interaction"]
+    },
+    "option3_annotationsOnly": {
+      "createAnalysisFrame": false,
+      "createAnnotations": true,
+      "generateMarkdownReport": false,
+      "annotationCategories": ["Guidelines", "Tips", "Content", "Accessibility", "Interaction"],
+      "focusOnCriticalIssues": true,
+      "maxAnnotationsPerHeuristic": 3
+    }
+  },
+  "usageInstructions": {
+    "critical_workflow_steps": [
+      "🚨 MANDATORY: Always verify selected frame before any analysis",
+      "Use get_selection() to check current Figma selection",
+      "Display frame name/type to user for confirmation before proceeding",
+      "Only start analysis after user confirms correct frame selection"
+    ],
+    "initialStep": [
+      "STEP 0: Check and confirm selected frame using get_selection()",
+      "Display selected frame details to user for verification",
+      "Wait for user confirmation before proceeding",
+      "Present the user choice prompt only after frame confirmation",
+      "Wait for user selection (1, 2, or 3) before proceeding",
+      "Gather contextual information about the component/page if helpful"
+    ],
+    "analysisProcess": [
+      "1. RECONFIRM: Double-check selected frame before starting analysis",
+      "2. Scan the selected frame and identify all UI elements and interactions",
+      "3. Evaluate each of the 10 heuristics systematically using defined criteria",
+      "4. Score each heuristic 1-5 with specific evidence from the interface",
+      "5. Calculate total score and determine overall assessment level",
+      "6. Generate output in user's selected format",
+      "7. Create targeted annotations on relevant UI elements",
+      "8. Ensure all recommendations are specific and actionable"
+    ],
+    "completionProcess": [
+      "1. Deliver analysis results in requested format",
+      "2. Present completion message to user",
+      "3. Offer next action options (analyze another frame, change format, focus analysis, other tasks)",
+      "4. Wait for user response to determine next steps",
+      "5. If user wants another analysis, restart from frame validation step"
+    ],
+    "frameValidationProtocol": {
+      "mandatory_checks": [
+        "Always call get_selection() before starting any heuristic analysis",
+        "Verify selection contains exactly one frame (not multiple objects or no selection)",
+        "Display frame name and type to user for explicit confirmation",
+        "Do not proceed with analysis until user confirms correct frame",
+        "If wrong frame selected, guide user to select correct frame and revalidate"
+      ],
+      "error_handling": [
+        "No selection: Ask user to select a frame first",
+        "Multiple selections: Ask user to select only one frame", 
+        "Non-frame selection: Ask user to select a frame (not component instance or other object)",
+        "User says wrong frame: Wait for new selection and revalidate"
+      ]
+    },
+    "postAnalysisOptions": {
+      "continue_options": [
+        "Analyze different frame with same or different output format",
+        "Re-analyze same frame with different output format",
+        "Deep dive into specific heuristics or problem areas",
+        "Switch to other analysis types (Legion Design Principles, UX Writing)",
+        "End session"
+      ],
+      "user_guidance": [
+        "Always offer clear next action options after completing analysis",
+        "Make it easy for user to continue with additional analyses",
+        "Provide brief descriptions of what each next action entails",
+        "Restart full workflow (including frame validation) for new analyses"
+      ]
+    },
+    "qualityChecks": [
+      "Frame validation completed before analysis starts",
+      "All annotations reference specific UI elements with evidence",
+      "Recommendations are actionable and prioritized by user impact", 
+      "Severity levels match the scoring criteria consistently",
+      "Output format matches user's selection exactly",
+      "Critical issues are properly flagged and explained with solutions",
+      "Post-analysis options are clearly presented to user"
+    ],
+    "consistencyRules": [
+      "NEVER skip frame validation step - it prevents analyzing wrong frames",
+      "Always use the 1-5 scoring system for each heuristic",
+      "Provide specific evidence from the interface, not generic observations",
+      "Include both critical issues and positive findings in analysis",
+      "Make recommendations actionable with clear priority levels", 
+      "Use consistent emoji indicators for severity levels",
+      "Follow exact color system and typography specifications for frames",
+      "Maintain professional, constructive tone throughout analysis",
+      "Always offer next steps after completing any analysis task"
+    ]
+  }
+}
