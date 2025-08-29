@@ -24,6 +24,7 @@ function buildCandidateDirs(): string[] {
   // 3) common CWD spots
   candidates.push(
     path.resolve(process.cwd(), "guides"),
+    path.resolve(process.cwd(), "guides/instructions"),
     path.resolve(process.cwd(), "context/guides")
   );
 
@@ -32,6 +33,7 @@ function buildCandidateDirs(): string[] {
   for (let i = 0; i < 8; i++) {
     candidates.push(
       path.resolve(cur, "guides"),
+      path.resolve(cur, "guides/instructions"),
       path.resolve(cur, "context/guides")
     );
     const parent = path.dirname(cur);
@@ -151,6 +153,7 @@ export function registerDocumentTools(server: McpServer): void {
     }
   );
   // --- end Guide utilities ---
+  
   // Document Info Tool
   server.tool(
     "get_document_info",
