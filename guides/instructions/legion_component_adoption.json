@@ -1,0 +1,667 @@
+{
+  "template": {
+    "name": "Legion Design System Component Usage Analysis Framework",
+    "version": "2.0",
+    "description": "Comprehensive template for analyzing Legion Design System component usage vs custom components with flexible output options: Figma frame, Markdown report, or annotations only"
+  },
+  "userChoicePrompt": {
+    "title": "🧩 Legion Design System Component Analysis - Output Format Selection",
+    "description": "I'll conduct a comprehensive analysis of your Legion Design System component usage vs custom components in your selected Figma frame. Please choose your preferred output format:",
+    "options": [
+      {
+        "id": "figma_frame",
+        "emoji": "🎨",
+        "title": "Figma Frame + Annotations",
+        "description": "Create a detailed analysis frame in Figma with structured sections (Component Usage Statistics, Legion DS Coverage, Custom Component Analysis, Recommendations, Implementation Roadmap) plus annotations on UI elements",
+        "deliverables": [
+          "Structured analysis frame in Figma (1000px width, auto-layout)",
+          "Component usage percentage breakdowns and statistics", 
+          "Color-coded annotations identifying Legion DS vs custom components",
+          "Visual charts showing DS adoption rates and recommendations"
+        ],
+        "bestFor": "Design system governance, team presentations, stakeholder reporting, visual documentation"
+      },
+      {
+        "id": "markdown_report",
+        "emoji": "📄",
+        "title": "Markdown Report + Annotations", 
+        "description": "Generate a detailed markdown analysis report with executive summary, component inventory, usage statistics, and implementation roadmap, plus annotations in Figma",
+        "deliverables": [
+          "Comprehensive markdown component analysis report",
+          "Executive summary with key metrics and findings",
+          "Detailed component inventory with usage percentages",
+          "Prioritized recommendations for improving DS adoption",
+          "Targeted annotations on components in Figma"
+        ],
+        "bestFor": "Documentation, developer handoff, design system audits, project records"
+      },
+      {
+        "id": "annotations_only",
+        "emoji": "📌",
+        "title": "Annotations Only",
+        "description": "Place targeted component analysis annotations directly on UI elements without additional frames or reports",
+        "deliverables": [
+          "Focused annotations on specific UI components",
+          "Color-coded by component type (Legion DS/Custom/Needs Review)",
+          "Concise findings with actionable component recommendations",
+          "Clean, minimal approach for quick component reviews"
+        ],
+        "bestFor": "Quick audits, developer feedback, iterative design improvements, component migration guidance"
+      }
+    ],
+    "selectionPrompt": "Which output format would you prefer for this Legion Design System component analysis?",
+    "followupQuestions": {
+      "component_context": "What type of page/component is this (e.g., landing page, form, dashboard, etc.)?",
+      "design_system_maturity": "How mature is your Legion Design System adoption in this project?", 
+      "analysis_focus": "Are there specific component types or areas you'd like me to focus on in the analysis?"
+    }
+  },
+  "mandatoryWorkflowSteps": {
+    "preAnalysisValidation": {
+      "step": "Frame Selection Validation",
+      "description": "CRITICAL: Always verify the selected frame before starting any component analysis",
+      "implementation": [
+        "1. Call get_selection() to check current Figma selection",
+        "2. Parse selection results to identify frame name, type, and count",
+        "3. Present frame details to user: 'Selected Frame: [Name] (Type: [Type])'",
+        "4. Ask explicit confirmation: 'Is this the correct frame to analyze? (YES/NO)'",
+        "5. Only proceed after user confirms 'YES'",
+        "6. If 'NO' or wrong selection, guide user to select correct frame and repeat validation"
+      ],
+      "errorHandling": {
+        "noSelection": "⚠️ No frame selected. Please select a frame in Figma first, then try again.",
+        "multipleSelection": "⚠️ Multiple items selected. Please select only ONE frame to analyze.",
+        "invalidSelection": "⚠️ Selected item is not a frame. Please select a frame (not component instance or other object).",
+        "userRejectsFrame": "Please select the correct frame in Figma, then let me know when ready to proceed."
+      }
+    },
+    "postAnalysisWorkflow": {
+      "step": "Continue or End Session",
+      "description": "After completing component analysis, always offer next action options",
+      "implementation": [
+        "1. Present completion message with summary of delivered results",
+        "2. Display next action menu with clear options",
+        "3. Wait for user selection of next action",
+        "4. For new analysis: restart from frame validation step",
+        "5. For different format on same frame: skip to format selection",
+        "6. For other tasks: run prompt on guide://instructions/started_prompt.json"
+      ],
+      "nextActionOptions": {
+        "newFrameAnalysis": "🔍 Analyze Another Frame - I'll help you select and analyze a different frame",
+        "differentFormat": "📋 Change Output Format - Re-analyze current frame with different output (Figma/Markdown/Annotations)",
+        "focusedAnalysis": "🎯 Deep Dive Analysis - Focus on specific component types or problem areas",
+        "otherTasks": "✨ Other Analysis - Switch to NNG Heuristic Evaluation, UX Writing review, or other tasks"
+      }
+    }
+  },
+  "analysisFramework": {
+    "methodology": {
+      "componentCategories": {
+        "legion_components": {
+          "description": "Components from the Legion Design System",
+          "examples": ["LgnButton", "LgnChip", "LgnAnchorText", "LgnInput", "LgnSelect", "LgnRadio", "LgnCheckbox", "LgnCard", "LgnModal", "LgnToast", "LgnBadge", "LgnAvatar", "LgnTabs", "LgnAccordion", "LgnTable", "LgnPagination", "LgnBreadcrumb", "LgnProgress", "LgnSkeleton", "LgnDatePicker"],
+          "identification": "Components that follow Legion naming convention and design tokens",
+          "color": "#edfced",
+          "category": "Content"
+        },
+        "custom_components": {
+          "description": "Custom-built components not using Legion Design System",
+          "identification": "Components built from scratch or heavily modified from Legion",
+          "color": "#fceded", 
+          "category": "Guidelines"
+        },
+        "mixed_components": {
+          "description": "Components that partially use Legion but have custom modifications",
+          "identification": "Legion components with custom styling or structure changes",
+          "color": "#fcf7ed",
+          "category": "Tips"
+        },
+        "needs_review": {
+          "description": "Components that could potentially use Legion alternatives",
+          "identification": "Custom components that have Legion equivalents available",
+          "color": "#f5f5fc",
+          "category": "Tips"
+        }
+      },
+      "scoringSystem": {
+        "legion_adoption_percentage": "Percentage of components using Legion Design System",
+        "custom_component_percentage": "Percentage of custom/non-Legion components",
+        "design_token_compliance": "Usage of Legion design tokens (colors, spacing, typography)",
+        "overall_ds_maturity": "Overall design system maturity score (1-5)"
+      },
+      "recommendationTypes": {
+        "component_replacement": "Suggest specific Legion components to replace custom ones",
+        "pattern_improvement": "Recommend better UI patterns (e.g., radio vs dropdown)",
+        "design_token_adoption": "Suggest using Legion design tokens instead of custom values",
+        "accessibility_enhancement": "Recommend accessible Legion components"
+      }
+    },
+    "componentAnalysisCriteria": [
+      {
+        "id": 1,
+        "name": "Basic UI Components",
+        "description": "Buttons, inputs, selects, checkboxes, radio buttons, and other form elements",
+        "legionComponents": ["LgnButton", "LgnInput", "LgnSelect", "LgnRadio", "LgnCheckbox", "LgnTextarea"],
+        "commonReplacements": {
+          "custom_button": "Use LgnButton for consistent styling and interactions",
+          "custom_input": "Use LgnInput for validation states and accessibility",
+          "dropdown_for_few_options": "Use LgnRadio instead of LgnSelect for 2-3 options",
+          "custom_checkbox": "Use LgnCheckbox for proper accessibility and states"
+        },
+        "evaluationPoints": [
+          "Identify all interactive form elements",
+          "Check if Legion equivalents are being used",
+          "Assess proper component selection (radio vs select, etc.)",
+          "Verify design token usage for spacing, colors, typography"
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Navigation Components",
+        "description": "Navigation bars, breadcrumbs, tabs, anchors, and wayfinding elements",
+        "legionComponents": ["LgnAnchorText", "LgnTabs", "LgnBreadcrumb", "LgnNavigation"],
+        "commonReplacements": {
+          "custom_links": "Use LgnAnchorText for consistent link styling",
+          "custom_tabs": "Use LgnTabs for proper accessibility and interactions",
+          "custom_breadcrumbs": "Use LgnBreadcrumb for navigation consistency"
+        },
+        "evaluationPoints": [
+          "Audit all navigation elements",
+          "Check link and navigation consistency",
+          "Verify proper semantic structure",
+          "Assess accessibility compliance"
+        ]
+      },
+      {
+        "id": 3,
+        "name": "Data Display Components",
+        "description": "Cards, tables, lists, badges, avatars, and content containers",
+        "legionComponents": ["LgnCard", "LgnTable", "LgnBadge", "LgnAvatar", "LgnChip", "LgnAccordion"],
+        "commonReplacements": {
+          "custom_cards": "Use LgnCard for consistent content containers",
+          "custom_tables": "Use LgnTable for proper data display and sorting",
+          "custom_badges": "Use LgnBadge for status indicators",
+          "custom_avatars": "Use LgnAvatar for user representations"
+        },
+        "evaluationPoints": [
+          "Identify all data display patterns",
+          "Check content organization consistency",
+          "Verify proper information hierarchy",
+          "Assess data table functionality"
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Feedback Components",
+        "description": "Modals, toasts, alerts, progress indicators, and user feedback elements",
+        "legionComponents": ["LgnModal", "LgnToast", "LgnAlert", "LgnProgress", "LgnSkeleton"],
+        "commonReplacements": {
+          "custom_modals": "Use LgnModal for consistent overlay patterns",
+          "custom_notifications": "Use LgnToast for user feedback",
+          "custom_alerts": "Use LgnAlert for important messages",
+          "custom_loaders": "Use LgnSkeleton or LgnProgress for loading states"
+        },
+        "evaluationPoints": [
+          "Audit all feedback mechanisms",
+          "Check modal and overlay patterns",
+          "Verify loading and progress indicators",
+          "Assess notification systems"
+        ]
+      },
+      {
+        "id": 5,
+        "name": "Layout and Structure",
+        "description": "Grids, spacing, containers, and overall layout patterns using Legion tokens",
+        "legionComponents": ["Legion Grid System", "Legion Spacing Tokens", "Legion Breakpoints"],
+        "commonReplacements": {
+          "custom_spacing": "Use Legion spacing tokens instead of arbitrary values",
+          "custom_grids": "Use Legion grid system for consistent layouts",
+          "custom_breakpoints": "Use Legion responsive breakpoints"
+        },
+        "evaluationPoints": [
+          "Check spacing consistency with Legion tokens",
+          "Verify grid system usage",
+          "Assess responsive behavior",
+          "Review layout patterns"
+        ]
+      }
+    ]
+  },
+  "analysisPrompts": {
+    "preAnalysisValidation": "🚨 CRITICAL FIRST STEP: Before conducting any component analysis, you MUST:\n1. Call get_selection() to verify the currently selected frame\n2. Display frame name and type to user for confirmation\n3. Wait for user confirmation that this is the correct frame to analyze\n4. After frame confirmation, IMMEDIATELY present the output format selection options\n5. Only proceed with analysis after user selects their preferred output format\n\nThis prevents analyzing the wrong frame and ensures user gets their preferred output format.",
+    "mainPrompt": "WORKFLOW STEPS:\n1. FIRST: Verify selected frame using get_selection() and get user confirmation\n2. SECOND: Present output format options and wait for user selection (1, 2, or 3)\n3. THIRD: Conduct comprehensive Legion Design System component usage analysis\n\nFor the analysis, examine the CONFIRMED selected Figma frame and:\n\n1. **Identify all UI components** in the frame and categorize them\n2. **Calculate usage percentages** of Legion DS vs custom components\n3. **Assess design token compliance** for colors, spacing, typography\n4. **Provide specific recommendations** for improving DS adoption\n5. **Create targeted annotations** on relevant UI elements (if applicable to chosen output format)\n6. **Generate output in selected format** (Figma frame/Markdown report/Annotations only)\n\n**Focus Areas:**\n- Component inventory and categorization\n- Legion Design System adoption rate\n- Custom component identification and replacement opportunities\n- Design token usage vs custom values\n- UI pattern recommendations (radio vs dropdown, etc.)\n- Accessibility improvements through Legion components\n- Implementation priority and roadmap\n\n**Analysis Requirements:**\n- Provide specific counts and percentages for component usage\n- Include evidence from the interface with component names/instances\n- Prioritize recommendations by impact and implementation effort\n- Reference specific Legion components in replacement suggestions\n- Calculate overall design system maturity score\n- Focus on actionable improvements for DS adoption\n\n**Post-Analysis:** After completing the evaluation, always offer next action options to continue the workflow.",
+    "evaluationSteps": [
+      "0. FIRST: Verify selected frame using get_selection() and get user confirmation",
+      "0.5. SECOND: Present output format options and wait for user selection (1, 2, or 3)",
+      "1. Scan the selected frame and identify all UI components and their types",
+      "2. Categorize components as Legion DS, Custom, Mixed, or Needs Review", 
+      "3. Count instances and calculate usage percentages for each category",
+      "4. Assess design token compliance (colors, spacing, typography)",
+      "5. Identify opportunities for Legion component adoption",
+      "6. Evaluate UI pattern appropriateness (e.g., radio vs select)",
+      "7. Create output based on user's selected format preference",
+      "8. For annotations: place on components that need Legion DS adoption",
+      "9. Prioritize recommendations by implementation effort and user impact"
+    ],
+    "contextualConsiderations": [
+      "Consider the maturity stage of Legion DS adoption in the project",
+      "Evaluate component complexity and custom requirements", 
+      "Assess brand consistency and Legion design token usage",
+      "Review accessibility benefits of Legion components",
+      "Consider development effort for component migration",
+      "Evaluate performance implications of component choices"
+    ]
+  },
+  "outputFormats": {
+    "figmaFrame": {
+      "structure": {
+        "mainFrame": {
+          "name": "Legion DS Component Analysis - {ComponentName}",
+          "type": "FRAME",
+          "layout": {
+            "direction": "VERTICAL",
+            "width": "FIXED",
+            "width_value": 1000,
+            "height": "HUG",
+            "spacing": 20,
+            "padding": {
+              "top": 20,
+              "right": 20,
+              "bottom": 20,
+              "left": 20
+            },
+            "alignment": "MIN",
+            "counter_axis_alignment": "MIN",
+            "horizontalAlign": "LEFT",
+            "verticalAlign": "TOP"
+          }
+        },
+        "sectionTemplates": {
+          "titleSection": {
+            "name": "Analysis Title Wrapper",
+            "type": "FRAME",
+            "layout": {
+              "direction": "VERTICAL",
+              "width": "FILL",
+              "height": "HUG",
+              "spacing": 4,
+              "padding": { "all": 0 },
+              "alignment": "MIN",
+              "counter_axis_alignment": "MIN",
+              "horizontalAlign": "LEFT",
+              "verticalAlign": "TOP"
+            },
+            "children": [
+              {
+                "name": "Analysis Title",
+                "type": "TEXT",
+                "content": "{analysisTitle}",
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 700,
+                  "fontSize": 32,
+                  "lineHeight": 40,
+                  "fill": "#000000"
+                }
+              },
+              {
+                "name": "Component Name",
+                "type": "TEXT",
+                "content": "{componentName}",
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 500,
+                  "fontSize": 24,
+                  "lineHeight": 30,
+                  "fill": "#000000"
+                }
+              }
+            ]
+          },
+          "usageStatisticsSection": {
+            "name": "Component Usage Statistics",
+            "type": "FRAME",
+            "layout": {
+              "direction": "VERTICAL",
+              "width": "FILL",
+              "height": "HUG",
+              "spacing": 15,
+              "padding": { "all": 15 },
+              "alignment": "MIN",
+              "counter_axis_alignment": "MIN",
+              "horizontalAlign": "LEFT",
+              "verticalAlign": "TOP"
+            },
+            "styling": { "cornerRadius": 12 },
+            "children": [
+              {
+                "name": "Section Title",
+                "type": "TEXT",
+                "layout": { "width": "FILL", "height": "HUG" },
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 700,
+                  "fontSize": 20,
+                  "lineHeight": 24,
+                  "fill": "#000000"
+                }
+              },
+              {
+                "name": "Usage Metrics", 
+                "type": "TEXT",
+                "layout": { "width": "FILL", "height": "HUG" },
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 600,
+                  "fontSize": 18,
+                  "lineHeight": 22,
+                  "fill": "#000000"
+                }
+              },
+              {
+                "name": "Section Content",
+                "type": "TEXT", 
+                "layout": { "width": "FILL", "height": "HUG" },
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 400,
+                  "fontSize": 16,
+                  "lineHeight": 20,
+                  "fill": "#000000"
+                }
+              }
+            ]
+          },
+          "contentSection": {
+            "type": "FRAME",
+            "layout": {
+              "direction": "VERTICAL",
+              "width": "FILL",
+              "height": "HUG",
+              "spacing": 15,
+              "padding": { "all": 15 },
+              "alignment": "MIN",
+              "counter_axis_alignment": "MIN",
+              "horizontalAlign": "LEFT",
+              "verticalAlign": "TOP"
+            },
+            "styling": { "cornerRadius": 12 },
+            "children": [
+              {
+                "name": "Section Title",
+                "type": "TEXT",
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 700,
+                  "fontSize": 20,
+                  "lineHeight": 24,
+                  "fill": "#000000"
+                }
+              },
+              {
+                "name": "Section Content",
+                "type": "TEXT",
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 400,
+                  "fontSize": 16,
+                  "lineHeight": 20,
+                  "fill": "#000000"
+                }
+              }
+            ]
+          }
+        },
+        "colorSystem": {
+          "background": "#fafafa",
+          "usageStatistics": "#ebf2fc",
+          "legionComponents": "#edfced",
+          "customComponents": "#fceded",
+          "mixedComponents": "#fcf7ed",
+          "recommendations": "#f5f5fc",
+          "text": "#000000"
+        }
+      },
+      "contentTemplates": {
+        "titleSection": {
+          "titleTemplate": "Legion DS Component Analysis",
+          "subtitleTemplate": "[Page/Component Name]"
+        },
+        "usageStatisticsSection": {
+          "title": "📊 Component Usage Statistics",
+          "metricsFormat": "Legion DS: {legionPercentage}% • Custom: {customPercentage}% • Mixed: {mixedPercentage}%",
+          "contentStructure": [
+            "🟢 Legion Components: {legionCount} components ({legionPercentage}%)",
+            "🔴 Custom Components: {customCount} components ({customPercentage}%)", 
+            "🟡 Mixed/Modified: {mixedCount} components ({mixedPercentage}%)",
+            "🔵 Design Token Compliance: {tokenCompliance}%",
+            "📈 Overall DS Maturity Score: {maturityScore}/5"
+          ]
+        },
+        "summarySection": {
+          "legionComponents": {
+            "title": "✅ Legion Design System Components",
+            "backgroundColor": "#edfced",
+            "contentStructure": [
+              "[Component Category] - {count} instances:",
+              "• {component1} - {usage} instances", 
+              "• {component2} - {usage} instances",
+              "• {component3} - {usage} instances",
+              "",
+              "[Benefits]: Consistent styling, accessibility, maintenance"
+            ]
+          },
+          "customComponents": {
+            "title": "🚨 Custom Components (Replacement Opportunities)",
+            "backgroundColor": "#fceded",
+            "contentStructure": [
+              "[Custom Component Type] - {count} instances:",
+              "• [Custom component 1] → Suggested: [Legion equivalent]",
+              "• [Custom component 2] → Suggested: [Legion equivalent]", 
+              "• [Custom component 3] → Suggested: [Legion equivalent]",
+              "",
+              "Impact: Improved consistency, reduced maintenance, better accessibility"
+            ]
+          },
+          "recommendations": {
+            "title": "💡 Priority Recommendations",
+            "backgroundColor": "#f5f5fc",
+            "contentStructure": [
+              "Priority 1: Replace [custom components] with [Legion equivalents] - Impact: High",
+              "Priority 2: Adopt Legion design tokens for [spacing/colors] - Impact: Medium",
+              "Priority 3: Improve UI patterns - [specific recommendations] - Impact: Medium",
+              "Priority 4: [Additional recommendations] - Impact: Low-Medium",
+              "",
+              "Quick Wins: [Easy implementations that boost DS adoption percentage]"
+            ]
+          }
+        },
+        "componentInventorySection": {
+          "title": "🧩 Detailed Component Inventory",
+          "backgroundColor": "#f5f5fc",
+          "inventoryFormat": "{category}: {componentName} ({instanceCount} instances) - {status}",
+          "contentStructure": [
+            "LEGION DESIGN SYSTEM COMPONENTS:",
+            "• {componentName}: {instanceCount} instances ✅",
+            "",
+            "CUSTOM COMPONENTS NEEDING REPLACEMENT:",
+            "• {customComponent}: {instanceCount} instances → Use {legionAlternative}",
+            "",
+            "MIXED/MODIFIED COMPONENTS:",
+            "• {mixedComponent}: {instanceCount} instances → Needs standardization"
+          ]
+        }
+      }
+    },
+    "markdownReport": {
+      "structure": {
+        "header": {
+          "title": "# Legion Design System Component Usage Analysis Report",
+          "metadata": [
+            "**Component/Page:** {componentName}",
+            "**Analysis Date:** {currentDate}",
+            "**Analyzer:** Legion DS Analysis Assistant",
+            "**Legion DS Adoption:** {legionPercentage}% ({legionCount}/{totalCount} components)",
+            "**Overall DS Maturity:** {maturityScore}/5"
+          ]
+        },
+        "executiveSummary": {
+          "title": "## Executive Summary",
+          "content": [
+            "### Component Usage Overview",
+            "- **Legion DS Components:** {legionCount} components ({legionPercentage}%)",
+            "- **Custom Components:** {customCount} components ({customPercentage}%)",
+            "- **Mixed/Modified:** {mixedCount} components ({mixedPercentage}%)",
+            "- **Design Token Compliance:** {tokenCompliance}%",
+            "",
+            "### Key Opportunities",
+            "- **Immediate Replacements:** {immediateReplacements} custom components have direct Legion equivalents",
+            "- **Pattern Improvements:** {patternImprovements} UI patterns can be optimized",
+            "- **Potential DS Adoption Increase:** +{potentialIncrease}% with recommended changes"
+          ]
+        },
+        "detailedAnalysis": {
+          "title": "## Detailed Component Analysis",
+          "categoryTemplate": [
+            "### {categoryName}",
+            "",
+            "**Current Usage:**",
+            "- Legion Components: {legionCount} ({legionPercentage}%)",
+            "- Custom Components: {customCount} ({customPercentage}%)",
+            "",
+            "**Component Inventory:**",
+            "{componentInventoryList}",
+            "",
+            "**Recommendations:**",
+            "{categoryRecommendations}",
+            "",
+            "---"
+          ]
+        },
+        "recommendationsSection": {
+          "title": "## Prioritized Recommendations",
+          "sections": [
+            {
+              "title": "### 🚀 High Impact - Quick Wins",
+              "content": "{highImpactRecommendations}"
+            },
+            {
+              "title": "### 📈 Medium Impact - Short Term",
+              "content": "{mediumImpactRecommendations}"
+            },
+            {
+              "title": "### 💡 Enhancement Opportunities - Long Term",
+              "content": "{longTermRecommendations}"
+            }
+          ]
+        }
+      }
+    },
+    "annotations": {
+      "annotationTypes": {
+        "legion_component": {
+          "title": "✅ Legion DS Component",
+          "format": "**Component:** {legionComponentName}\n**Usage:** Correctly implemented\n**Benefit:** Consistent styling, accessibility, maintainability\n**Status:** Good",
+          "category": "Content",
+          "placement": "On properly implemented Legion components"
+        },
+        "custom_needs_replacement": {
+          "title": "🚨 Custom Component - Replace with Legion",
+          "format": "**Current:** {customComponentName}\n**Recommended:** {legionAlternative}\n**Benefit:** +Consistency, +Accessibility, -Maintenance\n**Priority:** {priorityLevel}\n**Effort:** {implementationEffort}",
+          "category": "Guidelines",
+          "placement": "On custom components that have Legion equivalents"
+        },
+        "pattern_improvement": {
+          "title": "💡 UI Pattern Improvement",
+          "format": "**Current Pattern:** {currentPattern}\n**Recommended:** {improvedPattern}\n**Reason:** {rationale}\n**Example:** {specificExample}\n**Priority:** Medium",
+          "category": "Tips",
+          "placement": "On UI patterns that can be improved (e.g., dropdown → radio)"
+        },
+        "mixed_component": {
+          "title": "⚠️ Mixed Implementation - Needs Standardization",
+          "format": "**Component:** {componentName}\n**Issue:** Legion component with custom modifications\n**Recommendation:** {standardizationSuggestion}\n**Impact:** Improved consistency and maintenance",
+          "category": "Tips",
+          "placement": "On Legion components that have been customized"
+        },
+        "design_token_opportunity": {
+          "title": "🎨 Design Token Opportunity",
+          "format": "**Current:** Custom values\n**Recommended:** Use Legion design tokens\n**Tokens:** {suggestedTokens}\n**Benefit:** Better consistency and easier maintenance",
+          "category": "Tips",
+          "placement": "On elements using custom colors, spacing, or typography"
+        }
+      }
+    }
+  },
+  "workflowConfiguration": {
+    "step0_frameValidation": {
+      "critical_instruction": "⚠️ ALWAYS VERIFY SELECTED FRAME BEFORE ANALYSIS",
+      "validation_process": [
+        "Use get_selection() to confirm current selection in Figma",
+        "Display the selected frame name and type to user for confirmation",
+        "If no frame is selected, ask user to select the target frame",
+        "If multiple items selected, ask user to select a single frame",
+        "Only proceed with analysis after confirming correct frame selection"
+      ],
+      "confirmation_prompt": "I've detected your selected frame: **{frameName}** (Type: {frameType})\n\nIs this the correct frame you want me to analyze for Legion Design System component usage? Please confirm **YES** to proceed or **NO** to select a different frame.\n\n⚠️ After you confirm, I'll ask you to choose your preferred output format."
+    },
+    "step1_userChoice": {
+      "prompt": "I'll conduct a Legion Design System component usage analysis of your selected frame. Which output format would you prefer?\n\n🎨 **Option 1: Figma Frame + Annotations**\n- Detailed analysis frame with component usage statistics\n- Color-coded sections showing Legion vs custom components\n- Perfect for design system governance and presentations\n\n📄 **Option 2: Markdown Report + Annotations**\n- Comprehensive written component analysis report\n- Component inventory and implementation roadmap\n- Great for documentation and developer handoff\n\n📌 **Option 3: Annotations Only**\n- Clean, focused annotations on UI components\n- Quick identification of Legion vs custom components\n- Ideal for iterative component migrations\n\nPlease respond with: **1**, **2**, or **3**"
+    },
+    "step2_contextGathering": {
+      "questions": [
+        "What type of page/component is this?",
+        "What's the current maturity of Legion DS adoption in this project?", 
+        "Any specific component types you'd like me to focus on?"
+      ]
+    },
+    "step3_analysis": {
+      "process": [
+        "Reconfirm selected frame before starting analysis",
+        "Scan and inventory all UI components in the frame",
+        "Categorize components as Legion DS, Custom, Mixed, or Needs Review",
+        "Calculate usage percentages and design system maturity metrics",
+        "Identify replacement opportunities and pattern improvements",
+        "Generate output in selected format with actionable recommendations",
+        "Create targeted annotations on relevant components"
+      ]
+    },
+    "step4_completion": {
+      "completion_message": "✅ **Legion DS Component Analysis Complete!**\n\nI've finished analyzing your design for Legion Design System component usage and delivered the results in your requested format.",
+      "next_action_prompt": "Would you like me to:\n\n🔍 **Analyze Another Frame** - Select a different frame for component analysis\n📋 **Change Output Format** - Re-analyze the same frame with a different output format\n🎯 **Focus Analysis** - Deep dive into specific component types or categories\n✨ **Other Task** - Switch to NNG Heuristic Evaluation, UX Writing analysis, or other tasks\n\nWhat would you like to do next?"
+    }
+  },
+  "usageInstructions": {
+    "critical_workflow_steps": [
+      "🚨 MANDATORY: Always verify selected frame before any analysis",
+      "Use get_selection() to check current Figma selection",
+      "Display frame name/type to user for confirmation before proceeding", 
+      "IMMEDIATELY after frame confirmation: Present output format selection",
+      "Wait for user to choose output format (1, 2, or 3) before starting analysis",
+      "Only start analysis after both frame confirmation AND output format selection"
+    ],
+    "analysisProcess": [
+      "1. RECONFIRM: Double-check selected frame before starting analysis",
+      "2. Identify and categorize all UI components in the frame",
+      "3. Calculate Legion DS adoption percentage vs custom components",
+      "4. Assess design token compliance for colors, spacing, typography",
+      "5. Identify specific Legion component alternatives for custom elements",
+      "6. Evaluate UI pattern appropriateness and suggest improvements",
+      "7. Generate output in user's selected format with actionable recommendations",
+      "8. Create targeted annotations highlighting component opportunities"
+    ],
+    "componentIdentificationGuidelines": [
+      "Look for Legion component naming conventions (Lgn prefix)",
+      "Check for design system consistency in styling and behavior",
+      "Identify custom components that could use Legion alternatives",
+      "Assess design token usage vs custom values",
+      "Evaluate UI patterns for best practice adherence (radio vs dropdown, etc.)",
+      "Consider accessibility and maintenance benefits of Legion components"
+    ],
+    "recommendationPriorities": [
+      "High Priority: Direct Legion component replacements with significant impact",
+      "Medium Priority: UI pattern improvements and design token adoption",
+      "Low Priority: Advanced features and optimizations",
+      "Focus on quick wins that substantially increase DS adoption percentage"
+    ]
+  }
+}

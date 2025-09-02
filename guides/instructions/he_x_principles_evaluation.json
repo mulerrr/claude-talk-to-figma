@@ -1,0 +1,582 @@
+{
+  "template": {
+    "name": "Unified Design Analysis Framework - Heuristic Evaluation & Legion Design Principles",
+    "version": "3.0",
+    "description": "Comprehensive template for conducting both Nielsen's Heuristic Evaluations and Legion Design Principles compliance assessments with flexible output options"
+  },
+  "analysisTypeSelection": {
+    "title": "🎯 Design Analysis - Select Analysis Type",
+    "description": "I'll analyze your selected Figma frame using professional design evaluation methods. Please choose your analysis approach:",
+    "options": [
+      {
+        "id": "heuristic_evaluation",
+        "emoji": "🔍",
+        "title": "Nielsen's Heuristic Evaluation",
+        "description": "Comprehensive usability analysis using Jakob Nielsen's 10 Usability Heuristics",
+        "focus": [
+          "User experience and usability principles",
+          "Interface effectiveness and efficiency",
+          "Error prevention and recovery",
+          "User control and system feedback",
+          "Consistency and standards compliance"
+        ],
+        "bestFor": "UX reviews, usability testing preparation, user experience optimization, accessibility audits",
+        "outputScore": "Score: X/50 (10 heuristics × 5 points each)",
+        "framework": "nielsen_heuristics"
+      },
+      {
+        "id": "design_principles",
+        "emoji": "🎨",
+        "title": "Legion Design Principles Analysis",
+        "description": "Design system compliance evaluation using Legion Design Principles framework",
+        "focus": [
+          "Design system consistency and adherence",
+          "Visual design quality and brand alignment", 
+          "Component usage and pattern implementation",
+          "Scalability and technical implementation",
+          "Design coherence and systematic approach"
+        ],
+        "bestFor": "Design system audits, brand consistency reviews, component library validation, design quality assurance",
+        "outputScore": "Score: X/Y (Y principles × 5 points each)",
+        "framework": "legion_principles"
+      }
+    ],
+    "selectionPrompt": "Which analysis approach would you like me to use?",
+    "followupPrompt": "After selecting your analysis type, I'll present output format options (Figma frame, Markdown report, or Annotations only)."
+  },
+  "outputFormatSelection": {
+    "title": "📊 Analysis Output Format Selection",
+    "description": "Choose how you'd like to receive your {analysisType} analysis results:",
+    "options": [
+      {
+        "id": "figma_frame",
+        "emoji": "🎨",
+        "title": "Figma Frame + Annotations",
+        "description": "Create a detailed analysis frame in Figma with structured sections plus annotations on UI elements",
+        "deliverables": [
+          "Structured analysis frame in Figma (1000px width, auto-layout)",
+          "Comprehensive annotations on relevant UI elements",
+          "Color-coded sections for different finding types",
+          "Visual score breakdown and recommendations"
+        ],
+        "bestFor": "Presentations, design reviews, stakeholder sharing, visual documentation"
+      },
+      {
+        "id": "markdown_report", 
+        "emoji": "📄",
+        "title": "Markdown Report + Annotations",
+        "description": "Generate a detailed markdown analysis report with executive summary and implementation roadmap, plus annotations in Figma",
+        "deliverables": [
+          "Comprehensive markdown analysis report file",
+          "Executive summary with key findings", 
+          "Detailed analysis with scores and evidence",
+          "Prioritized action items and implementation roadmap",
+          "Targeted annotations on UI elements in Figma"
+        ],
+        "bestFor": "Documentation, developer handoff, detailed analysis, project records"
+      },
+      {
+        "id": "annotations_only",
+        "emoji": "📌", 
+        "title": "Annotations Only",
+        "description": "Place targeted analysis annotations directly on UI elements without additional frames or reports",
+        "deliverables": [
+          "Focused annotations on specific UI elements",
+          "Color-coded by issue severity (Critical/Warning/Good)", 
+          "Concise findings with actionable recommendations",
+          "Clean, minimal approach for quick reviews"
+        ],
+        "bestFor": "Quick reviews, iterative improvements, developer feedback, lightweight analysis"
+      }
+    ],
+    "selectionPrompt": "Which output format would you prefer for this {analysisType} analysis?"
+  },
+  "mandatoryWorkflowSteps": {
+    "preAnalysisValidation": {
+      "step": "Frame Selection Validation",
+      "description": "CRITICAL: Always verify the selected frame before starting any analysis",
+      "implementation": [
+        "1. Call get_selection() to check current Figma selection",
+        "2. Parse selection results to identify frame name, type, and count", 
+        "3. Present frame details to user: 'Selected Frame: [Name] (Type: [Type])'",
+        "4. Ask explicit confirmation: 'Is this the correct frame to analyze? (YES/NO)'",
+        "5. Only proceed after user confirms 'YES'",
+        "6. If 'NO' or wrong selection, guide user to select correct frame and repeat validation"
+      ],
+      "errorHandling": {
+        "noSelection": "❌ No frame selected. Please select a frame in Figma first, then try again.",
+        "multipleSelection": "❌ Multiple items selected. Please select only ONE frame to analyze.",
+        "invalidSelection": "❌ Selected item is not a frame. Please select a frame (not component instance or other object).",
+        "userRejectsFrame": "Please select the correct frame in Figma, then let me know when ready to proceed."
+      }
+    },
+    "postAnalysisWorkflow": {
+      "step": "Continue or End Session",
+      "description": "After completing analysis, always offer next action options",
+      "implementation": [
+        "1. Present completion message with summary of delivered results",
+        "2. Display next action menu with clear options", 
+        "3. Wait for user selection of next action",
+        "4. For new analysis: restart from frame validation step",
+        "5. For different format/type on same frame: skip to appropriate selection",
+        "6. For other tasks: run prompt on guide://instructions/started_prompt.json"
+      ],
+      "nextActionOptions": {
+        "newFrameAnalysis": "🔍 Analyze Another Frame - I'll help you select and analyze a different frame",
+        "differentAnalysisType": "🔄 Different Analysis Type - Re-analyze current frame with different method (Heuristic ↔ Design Principles)",
+        "differentFormat": "📋 Change Output Format - Re-analyze current frame with different output (Figma/Markdown/Annotations)",
+        "focusedAnalysis": "🎯 Deep Dive Analysis - Focus on specific areas or problem elements",
+        "otherTasks": "✨ Other Analysis - Switch to Legion Design Principles, UX Writing review, or other tasks"
+      }
+    }
+  },
+  "analysisFrameworks": {
+    "nielsen_heuristics": {
+      "name": "Nielsen's 10 Usability Heuristics",
+      "scoringSystem": {
+        "scale": "1-5 points per heuristic",
+        "maxScore": 50,
+        "principleCount": 10,
+        "ratings": {
+          "5": "Excellent - No issues identified, exceeds expectations",
+          "4": "Good - Minor issues that don't significantly impact usability", 
+          "3": "Acceptable - Some issues present but usable",
+          "2": "Poor - Significant usability problems that hinder user experience",
+          "1": "Critical - Major usability failures, unusable in current state"
+        }
+      },
+      "overallAssessment": {
+        "excellent": { "range": "90-100%", "label": "Excellent - Industry Leading UX" },
+        "good": { "range": "70-89%", "label": "Good with Areas for Improvement" },
+        "acceptable": { "range": "50-69%", "label": "Acceptable but Needs Significant Work" },
+        "poor": { "range": "30-49%", "label": "Poor - Major Usability Issues" },
+        "critical": { "range": "0-29%", "label": "Critical - Unusable Interface" }
+      },
+      "heuristics": [
+        {
+          "id": 1,
+          "name": "Visibility of System Status",
+          "description": "The design should always keep users informed about what is going on, through appropriate feedback within a reasonable amount of time.",
+          "evaluationCriteria": [
+            "Loading states and progress indicators present",
+            "Clear feedback for user actions",
+            "System status communicated effectively",
+            "Response time appropriate for context"
+          ],
+          "commonIssues": [
+            "Missing loading indicators",
+            "No feedback after user actions", 
+            "Unclear system state",
+            "Long waits without communication"
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Match Between System and Real World",
+          "description": "The system should speak the users' language, with words, phrases and concepts familiar to the user, rather than system-oriented terms.",
+          "evaluationCriteria": [
+            "Familiar language and terminology used",
+            "Logical information architecture",
+            "Follows real-world conventions",
+            "Icons and metaphors are recognizable"
+          ],
+          "commonIssues": [
+            "Technical jargon used",
+            "Illogical navigation structure",
+            "Unfamiliar icons or symbols",
+            "System-oriented language"
+          ]
+        },
+        {
+          "id": 3,
+          "name": "User Control and Freedom",
+          "description": "Users often choose system functions by mistake and will need a clearly marked emergency exit to leave the unwanted state.",
+          "evaluationCriteria": [
+            "Clear navigation and exit options",
+            "Undo/redo functionality available",
+            "Users can cancel operations", 
+            "Back button or breadcrumb navigation"
+          ],
+          "commonIssues": [
+            "No way to go back or cancel",
+            "Missing undo functionality",
+            "Users trapped in workflows",
+            "No clear escape routes"
+          ]
+        },
+        {
+          "id": 4,
+          "name": "Consistency and Standards",
+          "description": "Users should not have to wonder whether different words, situations, or actions mean the same thing. Follow platform conventions.",
+          "evaluationCriteria": [
+            "Consistent design system usage",
+            "Standard UI patterns followed",
+            "Uniform language and terminology",
+            "Predictable interactions"
+          ],
+          "commonIssues": [
+            "Inconsistent component usage",
+            "Different terms for same actions",
+            "Non-standard UI patterns",
+            "Unpredictable behavior"
+          ]
+        },
+        {
+          "id": 5,
+          "name": "Error Prevention", 
+          "description": "Even better than good error messages is a careful design which prevents a problem from occurring in the first place.",
+          "evaluationCriteria": [
+            "Input validation and constraints",
+            "Clear format requirements",
+            "Confirmation dialogs for destructive actions",
+            "Prevention of common user errors"
+          ],
+          "commonIssues": [
+            "No input validation",
+            "Easy to make mistakes",
+            "No confirmation for important actions",
+            "Unclear input requirements"
+          ]
+        },
+        {
+          "id": 6,
+          "name": "Recognition Rather Than Recall",
+          "description": "Minimize the user's memory load by making elements, actions, and options visible.",
+          "evaluationCriteria": [
+            "Clear labels and instructions",
+            "Visible options and actions",
+            "Contextual help available",
+            "Reduced cognitive load"
+          ],
+          "commonIssues": [
+            "Hidden or unclear options",
+            "Users must remember information",
+            "Complex mental models required",
+            "Insufficient visual cues"
+          ]
+        },
+        {
+          "id": 7,
+          "name": "Flexibility and Efficiency of Use",
+          "description": "Shortcuts may speed up the interaction for the expert user such that the design can cater to both inexperienced and experienced users.",
+          "evaluationCriteria": [
+            "Shortcuts for power users",
+            "Customization options available",
+            "Efficient workflows",
+            "Accommodates different skill levels"
+          ],
+          "commonIssues": [
+            "No shortcuts or advanced features",
+            "One-size-fits-all approach",
+            "Inefficient workflows",
+            "No personalization options"
+          ]
+        },
+        {
+          "id": 8,
+          "name": "Aesthetic and Minimalist Design",
+          "description": "Interfaces should not contain information that is irrelevant or rarely needed. Focus on essential elements.",
+          "evaluationCriteria": [
+            "Clean, focused design",
+            "Proper visual hierarchy",
+            "Relevant content only",
+            "Good use of white space"
+          ],
+          "commonIssues": [
+            "Cluttered interface",
+            "Too much information displayed",
+            "Poor visual hierarchy",
+            "Distracting elements"
+          ]
+        },
+        {
+          "id": 9,
+          "name": "Help Users Recognize, Diagnose, and Recover from Errors",
+          "description": "Error messages should be expressed in plain language, precisely indicate the problem, and constructively suggest a solution.",
+          "evaluationCriteria": [
+            "Clear, helpful error messages",
+            "Specific problem identification",
+            "Actionable recovery suggestions",
+            "User-friendly language"
+          ],
+          "commonIssues": [
+            "Generic or unclear error messages",
+            "Technical error codes shown",
+            "No recovery suggestions",
+            "Blame-oriented language"
+          ]
+        },
+        {
+          "id": 10,
+          "name": "Help and Documentation",
+          "description": "It's best if the system doesn't need documentation, but it may be necessary to provide help that is easy to search and focused on the user's task.",
+          "evaluationCriteria": [
+            "Contextual help available",
+            "Easy to find assistance",
+            "Task-focused guidance",
+            "Searchable documentation"
+          ],
+          "commonIssues": [
+            "No help system available",
+            "Hard to find assistance",
+            "Generic, unhelpful documentation",
+            "Not contextually relevant"
+          ]
+        }
+      ]
+    },
+    "legion_principles": {
+      "name": "Legion Design Principles", 
+      "scoringSystem": {
+        "scale": "1-5 points per design principle",
+        "maxScore": "Calculated based on number of Legion Design Principles",
+        "principleCount": "Dynamic - loaded from guide file",
+        "ratings": {
+          "5": "Excellent - Exemplifies the principle, exceeds expectations",
+          "4": "Good - Follows the principle well with minor areas for improvement",
+          "3": "Acceptable - Meets basic requirements but has room for enhancement", 
+          "2": "Poor - Significant deviations from the principle that impact user experience",
+          "1": "Critical - Major violations of the principle, requires immediate attention"
+        }
+      },
+      "overallCompliance": {
+        "exemplary": { "range": "90-100%", "label": "Exemplary - Design System Leadership" },
+        "strong": { "range": "80-89%", "label": "Strong Compliance with Minor Improvements" },
+        "acceptable": { "range": "70-79%", "label": "Acceptable but Needs Focused Work" },
+        "poor": { "range": "60-69%", "label": "Poor - Major Principle Violations" },
+        "critical": { "range": "0-59%", "label": "Critical - Does Not Meet Design Standards" }
+      },
+      "principlesSource": "guide://legion-design-principles.json",
+      "evaluationApproach": {
+        "visualConsistency": [
+          "Consistent use of colors, typography, and spacing",
+          "Adherence to design system components and patterns",
+          "Brand alignment and visual hierarchy"
+        ],
+        "userExperienceAlignment": [
+          "Clear user flows and interaction patterns",
+          "Appropriate information architecture",
+          "Accessibility and inclusivity considerations"
+        ],
+        "technicalConsistency": [
+          "Proper component usage and naming conventions",
+          "Scalable and maintainable design structure",
+          "Performance and technical feasibility"
+        ],
+        "businessAlignment": [
+          "Supports business objectives and user goals",
+          "Consistent with brand strategy and positioning",
+          "Scalable for future growth and iterations"
+        ]
+      }
+    }
+  },
+  "severityLevels": {
+    "critical": { "emoji": "🚨", "range": "1-2", "color": "#fceded", "category": "Guidelines" },
+    "warning": { "emoji": "⚠️", "range": "3", "color": "#fcf7ed", "category": "Tips" },
+    "good": { "emoji": "✅", "range": "4-5", "color": "#edfced", "category": "Content" }
+  },
+  "analysisPrompts": {
+    "preAnalysisValidation": "🚨 CRITICAL FIRST STEP: Before conducting any analysis, you MUST:\n1. Call get_selection() to verify the currently selected frame\n2. Display frame name and type to user for confirmation\n3. Wait for user confirmation that this is the correct frame to analyze\n4. Load appropriate framework data (Legion Principles if needed)\n5. Only proceed with analysis after explicit user confirmation\n\nThis prevents analyzing the wrong frame and ensures accuracy.",
+    "heuristicEvaluationPrompt": "Conduct a comprehensive Nielsen's 10 Usability Heuristics evaluation of the CONFIRMED selected Figma frame. For each heuristic:\n\n1. **Score from 1-5** based on the evaluation criteria\n2. **Identify specific issues or strengths** with evidence from the interface\n3. **Provide actionable recommendations** for improvements\n4. **Create targeted annotations** on relevant UI elements (if applicable to chosen output format)\n5. **Generate output in selected format** (Figma frame/Markdown report/Annotations only)\n\n**Focus Areas:**\n- Visual design elements and layout\n- Interaction patterns and user flows\n- Content quality and messaging\n- Navigation and wayfinding\n- Error handling and feedback mechanisms\n- Accessibility and inclusivity\n- Information architecture\n- Performance implications",
+    "designPrinciplesPrompt": "Conduct a comprehensive Legion Design Principles compliance evaluation of the CONFIRMED selected Figma frame. For each principle:\n\n1. **Score from 1-5** based on compliance with the specific principle requirements\n2. **Identify specific compliance successes or violations** with evidence from the interface\n3. **Provide actionable design recommendations** for improvements\n4. **Create targeted annotations** on relevant UI elements (if applicable to chosen output format)\n5. **Generate output in selected format** (Figma frame/Markdown report/Annotations only)\n\n**Focus Areas:**\n- Visual design consistency and adherence to design system\n- Component usage and pattern implementation\n- Typography, color, and spacing compliance\n- User experience flow and interaction design\n- Accessibility and inclusive design practices\n- Brand alignment and design coherence\n- Technical implementation feasibility\n- Scalability and maintainability"
+  },
+  "outputFormats": {
+    "figmaFrame": {
+      "structure": {
+        "mainFrame": {
+          "name": "{AnalysisType} Analysis - {ComponentName}",
+          "type": "FRAME",
+          "layout": {
+            "direction": "VERTICAL",
+            "width": "FIXED", 
+            "width_value": 1000,
+            "height": "HUG",
+            "spacing": 20,
+            "padding": {
+              "top": 20,
+              "right": 20,
+              "bottom": 20,
+              "left": 20
+            },
+            "alignment": "MIN",
+            "counter_axis_alignment": "MIN",
+            "horizontalAlign": "LEFT",
+            "verticalAlign": "TOP"
+          }
+        },
+        "colorSystem": {
+          "background": "#fafafa",
+          "overallAssessment": "#ebf2fc",
+          "criticalIssues": "#fceded", 
+          "positiveFindings": "#edfced",
+          "recommendations": "#fcf7ed",
+          "detailedScores": "#f5f5fc",
+          "implementationRoadmap": "#f2f2f2",
+          "text": "#000000"
+        },
+        "typography": {
+          "titleSize": 32,
+          "subtitleSize": 24, 
+          "sectionTitleSize": 20,
+          "bodySize": 16,
+          "fontFamily": "Inter",
+          "lineHeightMultiplier": 1.25
+        }
+      },
+      "contentTemplates": {
+        "heuristics": {
+          "title": "Nielsen's Heuristic Evaluation",
+          "overallSection": "Overall Usability Assessment",
+          "criticalSection": "🚨 Critical Usability Issues",
+          "positiveSection": "✅ Strong Usability Areas",
+          "recommendationsSection": "💡 Key Usability Recommendations",
+          "detailedSection": "📊 Detailed Heuristic Scores",
+          "roadmapSection": "🚀 Usability Implementation Roadmap"
+        },
+        "principles": {
+          "title": "Legion Design Principles Analysis", 
+          "overallSection": "Overall Compliance Assessment",
+          "criticalSection": "🚨 Critical Design Principle Violations",
+          "positiveSection": "✅ Exemplary Principle Implementation",
+          "recommendationsSection": "💡 Key Design Recommendations",
+          "detailedSection": "📊 Detailed Principle Compliance Scores",
+          "roadmapSection": "🚀 Design Implementation Roadmap"
+        }
+      }
+    },
+    "markdownReport": {
+      "structure": {
+        "heuristics": {
+          "title": "# Nielsen's Heuristic Evaluation Report",
+          "executiveSummaryTitle": "## Executive Summary",
+          "detailedFindingsTitle": "## Detailed Heuristic Analysis",
+          "prioritizedActionsTitle": "## Prioritized Usability Actions"
+        },
+        "principles": {
+          "title": "# Legion Design Principles Compliance Report",
+          "executiveSummaryTitle": "## Executive Summary", 
+          "detailedFindingsTitle": "## Detailed Principle Compliance Analysis",
+          "prioritizedActionsTitle": "## Prioritized Design Actions"
+        }
+      }
+    },
+    "annotations": {
+      "annotationTypes": {
+        "critical": {
+          "heuristics": {
+            "title": "🚨 Critical Usability Issue",
+            "format": "**Heuristic:** {heuristicName}\n**Issue:** {specificProblem}\n**User Impact:** {impactDescription}\n**Recommendation:** {actionableSolution}\n**Priority:** High"
+          },
+          "principles": {
+            "title": "🚨 Critical Design Principle Violation", 
+            "format": "**Principle:** {principleName}\n**Violation:** {specificProblem}\n**Design Impact:** {impactDescription}\n**Recommendation:** {actionableSolution}\n**Priority:** High"
+          }
+        },
+        "warning": {
+          "heuristics": {
+            "title": "⚠️ Usability Concern",
+            "format": "**Heuristic:** {heuristicName}\n**Issue:** {specificProblem}\n**User Impact:** {impactDescription}\n**Recommendation:** {actionableSolution}\n**Priority:** Medium"
+          },
+          "principles": {
+            "title": "⚠️ Design Principle Concern",
+            "format": "**Principle:** {principleName}\n**Issue:** {specificProblem}\n**Design Impact:** {impactDescription}\n**Recommendation:** {actionableSolution}\n**Priority:** Medium"
+          }
+        },
+        "strength": {
+          "heuristics": {
+            "title": "✅ Usability Strength",
+            "format": "**Heuristic:** {heuristicName}\n**Strength:** {positiveAspect}\n**Evidence:** {specificExample}\n**User Benefit:** {benefitDescription}"
+          },
+          "principles": {
+            "title": "✅ Exemplary Principle Implementation",
+            "format": "**Principle:** {principleName}\n**Strength:** {positiveAspect}\n**Evidence:** {specificExample}\n**Design Benefit:** {benefitDescription}"
+          }
+        }
+      }
+    }
+  },
+  "workflowConfiguration": {
+    "step0_frameValidation": {
+      "critical_instruction": "⚠️ ALWAYS VERIFY SELECTED FRAME BEFORE ANALYSIS",
+      "validation_process": [
+        "Use get_selection() to confirm current selection in Figma",
+        "Display the selected frame name and type to user for confirmation",
+        "If no frame is selected, ask user to select the target frame",
+        "If multiple items selected, ask user to select a single frame", 
+        "Load appropriate framework data if needed (Legion Principles)",
+        "Only proceed with analysis after confirming correct frame selection"
+      ],
+      "confirmation_prompt": "I've detected your selected frame: **{frameName}** (Type: {frameType})\n\nIs this the correct frame you want me to analyze? Please confirm **YES** to proceed or **NO** to select a different frame."
+    },
+    "step1_analysisTypeSelection": {
+      "prompt": "I'll analyze your selected frame using professional design evaluation methods. Which analysis approach would you prefer?\n\n🔍 **Option 1: Nielsen's Heuristic Evaluation**\n- Comprehensive usability analysis using 10 proven heuristics\n- Focus on user experience and interface effectiveness\n- Great for UX reviews and usability optimization\n\n🎨 **Option 2: Legion Design Principles Analysis**\n- Design system compliance evaluation\n- Focus on visual consistency and design quality\n- Perfect for design system audits and brand compliance\n\nPlease respond with: **1** for Heuristic Evaluation or **2** for Design Principles"
+    },
+    "step2_outputFormatSelection": {
+      "prompt": "I'll conduct a {analysisType} of your selected frame. Which output format would you prefer?\n\n🎨 **Option 1: Figma Frame + Annotations**\n- Structured analysis frame with visual sections\n- Color-coded findings and recommendations\n- Perfect for design reviews and presentations\n\n📄 **Option 2: Markdown Report + Annotations**\n- Detailed written analysis report\n- Executive summary and implementation roadmap\n- Great for documentation and developer handoff\n\n📌 **Option 3: Annotations Only**\n- Clean, focused annotations on UI elements\n- Quick and minimal approach\n- Ideal for iterative improvements\n\nPlease respond with: **1**, **2**, or **3**"
+    },
+    "step3_contextGathering": {
+      "questions": [
+        "What is the primary purpose of this component/page?",
+        "Who are the target users?",
+        "Any specific areas to focus the analysis on?"
+      ]
+    },
+    "step4_analysis": {
+      "process": [
+        "Reconfirm selected frame before starting analysis",
+        "Load appropriate evaluation framework",
+        "Scan selected frame structure and identify elements",
+        "Evaluate systematically with evidence",
+        "Score and calculate totals",
+        "Identify issues/violations and strengths",
+        "Generate output in selected format",
+        "Create targeted annotations on UI elements"
+      ]
+    },
+    "step5_completion": {
+      "heuristics_completion": "✅ **Nielsen's Heuristic Evaluation Complete!**\n\nI've finished analyzing your design using Nielsen's 10 Usability Heuristics and delivered the results in your requested format.",
+      "principles_completion": "✅ **Legion Design Principles Analysis Complete!**\n\nI've finished analyzing your design for compliance with Legion Design Principles and delivered the results in your requested format.",
+      "next_action_prompt": "Would you like me to:\n\n🔍 **Analyze Another Frame** - Select a different frame for analysis\n🔄 **Different Analysis Type** - Re-analyze current frame with different method\n📋 **Change Output Format** - Re-analyze current frame with different output format\n🎯 **Focus Analysis** - Deep dive into specific areas or elements\n✨ **Other Task** - Switch to UX Writing review or other specialized analysis\n✅ **End Session** - Complete current analysis session\n\nWhat would you like to do next?"
+    }
+  },
+  "usageInstructions": {
+    "critical_workflow_steps": [
+      "🚨 MANDATORY: Always verify selected frame before any analysis",
+      "Use get_selection() to check current Figma selection", 
+      "Display frame name/type to user for confirmation before proceeding",
+      "Present analysis type selection first, then output format selection",
+      "Load appropriate framework data (Legion Principles if needed)",
+      "Only start analysis after all confirmations and data loading complete"
+    ],
+    "workflow_sequence": [
+      "STEP 0: Frame validation using get_selection()",
+      "STEP 1: Analysis type selection (Heuristics vs Design Principles)",
+      "STEP 2: Output format selection (Figma frame vs Markdown vs Annotations)", 
+      "STEP 3: Optional context gathering",
+      "STEP 4: Execute selected analysis type with selected output format",
+      "STEP 5: Present completion message and offer next action options"
+    ],
+    "quality_requirements": [
+      "Frame validation completed before analysis starts",
+      "Appropriate framework loaded and ready",
+      "All annotations reference specific UI elements with evidence",
+      "Recommendations are actionable and prioritized by impact",
+      "Severity levels match the scoring criteria consistently",
+      "Output format matches user's selection exactly",
+      "Critical issues properly flagged and explained with solutions", 
+      "Post-analysis options clearly presented to user"
+    ],
+    "consistency_rules": [
+      "NEVER skip frame validation step",
+      "Always use the 1-5 scoring system for both analysis types",
+      "Provide specific evidence from the interface, not generic observations",
+      "Include both critical issues and positive findings",
+      "Make recommendations actionable with clear priority levels",
+      "Use consistent emoji indicators for severity levels",
+      "Follow exact color system and typography specifications",
+      "Maintain professional, constructive tone throughout",
+      "Always offer comprehensive next steps after completing analysis"
+    ]
+  }
+}

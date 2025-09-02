@@ -1,0 +1,706 @@
+{
+  "template": {
+    "name": "Legion Design Principles Compliance Framework - Multi-Output Format",
+    "version": "2.0",
+    "description": "Comprehensive template for conducting Legion Design Principles compliance evaluations with flexible output options: Figma frame, Markdown report, or annotations only"
+  },
+  "userChoicePrompt": {
+    "title": "🎯 Legion Design Principles Analysis - Output Format Selection",
+    "description": "I'll conduct a comprehensive Legion Design Principles compliance evaluation of your selected Figma frame. Please choose your preferred output format:",
+    "options": [
+      {
+        "id": "figma_frame",
+        "emoji": "🎨",
+        "title": "Figma Frame + Annotations",
+        "description": "Create a detailed analysis frame in Figma with structured sections (Overall Compliance Assessment, Critical Violations, Strong Areas, Recommendations, Detailed Principle Scores, Implementation Roadmap) plus annotations on UI elements",
+        "deliverables": [
+          "Structured analysis frame in Figma (1000px width, auto-layout)",
+          "Comprehensive annotations on relevant UI elements",
+          "Color-coded sections for different compliance levels",
+          "Visual score breakdown and design recommendations"
+        ],
+        "bestFor": "Design reviews, stakeholder presentations, visual documentation, design system validation"
+      },
+      {
+        "id": "markdown_report",
+        "emoji": "📄",
+        "title": "Markdown Report + Annotations",
+        "description": "Generate a detailed markdown compliance report with executive summary, findings, and implementation roadmap, plus annotations in Figma",
+        "deliverables": [
+          "Comprehensive markdown compliance report file",
+          "Executive summary with key findings and compliance score",
+          "Detailed principle analysis with evidence and scores",
+          "Prioritized action items and design system improvements",
+          "Targeted annotations on UI elements in Figma"
+        ],
+        "bestFor": "Documentation, developer handoff, design system audits, compliance records"
+      },
+      {
+        "id": "annotations_only",
+        "emoji": "📌",
+        "title": "Annotations Only",
+        "description": "Place targeted design principle annotations directly on UI elements without additional frames or reports",
+        "deliverables": [
+          "Focused annotations on specific UI elements",
+          "Color-coded by compliance level (Critical/Warning/Good)",
+          "Concise findings with actionable design improvements",
+          "Clean, minimal approach for quick design reviews"
+        ],
+        "bestFor": "Quick reviews, design iterations, component refinements, design system maintenance"
+      }
+    ],
+    "selectionPrompt": "Which output format would you prefer for this design principles compliance analysis?",
+    "followupQuestions": {
+      "component_context": "What is the primary purpose/context of this component or page?",
+      "target_users": "Who are the primary users of this interface?",
+      "design_system_context": "Is this component part of an existing design system or style guide?",
+      "evaluation_focus": "Are there any specific design principles or areas you'd like me to focus on?"
+    }
+  },
+  "mandatoryWorkflowSteps": {
+    "preAnalysisValidation": {
+      "step": "Frame Selection Validation",
+      "description": "CRITICAL: Always verify the selected frame before starting any design principles analysis",
+      "implementation": [
+        "1. Call get_selection() to check current Figma selection",
+        "2. Parse selection results to identify frame name, type, and count",
+        "3. Present frame details to user: 'Selected Frame: [Name] (Type: [Type])'",
+        "4. Ask explicit confirmation: 'Is this the correct frame to analyze? (YES/NO)'",
+        "5. Only proceed after user confirms 'YES'",
+        "6. If 'NO' or wrong selection, guide user to select correct frame and repeat validation"
+      ],
+      "errorHandling": {
+        "noSelection": "⚠️ No frame selected. Please select a frame in Figma first, then try again.",
+        "multipleSelection": "⚠️ Multiple items selected. Please select only ONE frame to analyze.",
+        "invalidSelection": "⚠️ Selected item is not a frame. Please select a frame (not component instance or other object).",
+        "userRejectsFrame": "Please select the correct frame in Figma, then let me know when ready to proceed."
+      }
+    },
+    "postAnalysisWorkflow": {
+      "step": "Continue or End Session",
+      "description": "After completing design principles analysis, always offer next action options",
+      "implementation": [
+        "1. Present completion message with summary of delivered results",
+        "2. Display next action menu with clear options",
+        "3. Wait for user selection of next action",
+        "4. For new analysis: restart from frame validation step",
+        "5. For different format on same frame: skip to format selection",
+        "6. For other tasks: transition to appropriate workflow"
+      ],
+      "nextActionOptions": {
+        "newFrameAnalysis": "🔍 Analyze Another Frame - I'll help you select and analyze a different frame\n",
+        "differentFormat": "📋 Change Output Format - Re-analyze current frame with different output (Figma/Markdown/Annotations)\n",
+        "otherTasks": "✨ Other Analysis - Switch to Heuristic Evaluation, UX Writing review, or other tasks\n",
+        "endSession": "✅ End Session - Complete current analysis session\n",
+        "newSession": "Start New Session - Start a fresh analysis session from the beginning"
+      }
+    }
+  },
+  "analysisFramework": {
+    "methodology": {
+      "scoringSystem": {
+        "scale": "1-5 points per design principle",
+        "maxScore": "Calculated based on number of Legion Design Principles",
+        "ratings": {
+          "5": "Excellent - Exemplifies the principle, exceeds expectations",
+          "4": "Good - Follows the principle well with minor areas for improvement",
+          "3": "Acceptable - Meets basic requirements but has room for enhancement",
+          "2": "Poor - Significant deviations from the principle that impact user experience",
+          "1": "Critical - Major violations of the principle, requires immediate attention"
+        }
+      },
+      "complianceLevels": {
+        "critical": { "emoji": "🚨", "range": "1-2", "color": "#fceded", "category": "Guidelines" },
+        "warning": { "emoji": "⚠️", "range": "3", "color": "#fcf7ed", "category": "Tips" },
+        "good": { "emoji": "✅", "range": "4-5", "color": "#edfced", "category": "Content" }
+      },
+      "overallCompliance": {
+        "exemplary": { "range": "90-100%", "label": "Exemplary - Design System Leadership" },
+        "strong": { "range": "80-89%", "label": "Strong Compliance with Minor Improvements" },
+        "acceptable": { "range": "70-79%", "label": "Acceptable but Needs Focused Work" },
+        "poor": { "range": "60-69%", "label": "Poor - Major Principle Violations" },
+        "critical": { "range": "0-59%", "label": "Critical - Does Not Meet Design Standards" }
+      }
+    },
+    "principleEvaluationFramework": {
+      "note": "Legion Design Principles will be loaded from guide://legion-design-principles.json",
+      "evaluationApproach": {
+        "visualConsistency": [
+          "Consistent use of colors, typography, and spacing",
+          "Adherence to design system components and patterns",
+          "Brand alignment and visual hierarchy"
+        ],
+        "userExperienceAlignment": [
+          "Clear user flows and interaction patterns",
+          "Appropriate information architecture",
+          "Accessibility and inclusivity considerations"
+        ],
+        "technicalConsistency": [
+          "Proper component usage and naming conventions",
+          "Scalable and maintainable design structure",
+          "Performance and technical feasibility"
+        ],
+        "businessAlignment": [
+          "Supports business objectives and user goals",
+          "Consistent with brand strategy and positioning",
+          "Scalable for future growth and iterations"
+        ]
+      }
+    },
+    "evaluationCriteria": {
+      "evidenceRequired": [
+        "Specific visual elements that demonstrate principle adherence or violation",
+        "Measurable aspects (spacing, sizing, color usage, typography)",
+        "User experience impact of design decisions",
+        "Component consistency across the interface"
+      ],
+      "assessmentFactors": [
+        "Visual consistency with design system standards",
+        "Functional effectiveness for user tasks",
+        "Scalability and maintainability of design patterns",
+        "Accessibility compliance and inclusive design practices",
+        "Brand alignment and design coherence"
+      ]
+    }
+  },
+  "analysisPrompts": {
+    "preAnalysisValidation": "🚨 CRITICAL FIRST STEP: Before conducting any design principles analysis, you MUST:\n1. Call get_selection() to verify the currently selected frame\n2. Display frame name and type to user for confirmation\n3. Wait for user confirmation that this is the correct frame to analyze\n4. Load Legion Design Principles from guide://legion-design-principles.json\n5. Only proceed with analysis after explicit user confirmation and principles loaded\n\nThis prevents analyzing the wrong frame and ensures accurate compliance assessment.",
+    "principlesLoadingPrompt": "Loading Legion Design Principles from the guide file to ensure accurate compliance evaluation...",
+    "mainPrompt": "Conduct a comprehensive Legion Design Principles compliance evaluation of the CONFIRMED selected Figma frame. For each principle:\n\n1. **Score from 1-5** based on compliance with the specific principle requirements\n2. **Identify specific compliance successes or violations** with evidence from the interface\n3. **Provide actionable design recommendations** for improvements\n4. **Create targeted annotations** on relevant UI elements (if applicable to chosen output format)\n5. **Generate output in selected format** (Figma frame/Markdown report/Annotations only)\n\n**Focus Areas:**\n- Visual design consistency and adherence to design system\n- Component usage and pattern implementation\n- Typography, color, and spacing compliance\n- User experience flow and interaction design\n- Accessibility and inclusive design practices\n- Brand alignment and design coherence\n- Technical implementation feasibility\n- Scalability and maintainability\n\n**Analysis Requirements:**\n- Use specific evidence from the interface, not generic observations\n- Reference the loaded Legion Design Principles exactly\n- Include both violations and exemplary implementations\n- Prioritize recommendations by design impact and user benefit\n- Reference specific UI elements in annotations\n- Provide concrete examples for each principle assessment\n\n**Post-Analysis:** After completing the evaluation, always offer next action options to continue the workflow.",
+    "evaluationSteps": [
+      "1. Load Legion Design Principles from guide file and understand each principle requirement",
+      "2. Scan the selected frame and identify all design elements, components, and patterns",
+      "3. Evaluate each design principle systematically using specific criteria",
+      "4. Score each principle from 1-5 and document specific evidence",
+      "5. Calculate total compliance score and determine overall assessment level",
+      "6. Identify critical violations (scores 1-2), warnings (score 3), and exemplary areas (scores 4-5)",
+      "7. Create output based on user's selected format preference",
+      "8. For annotations: place on UI elements that demonstrate principle compliance or violations",
+      "9. For reports/frames: organize findings into structured, actionable format"
+    ],
+    "contextualConsiderations": [
+      "Consider the component's role within the broader design system",
+      "Evaluate responsiveness and multi-device appropriateness",
+      "Assess brand consistency and design system adherence",
+      "Review accessibility standards compliance",
+      "Consider technical feasibility and implementation complexity",
+      "Evaluate user experience flow and interaction patterns",
+      "Assess scalability for future iterations and variations"
+    ]
+  },
+  "outputFormats": {
+    "figmaFrame": {
+      "structure": {
+        "mainFrame": {
+          "name": "Legion Design Principles Analysis - {ComponentName}",
+          "type": "FRAME",
+          "layout": {
+            "direction": "VERTICAL",
+            "width": "FIXED",
+            "width_value": 1000,
+            "height": "HUG",
+            "spacing": 20,
+            "padding": {
+              "top": 20,
+              "right": 20,
+              "bottom": 20,
+              "left": 20
+            },
+            "alignment": "MIN",
+            "counter_axis_alignment": "MIN",
+            "horizontalAlign": "LEFT",
+            "verticalAlign": "TOP"
+          }
+        },
+        "sectionTemplates": {
+          "titleSection": {
+            "name": "Analysis Title Wrapper",
+            "type": "FRAME",
+            "layout": {
+              "direction": "VERTICAL",
+              "width": "FILL",
+              "height": "HUG",
+              "spacing": 4,
+              "padding": { "all": 0 },
+              "alignment": "MIN",
+              "counter_axis_alignment": "MIN",
+              "horizontalAlign": "LEFT",
+              "verticalAlign": "TOP"
+            },
+            "children": [
+              {
+                "name": "Analysis Title",
+                "type": "TEXT",
+                "content": "{analysisTitle}",
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 700,
+                  "fontSize": 32,
+                  "lineHeight": 40,
+                  "fill": "#000000"
+                }
+              },
+              {
+                "name": "Component Name",
+                "type": "TEXT",
+                "content": "{componentName}",
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 500,
+                  "fontSize": 24,
+                  "lineHeight": 30,
+                  "fill": "#000000"
+                }
+              }
+            ]
+          },
+          "overallComplianceSection": {
+            "name": "Overall Compliance Assessment",
+            "type": "FRAME",
+            "layout": {
+              "direction": "VERTICAL",
+              "width": "FILL",
+              "height": "HUG",
+              "spacing": 15,
+              "padding": { "all": 15 },
+              "alignment": "MIN",
+              "counter_axis_alignment": "MIN",
+              "horizontalAlign": "LEFT",
+              "verticalAlign": "TOP"
+            },
+            "styling": { "cornerRadius": 12 },
+            "children": [
+              {
+                "name": "Section Title",
+                "type": "TEXT",
+                "layout": { "width": "FILL", "height": "HUG" },
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 700,
+                  "fontSize": 20,
+                  "lineHeight": 24,
+                  "fill": "#000000"
+                }
+              },
+              {
+                "name": "Compliance Score",
+                "type": "TEXT",
+                "layout": { "width": "FILL", "height": "HUG" },
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 800,
+                  "fontSize": 22,
+                  "lineHeight": 24,
+                  "fill": "#000000"
+                }
+              },
+              {
+                "name": "Section Content",
+                "type": "TEXT",
+                "layout": { "width": "FILL", "height": "HUG" },
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 400,
+                  "fontSize": 16,
+                  "lineHeight": 20,
+                  "fill": "#000000"
+                }
+              }
+            ]
+          },
+          "contentSection": {
+            "type": "FRAME",
+            "layout": {
+              "direction": "VERTICAL",
+              "width": "FILL",
+              "height": "HUG",
+              "spacing": 15,
+              "padding": { "all": 15 },
+              "alignment": "MIN",
+              "counter_axis_alignment": "MIN",
+              "horizontalAlign": "LEFT",
+              "verticalAlign": "TOP"
+            },
+            "styling": { "cornerRadius": 12 },
+            "children": [
+              {
+                "name": "Section Title",
+                "type": "TEXT",
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 700,
+                  "fontSize": 20,
+                  "lineHeight": 24,
+                  "fill": "#000000"
+                }
+              },
+              {
+                "name": "Section Content",
+                "type": "TEXT",
+                "styling": {
+                  "fontFamily": "Inter",
+                  "fontWeight": 400,
+                  "fontSize": 16,
+                  "lineHeight": 20,
+                  "fill": "#000000"
+                }
+              }
+            ]
+          }
+        },
+        "colorSystem": {
+          "background": "#fafafa",
+          "overallCompliance": "#ebf2fc",
+          "criticalViolations": "#fceded",
+          "strongAreas": "#edfced",
+          "recommendations": "#fcf7ed",
+          "detailedScores": "#f5f5fc",
+          "implementationRoadmap": "#f2f2f2",
+          "text": "#000000"
+        },
+        "typography": {
+          "titleSize": 32,
+          "subtitleSize": 24,
+          "sectionTitleSize": 20,
+          "bodySize": 16,
+          "fontFamily": "Inter",
+          "lineHeightMultiplier": 1.25
+        }
+      },
+      "contentTemplates": {
+        "titleSection": {
+          "titleTemplate": "Legion Design Principles Analysis",
+          "subtitleTemplate": "[Component/Page Name]"
+        },
+        "overallComplianceSection": {
+          "title": "Overall Compliance Assessment",
+          "scoreFormat": "Score: {totalScore}/{maxScore} ({percentage}%) - {complianceLevel}",
+          "contentStructure": [
+            "• [Key compliance strength with specific examples]",
+            "• [Critical violations summary with impact description]",
+            "• [Overall recommendation with priority focus areas]",
+            "• [Design system alignment assessment]"
+          ]
+        },
+        "summarySection": {
+          "criticalViolations": {
+            "title": "🚨 Critical Design Principle Violations",
+            "backgroundColor": "#fceded",
+            "contentStructure": [
+              "[Principle Name] - [Violation Title]:",
+              "• [Specific violation 1 with design impact]",
+              "• [Specific violation 2 with design impact]",
+              "• [Specific violation 3 with design impact]",
+              "",
+              "[Second Principle] - [Violation Title]:",
+              "• [Additional critical violations...]"
+            ]
+          },
+          "strongAreas": {
+            "title": "✅ Exemplary Principle Implementation",
+            "backgroundColor": "#edfced",
+            "contentStructure": [
+              "[Principle Name] - [Strength Title]:",
+              "• [Specific strength 1 with evidence]",
+              "• [Specific strength 2 with evidence]",
+              "• [Specific strength 3 with evidence]",
+              "",
+              "[Second Principle] - [Strength Title]:",
+              "• [Additional exemplary implementations...]"
+            ]
+          },
+          "recommendations": {
+            "title": "💡 Key Design Recommendations",
+            "backgroundColor": "#fcf7ed",
+            "contentStructure": [
+              "Priority 1: [Highest impact design improvement]",
+              "Priority 2: [Second priority design enhancement]",
+              "Priority 3: [Third priority consistency update]",
+              "Priority 4: [Fourth priority system alignment]",
+              "Priority 5: [Fifth priority future consideration]",
+              "",
+              "Design System: [Holistic design system improvement strategy]"
+            ]
+          }
+        },
+        "detailedScoreSection": {
+          "title": "📊 Detailed Principle Compliance Scores",
+          "backgroundColor": "#f5f5fc",
+          "scoreFormat": "{number}. {principleName}: {score}/5 {emoji}",
+          "contentStructure": [
+            "{number}. {principleName}: {score}/5 {emoji}",
+            "• [Key compliance finding 1]",
+            "• [Key compliance finding 2]",
+            "",
+            "[Repeat for all Legion Design Principles...]"
+          ]
+        },
+        "implementationRoadmapSection": {
+          "title": "🚀 Design Implementation Roadmap",
+          "backgroundColor": "#f2f2f2",
+          "contentStructure": [
+            "Immediate (Current Sprint): [Critical design fixes needed now]",
+            "Short-term (Next Sprint): [Important design improvements for next iteration]",
+            "Medium-term (Next Release): [Design system enhancements and component updates]",
+            "Long-term (Design Roadmap): [Strategic design system evolution and innovation]"
+          ]
+        }
+      }
+    },
+    "markdownReport": {
+      "structure": {
+        "header": {
+          "title": "# Legion Design Principles Compliance Report",
+          "metadata": [
+            "**Component/Page:** {componentName}",
+            "**Analysis Date:** {currentDate}",
+            "**Evaluator:** Design System Analysis Assistant",
+            "**Overall Compliance:** {totalScore}/{maxScore} ({percentage}%) - {complianceLevel}"
+          ]
+        },
+        "executiveSummary": {
+          "title": "## Executive Summary",
+          "content": [
+            "### Overall Compliance Assessment",
+            "{overallComplianceDescription}",
+            "",
+            "### Key Findings",
+            "- **Critical Violations:** {criticalViolationCount} principles requiring immediate attention",
+            "- **Areas for Improvement:** {warningCount} principles needing enhancement",
+            "- **Exemplary Areas:** {strengthCount} principles implemented excellently",
+            "",
+            "### Top Recommendations",
+            "1. {topRecommendation1}",
+            "2. {topRecommendation2}",
+            "3. {topRecommendation3}"
+          ]
+        },
+        "detailedFindings": {
+          "title": "## Detailed Principle Compliance Analysis",
+          "principleTemplate": [
+            "### {number}. {principleName} - Score: {score}/5 {emoji}",
+            "",
+            "**Principle Description:** {principleDescription}",
+            "",
+            "**Compliance Findings:**",
+            "{detailedFindings}",
+            "",
+            "**Evidence:**",
+            "{specificEvidence}",
+            "",
+            "**Design Recommendations:**",
+            "{actionableRecommendations}",
+            "",
+            "---"
+          ]
+        },
+        "prioritizedActions": {
+          "title": "## Prioritized Design Actions",
+          "sections": [
+            {
+              "title": "### 🚨 Critical Design Violations (Immediate Action Required)",
+              "content": "{criticalViolationsList}"
+            },
+            {
+              "title": "### ⚠️ High Priority Improvements (Next Sprint)",
+              "content": "{highPriorityImprovementsList}"
+            },
+            {
+              "title": "### 💡 Enhancement Opportunities (Future Iterations)",
+              "content": "{enhancementOpportunitiesList}"
+            }
+          ]
+        },
+        "implementationRoadmap": {
+          "title": "## Design Implementation Roadmap",
+          "timeline": [
+            {
+              "phase": "### Immediate (Week 1-2)",
+              "content": [
+                "- {criticalFix1}",
+                "- {criticalFix2}",
+                "- {criticalFix3}"
+              ]
+            },
+            {
+              "phase": "### Short-term (Sprint 1-2)",
+              "content": [
+                "- {shortTermImprovement1}",
+                "- {shortTermImprovement2}",
+                "- {shortTermImprovement3}"
+              ]
+            },
+            {
+              "phase": "### Medium-term (Next Quarter)",
+              "content": [
+                "- {mediumTermEnhancement1}",
+                "- {mediumTermEnhancement2}"
+              ]
+            },
+            {
+              "phase": "### Long-term (Design Roadmap)",
+              "content": [
+                "- {longTermEnhancement1}",
+                "- {longTermEnhancement2}"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "annotations": {
+      "annotationTypes": {
+        "critical": {
+          "title": "🚨 Critical Design Principle Violation",
+          "format": "**Principle:** {principleName}\n**Violation:** {specificProblem}\n**Design Impact:** {impactDescription}\n**Recommendation:** {actionableSolution}\n**Priority:** High",
+          "category": "Guidelines",
+          "placement": "On UI elements with major principle violations"
+        },
+        "warning": {
+          "title": "⚠️ Design Principle Concern",
+          "format": "**Principle:** {principleName}\n**Issue:** {specificProblem}\n**Design Impact:** {impactDescription}\n**Recommendation:** {actionableSolution}\n**Priority:** Medium",
+          "category": "Tips",
+          "placement": "On UI elements with moderate compliance issues"
+        },
+        "strength": {
+          "title": "✅ Exemplary Principle Implementation",
+          "format": "**Principle:** {principleName}\n**Strength:** {positiveAspect}\n**Evidence:** {specificExample}\n**Design Benefit:** {benefitDescription}",
+          "category": "Content",
+          "placement": "On UI elements that exemplify design principles"
+        },
+        "improvement": {
+          "title": "💡 Design Enhancement Opportunity",
+          "format": "**Principle:** {principleName}\n**Current State:** {currentImplementation}\n**Enhancement:** {improvementSuggestion}\n**Expected Benefit:** {benefitDescription}\n**Priority:** Low-Medium",
+          "category": "Tips",
+          "placement": "On UI elements with improvement potential"
+        }
+      }
+    }
+  },
+  "workflowConfiguration": {
+    "step0_frameValidation": {
+      "critical_instruction": "⚠️ ALWAYS VERIFY SELECTED FRAME BEFORE ANALYSIS",
+      "validation_process": [
+        "Use get_selection() to confirm current selection in Figma",
+        "Display the selected frame name and type to user for confirmation",
+        "If no frame is selected, ask user to select the target frame",
+        "If multiple items selected, ask user to select a single frame",
+        "Load Legion Design Principles from guide://legion-design-principles.json",
+        "Only proceed with analysis after confirming correct frame selection and principles loaded"
+      ],
+      "confirmation_prompt": "I've detected your selected frame: **{frameName}** (Type: {frameType})\n\nIs this the correct frame you want me to analyze for Legion Design Principles compliance? Please confirm **YES** to proceed or **NO** to select a different frame."
+    },
+    "step1_userChoice": {
+      "prompt": "I'll conduct a Legion Design Principles compliance evaluation of your selected frame. Which output format would you prefer?\n\n🎨 **Option 1: Figma Frame + Annotations**\n- Structured analysis frame with visual sections\n- Color-coded compliance findings and recommendations\n- Perfect for design reviews and stakeholder presentations\n\n📄 **Option 2: Markdown Report + Annotations**\n- Detailed written compliance analysis report\n- Executive summary and implementation roadmap\n- Great for documentation and design system audits\n\n📌 **Option 3: Annotations Only**\n- Clean, focused annotations on UI elements\n- Quick and minimal approach\n- Ideal for iterative design improvements\n\nPlease respond with: **1**, **2**, or **3**"
+    },
+    "step2_contextGathering": {
+      "questions": [
+        "What is the primary purpose of this component/page?",
+        "Is this part of an existing design system?",
+        "Are there specific design principles to focus on?",
+        "What's the target user context for this interface?"
+      ]
+    },
+    "step3_analysis": {
+      "process": [
+        "Load Legion Design Principles from guide file",
+        "Reconfirm selected frame before starting analysis",
+        "Scan selected frame structure and identify design elements",
+        "Evaluate each design principle systematically with evidence",
+        "Score each principle 1-5 and calculate total compliance",
+        "Identify critical violations, warnings, and exemplary areas",
+        "Generate output in selected format",
+        "Create targeted annotations on UI elements"
+      ]
+    },
+    "step4_completion": {
+      "completion_message": "✅ **Legion Design Principles Analysis Complete!**\n\nI've finished analyzing your design for compliance with Legion Design Principles and delivered the results in your requested format.",
+      "next_action_prompt": "Would you like me to:\n\n🔍 **Analyze Another Frame** - Select a different frame for design principles evaluation\n📋 **Change Output Format** - Re-analyze the same frame with a different output format\n✨ **Other Task** - Switch to Heuristic Evaluation, UX Writing review, or other tasks\n✅ **Start Over** - Start a fresh analysis session from the beginning\n\nWhat would you like to do next?"
+    }
+  },
+  "outputConfiguration": {
+    "option1_figmaFrame": {
+      "createAnalysisFrame": true,
+      "createAnnotations": true,
+      "frameWidth": 1000,
+      "frameLayout": "vertical_autolayout",
+      "includeColorCoding": true,
+      "includeSections": [
+        "titleSection",
+        "overallCompliance",
+        "criticalViolations",
+        "strongAreas",
+        "recommendations",
+        "detailedScores",
+        "implementationRoadmap"
+      ],
+      "annotationCategories": ["Guidelines", "Tips", "Content", "Accessibility", "Interaction"]
+    },
+    "option2_markdownReport": {
+      "createAnalysisFrame": false,
+      "createAnnotations": true,
+      "generateMarkdownReport": true,
+      "reportSections": [
+        "header",
+        "executiveSummary",
+        "detailedFindings",
+        "prioritizedActions",
+        "implementationRoadmap"
+      ],
+      "annotationCategories": ["Guidelines", "Tips", "Content", "Accessibility", "Interaction"]
+    },
+    "option3_annotationsOnly": {
+      "createAnalysisFrame": false,
+      "createAnnotations": true,
+      "generateMarkdownReport": false,
+      "annotationCategories": ["Guidelines", "Tips", "Content", "Accessibility", "Interaction"],
+      "focusOnCriticalViolations": true,
+      "maxAnnotationsPerPrinciple": 3
+    }
+  },
+  "usageInstructions": {
+    "critical_workflow_steps": [
+      "🚨 MANDATORY: Always verify selected frame before any analysis",
+      "Use get_selection() to check current Figma selection",
+      "Load Legion Design Principles from guide://legion-design-principles.json",
+      "Display frame name/type to user for confirmation before proceeding",
+      "Only start analysis after user confirms correct frame selection and principles loaded"
+    ],
+    "initialStep": [
+      "STEP 0: Check and confirm selected frame using get_selection()",
+      "Load Legion Design Principles from guide file",
+      "Display selected frame details to user for verification",
+      "Wait for user confirmation before proceeding",
+      "Present the user choice prompt only after frame confirmation",
+      "Wait for user selection (1, 2, or 3) before proceeding",
+      "Gather contextual information about the component/design system if helpful"
+    ],
+    "analysisProcess": [
+      "1. RECONFIRM: Double-check selected frame and loaded principles before starting analysis",
+      "2. Scan the selected frame and identify all design elements, components, and patterns",
+      "3. Evaluate each Legion Design Principle systematically using defined criteria",
+      "4. Score each principle 1-5 with specific evidence from the interface",
+      "5. Calculate total compliance score and determine overall assessment level",
+      "6. Generate output in user's selected format",
+      "7. Create targeted annotations on relevant UI elements",
+      "8. Ensure all recommendations are specific and actionable for design improvement"
+    ],
+    "completionProcess": [
+      "1. Deliver analysis results in requested format",
+      "2. Present completion message to user",
+      "3. Offer comprehensive next action options (analyze another frame, change format, focus analysis, component variations, design system audit, other tasks)",
+      "4. Wait for user response to determine next steps",
+      "5. If user wants another analysis, restart from frame validation step"
+    ],
+    "qualityChecks": [
+      "Frame validation completed before analysis starts",
+      "Legion Design Principles successfully loaded from guide file",
+      "All annotations reference specific design elements with evidence",
+      "Recommendations are actionable and prioritized by design impact",
+      "Compliance levels match the scoring criteria consistently",
+      "Output format matches user's selection exactly",
+      "Critical violations are properly flagged and explained with solutions",
+      "Post-analysis options are clearly presented to user"
+    ]
+  }
+}

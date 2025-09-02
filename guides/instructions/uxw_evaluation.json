@@ -1,64 +1,482 @@
 {
-  "meta": {
-    "version": "1.0.0",
-    "updated_at": "2025-08-16",
-    "owner": "Design Lab Â· UX Writing",
-    "audience_locales": ["id-ID", "en-US"],
-    "priority_order": ["compliance", "clarity", "actionability", "consistency", "tone", "brand"]
+  "template": {
+    "name": "UX Writing Analysis Framework - Multi-Output Format",
+    "version": "2.0",
+    "description": "Comprehensive template for conducting UX Writing analysis evaluations with flexible output options: Text replacement in Figma, detailed analysis frame, Markdown report, or annotations only"
   },
-  "voice": {
-    "principles": ["Warm", "Concise", "Trustworthy", "Human, not chatty", "Conversational", "Helpful", "encouraging"],
-    "do": ["Use everyday words", "Active voice", "One idea per sentence"],
-    "dont": ["Jargon", "Shamey/blaming phrasing", "Overpromising outcomes"]
+  "userChoicePrompt": {
+    "title": "✍️ UX Writing Analysis - Output Format Selection",
+    "description": "I'll conduct a comprehensive UX Writing analysis of all text content in your selected Figma frame. Please choose your preferred output format:",
+    "options": [
+      {
+        "id": "text_replacement",
+        "emoji": "🔄",
+        "title": "Replace Text in Figma + Analysis",
+        "description": "Automatically replace existing text with improved versions directly in the Figma frame, plus create a comprehensive analysis summary",
+        "deliverables": [
+          "Direct text replacement in all text nodes within the frame",
+          "Improved copy based on UX Writing principles and guidelines",
+          "Analysis summary frame showing what was changed and why",
+          "Before/after comparison with improvement rationale",
+          "Targeted annotations explaining key improvements"
+        ],
+        "bestFor": "Active design iterations, rapid copy improvements, real-time text optimization, content updates"
+      },
+      {
+        "id": "figma_frame",
+        "emoji": "📝",
+        "title": "Analysis Frame + Improved Copy",
+        "description": "Create a detailed UX Writing analysis frame with original vs. improved text comparisons, writing principles evaluation, and recommendations",
+        "deliverables": [
+          "Structured analysis frame in Figma (1200px width, auto-layout)",
+          "Original vs. improved text side-by-side comparisons",
+          "UX Writing principles evaluation and scoring",
+          "Detailed improvement rationale and writing guidelines applied",
+          "Comprehensive annotations on text elements"
+        ],
+        "bestFor": "Design reviews, copy approval processes, writing guidelines documentation, stakeholder presentations"
+      },
+      {
+        "id": "markdown_report",
+        "emoji": "📄",
+        "title": "Markdown Report + Text Suggestions",
+        "description": "Generate a detailed markdown writing analysis report with text inventory, improvements, and UX writing guidelines compliance",
+        "deliverables": [
+          "Comprehensive markdown UX writing analysis report",
+          "Text inventory with quality assessment and improvements",
+          "UX writing principles compliance evaluation",
+          "Prioritized content improvement recommendations",
+          "Style guide alignment and persona-based writing suggestions"
+        ],
+        "bestFor": "Documentation, content strategy planning, writing guidelines audits, developer handoff"
+      },
+      {
+        "id": "annotations_only",
+        "emoji": "📌",
+        "title": "Text Annotations Only",
+        "description": "Place targeted UX writing improvement annotations directly on text elements without replacing content",
+        "deliverables": [
+          "Focused annotations on specific text elements",
+          "Writing improvement suggestions with rationale",
+          "UX writing principle violations and recommendations",
+          "Clean, minimal approach for quick copy reviews"
+        ],
+        "bestFor": "Quick copy reviews, content iterations, writing quality checks, collaborative editing"
+      }
+    ],
+    "selectionPrompt": "Which output format would you prefer for this UX Writing analysis?",
+    "followupQuestions": {
+      "content_context": "What is the primary purpose of this interface/content?",
+      "target_audience": "Who are the primary users reading this content?",
+      "brand_voice": "What brand voice/tone should the content reflect?",
+      "writing_focus": "Are there specific areas of writing you'd like me to focus on (clarity, tone, accessibility, etc.)?"
+    }
   },
-  "tone_ladder": {
-    "success": "brief, appreciative",
-    "neutral": "matter-of-fact, minimal",
-    "warning": "calm, solution-first",
-    "error_sensitive": "empathetic, no blame, clear next step",
-    "high_risk": "reassuring, transparent about limits"
-  },
-  "lexicon": {
-    "preferred": {
-      "PIN": "PIN",
-      "OTP": "kode OTP",
-      "Sign in": "Masuk",
-      "Log out": "Keluar"
+  "mandatoryWorkflowSteps": {
+    "preAnalysisValidation": {
+      "step": "Frame Selection and Text Scanning",
+      "description": "CRITICAL: Always verify the selected frame and scan for text content before starting UX writing analysis",
+      "implementation": [
+        "1. Call get_selection() to check current Figma selection",
+        "2. Parse selection results to identify frame name, type, and count",
+        "3. Call scan_text_nodes() to identify all text elements in the frame",
+        "4. Present frame details and text content overview to user",
+        "5. Ask explicit confirmation: 'Is this the correct frame to analyze? (YES/NO)'",
+        "6. Only proceed after user confirms 'YES'",
+        "7. If 'NO' or wrong selection, guide user to select correct frame and repeat validation"
+      ],
+      "errorHandling": {
+        "noSelection": "⚠️ No frame selected. Please select a frame in Figma first, then try again.",
+        "multipleSelection": "⚠️ Multiple items selected. Please select only ONE frame to analyze.",
+        "invalidSelection": "⚠️ Selected item is not a frame. Please select a frame (not component instance or other object).",
+        "noTextContent": "⚠️ No text content found in selected frame. Please select a frame with text elements.",
+        "userRejectsFrame": "Please select the correct frame in Figma, then let me know when ready to proceed."
+      }
     },
-    "banned": ["Proceed", "OK", "Password untuk PIN", "Gagal total"],
-    "casing": {
-      "buttons": "Title Case in Indonesian, Sentence case in Indonesian, don't more tha 5 words",
-      "labels": "Sentence case"
+    "postAnalysisWorkflow": {
+      "step": "Continue or End Session",
+      "description": "After completing UX writing analysis, always offer next action options",
+      "implementation": [
+        "1. Present completion message with summary of text improvements delivered",
+        "2. Display next action menu with clear options",
+        "3. Wait for user selection of next action",
+        "4. For new analysis: restart from frame validation step",
+        "5. For different format on same frame: skip to format selection",
+        "6. If user wants other tasks or start over, run prompt on guide://instructions/started_prompt.json"
+      ],
+      "nextActionOptions": {
+        "newFrameAnalysis": "📝 Analyze Another Frame - I'll help you select and analyze text in a different frame",
+        "differentFormat": "📋 Change Output Format - Re-analyze current frame with different output (Replace/Frame/Report/Annotations)",
+        "refineText": "✨ Refine Specific Text - Focus on improving specific text elements or sections",
+        "otherTasks": "🔍 Other Analysis - Switch to Design Principles, Heuristic Evaluation, or other tasks (run prompt on guide://instructions/started_prompt.json)",
+        "endSession": "✅ End Session - Complete current analysis session"
+      }
     }
   },
-  "a11y_and_readability": {
-    "reading_level": "G6-8",
-    "inclusive_language": true,
-    "numeracy_and_format": {
-      "id-ID": {"date": "DD/MM/YYYY", "time": "24h", "number": "1.234,56"},
-      "en-US": {"date": "MM/DD/YYYY", "time": "12h", "number": "1,234.56"}
+  "analysisFramework": {
+    "methodology": {
+      "scoringSystem": {
+        "scale": "1-5 points per UX writing principle",
+        "maxScore": "Calculated based on number of UX Writing principles from guide",
+        "ratings": {
+          "5": "Excellent - Exemplifies clear, user-focused writing that enhances experience",
+          "4": "Good - Follows writing guidelines well with minor areas for improvement",
+          "3": "Acceptable - Meets basic clarity requirements but could be more effective",
+          "2": "Poor - Significant issues with clarity, tone, or user experience impact",
+          "1": "Critical - Major writing problems that confuse or hinder users"
+        }
+      },
+      "improvementLevels": {
+        "critical": { "emoji": "🚨", "range": "1-2", "color": "#fceded", "priority": "High" },
+        "moderate": { "emoji": "⚠️", "range": "3", "color": "#fcf7ed", "priority": "Medium" },
+        "minor": { "emoji": "💡", "range": "4", "color": "#f0f8ff", "priority": "Low" },
+        "excellent": { "emoji": "✅", "range": "5", "color": "#edfced", "priority": "Maintain" }
+      },
+      "overallWritingQuality": {
+        "exceptional": { "range": "90-100%", "label": "Exceptional - Writing Excellence Standard" },
+        "strong": { "range": "80-89%", "label": "Strong Writing with Minor Improvements" },
+        "acceptable": { "range": "70-79%", "label": "Acceptable but Needs Focused Work" },
+        "poor": { "range": "60-69%", "label": "Poor - Major Writing Issues Present" },
+        "critical": { "range": "0-59%", "label": "Critical - Does Not Meet Writing Standards" }
+      }
+    },
+    "uxWritingEvaluationFramework": {
+      "note": "UX Writing principles will be loaded from guide://general_uxw_rule.json",
+      "evaluationApproach": {
+        "clarityAndComprehension": [
+          "Clear, concise language that users understand immediately",
+          "Appropriate reading level for target audience",
+          "Elimination of jargon, ambiguity, and unnecessary complexity"
+        ],
+        "voiceAndTone": [
+          "Consistent brand voice across all text elements",
+          "Appropriate tone for context and user emotional state",
+          "Personality that matches brand guidelines and user expectations"
+        ],
+        "userCentricLanguage": [
+          "Action-oriented, benefit-focused copy",
+          "User's perspective and language preferences",
+          "Contextually relevant information hierarchy"
+        ],
+        "accessibilityAndInclusion": [
+          "Plain language principles and readability",
+          "Inclusive language and cultural sensitivity",
+          "Screen reader compatibility and clear structure"
+        ],
+        "functionalEffectiveness": [
+          "Clear calls-to-action and navigation guidance",
+          "Error prevention through clear instructions",
+          "Scannable content structure and information hierarchy"
+        ]
+      }
+    },
+    "evaluationCriteria": {
+      "textAnalysisFactors": [
+        "Clarity and immediate comprehension by target users",
+        "Consistency with brand voice and style guidelines",
+        "Effectiveness in guiding user actions and decisions",
+        "Accessibility and inclusive language practices",
+        "Information hierarchy and scannability"
+      ],
+      "improvementPrioritization": [
+        "High Impact: Text that directly affects user task completion",
+        "Medium Impact: Content that influences user confidence and understanding",
+        "Low Impact: Text that enhances overall experience and brand perception"
+      ]
     }
   },
-  "negative_case_policy": {
-    "steps": ["Acknowledge briefly", "Neutral cause (no blame)", "Offer one next step", "Set expectation (time/limits)"],
-    "phrasing": {
-      "avoid": ["Kamu salah memasukkanâ€¦", "Gagal karena kamuâ€¦"],
-      "prefer": ["Kode tidak cocok", "Tidak dapat diproses saat ini"]
+  "analysisPrompts": {
+    "preAnalysisValidation": "🚨 CRITICAL FIRST STEP: Before conducting any UX writing analysis, you MUST:\n1. Call get_selection() to verify the currently selected frame\n2. Use scan_text_nodes() to identify all text content in the frame\n3. Display frame name, type, and text content overview to user for confirmation\n4. Wait for user confirmation that this is the correct frame to analyze\n5. Load UX Writing principles from guide://general_uxw_rule.json\n6. Only proceed with analysis after explicit user confirmation and principles loaded\n\nThis prevents analyzing the wrong content and ensures accurate writing evaluation.",
+    "principlesLoadingPrompt": "Loading UX Writing guidelines from guide://general_uxw_rule.json to ensure accurate content evaluation...",
+    "mainPrompt": "Conduct a comprehensive UX Writing analysis of all text content in the CONFIRMED selected Figma frame. For each text element:\n\n1. **Evaluate against UX writing principles** loaded from the guide file\n2. **Score writing quality from 1-5** based on clarity, effectiveness, and user experience impact\n3. **Generate improved text versions** that better align with UX writing best practices\n4. **Provide specific improvement rationale** explaining why changes enhance user experience\n5. **Implement chosen output format** (Text replacement/Analysis frame/Report/Annotations)\n\n**Focus Areas:**\n- Clarity and immediate user comprehension\n- Consistent voice and appropriate tone for context\n- Action-oriented, user-benefit focused language\n- Accessibility and inclusive writing practices\n- Information hierarchy and scannability\n- Error prevention through clear guidance\n- Brand voice consistency and style guide alignment\n\n**Text Improvement Requirements:**\n- Base improvements on specific UX writing principles from the loaded guide\n- Prioritize user task completion and comprehension\n- Maintain brand voice while enhancing clarity\n- Ensure improved text fits within design constraints\n- Provide clear rationale for each text change\n- Consider context and user emotional state\n\n**Post-Analysis:** After completing the evaluation, always offer next action options to continue the workflow.",
+    "evaluationSteps": [
+      "1. Load UX Writing guidelines from guide://general_uxw_rule.json and understand each principle",
+      "2. Scan all text nodes in the selected frame using scan_text_nodes()",
+      "3. Categorize text elements by type (headers, body, buttons, labels, etc.)",
+      "4. Evaluate each text element against UX writing principles systematically",
+      "5. Score each principle from 1-5 and identify improvement opportunities",
+      "6. Generate improved text versions that address identified issues",
+      "7. Calculate overall writing quality score and assessment level",
+      "8. Create output based on user's selected format preference",
+      "9. For text replacement: use set_text_content() or set_multiple_text_contents()",
+      "10. For analysis formats: organize findings into structured, actionable format"
+    ],
+    "textImprovementGuidelines": [
+      "Maintain original meaning while enhancing clarity and user experience",
+      "Consider character limits and design constraints when improving text",
+      "Prioritize user task completion and reduce cognitive load",
+      "Ensure improved text aligns with loaded UX writing principles",
+      "Maintain consistent voice across all improved text elements",
+      "Focus on user benefits and action-oriented language",
+      "Apply accessibility and plain language principles",
+      "Consider context and user emotional journey"
+    ]
+  },
+  "outputFormats": {
+    "textReplacement": {
+      "process": {
+        "textAnalysis": {
+          "step": "Analyze all text content in selected frame",
+          "implementation": [
+            "Use scan_text_nodes() to get complete text inventory",
+            "Evaluate each text element against UX writing principles",
+            "Generate improved versions with rationale",
+            "Prepare replacement text that fits design constraints"
+          ]
+        },
+        "contentReplacement": {
+          "step": "Replace text directly in Figma",
+          "implementation": [
+            "Use set_multiple_text_contents() for bulk text replacement",
+            "Ensure improved text maintains design integrity",
+            "Create backup record of original vs. improved content",
+            "Apply consistent voice and style across all replacements"
+          ]
+        },
+        "analysisSummary": {
+          "step": "Create analysis summary frame",
+          "structure": {
+            "name": "UX Writing Analysis Summary - {ComponentName}",
+            "sections": [
+              "Analysis Overview",
+              "Text Improvements Made",
+              "UX Writing Principles Applied",
+              "Before & After Comparison",
+              "Implementation Notes"
+            ]
+          }
+        }
+      }
+    },
+    "figmaFrame": {
+      "structure": {
+        "mainFrame": {
+          "name": "UX Writing Analysis - {ComponentName}",
+          "type": "FRAME",
+          "layout": {
+            "direction": "VERTICAL",
+            "width": "FIXED",
+            "width_value": 1200,
+            "height": "HUG",
+            "spacing": 20,
+            "padding": { "all": 20 },
+            "alignment": "MIN"
+          }
+        },
+        "sectionTemplates": {
+          "titleSection": {
+            "name": "Analysis Title",
+            "content": "UX Writing Analysis Results",
+            "styling": {
+              "fontSize": 32,
+              "fontWeight": 700,
+              "fill": "#000000"
+            }
+          },
+          "overallAnalysis": {
+            "name": "Overall Analysis",
+            "backgroundColor": "#f0f8ff",
+            "contentStructure": [
+              "Writing Quality Score: {totalScore}/{maxScore} ({percentage}%)",
+              "Overall Assessment: {qualityLevel}",
+              "Text Elements Analyzed: {textElementCount}",
+              "Improvements Made: {improvementCount}",
+              "Key Strengths: {strengths}",
+              "Critical Issues: {criticalIssues}"
+            ]
+          },
+          "beforeAfterComparison": {
+            "name": "Before & After Text Comparison",
+            "backgroundColor": "#fcf7ed",
+            "structure": "Two-column layout showing original vs. improved text"
+          },
+          "principlesApplied": {
+            "name": "UX Writing Principles Applied",
+            "backgroundColor": "#edfced",
+            "contentStructure": [
+              "{principleName}: {applicationDescription}",
+              "Evidence: {specificExample}",
+              "User Benefit: {benefitDescription}"
+            ]
+          },
+          "implementationNotes": {
+            "name": "Implementation & Next Steps",
+            "backgroundColor": "#f5f5f5",
+            "contentStructure": [
+              "Immediate Actions: {immediateActions}",
+              "Style Guide Updates: {styleGuideUpdates}",
+              "Future Considerations: {futureConsiderations}"
+            ]
+          }
+        }
+      }
+    },
+    "markdownReport": {
+      "structure": {
+        "header": {
+          "title": "# UX Writing Analysis Report",
+          "metadata": [
+            "**Component/Page:** {componentName}",
+            "**Analysis Date:** {currentDate}",
+            "**Text Elements Analyzed:** {textElementCount}",
+            "**Overall Writing Quality:** {totalScore}/{maxScore} ({percentage}%) - {qualityLevel}"
+          ]
+        },
+        "executiveSummary": {
+          "title": "## Executive Summary",
+          "sections": [
+            "### Overall Analysis",
+            "### Key Improvements Made",
+            "### UX Writing Principles Applied",
+            "### Priority Recommendations"
+          ]
+        },
+        "detailedFindings": {
+          "title": "## Detailed Text Analysis",
+          "textElementTemplate": [
+            "### {elementType}: {originalText}",
+            "**Original:** {originalText}",
+            "**Improved:** {improvedText}",
+            "**Principle Applied:** {principleApplied}",
+            "**Rationale:** {improvementRationale}",
+            "**User Benefit:** {userBenefit}",
+            "---"
+          ]
+        }
+      }
+    },
+    "annotations": {
+      "annotationTypes": {
+        "textImprovement": {
+          "title": "✍️ Text Improvement Suggestion",
+          "format": "**Original:** {originalText}\n**Improved:** {improvedText}\n**Principle:** {principleApplied}\n**Why:** {improvementReason}\n**User Impact:** {userBenefit}",
+          "category": "Content"
+        },
+        "writingIssue": {
+          "title": "🚨 Writing Issue",
+          "format": "**Issue:** {writingProblem}\n**Impact:** {userImpact}\n**Suggestion:** {improvementSuggestion}\n**Priority:** {priority}",
+          "category": "Guidelines"
+        },
+        "writingStrength": {
+          "title": "✅ Writing Strength",
+          "format": "**Strength:** {positiveAspect}\n**Principle:** {principleExemplified}\n**User Benefit:** {benefitDescription}",
+          "category": "Content"
+        }
+      }
     }
   },
-  "compliance": {
-    "privacy": ["Do not expose personal data in messages", "Never confirm sensitive info in errors"],
-    "legal_required_clauses": [],
-    "must_not_claim": ["Guaranteed approval", "Instant recovery"]
+  "workflowConfiguration": {
+    "step0_frameValidation": {
+      "critical_instruction": "⚠️ ALWAYS VERIFY SELECTED FRAME AND SCAN TEXT BEFORE ANALYSIS",
+      "validation_process": [
+        "Use get_selection() to confirm current selection in Figma",
+        "Use scan_text_nodes() to identify all text content in the frame",
+        "Display the selected frame name, type, and text content overview",
+        "Load UX Writing guidelines from guide://general_uxw_rule.json",
+        "Ask user to confirm this is the correct frame to analyze",
+        "Only proceed after confirming correct frame selection and principles loaded"
+      ],
+      "confirmation_prompt": "I've detected your selected frame: **{frameName}** (Type: {frameType})\n\nFound {textElementCount} text elements to analyze:\n{textElementsPreview}\n\nIs this the correct frame for UX Writing analysis? Please confirm **YES** to proceed or **NO** to select a different frame."
+    },
+    "step1_userChoice": {
+      "prompt": "I'll conduct a UX Writing analysis of all text content in your selected frame. Which output format would you prefer?\n\n🔄 **Option 1: Replace Text in Figma + Analysis**\n- Automatically improve and replace existing text in your frame\n- Create analysis summary showing what changed and why\n- Perfect for active design work and immediate improvements\n\n📝 **Option 2: Analysis Frame + Improved Copy**\n- Create detailed analysis frame with before/after comparisons\n- Comprehensive writing evaluation and recommendations\n- Great for reviews and documentation\n\n📄 **Option 3: Markdown Report + Text Suggestions**\n- Detailed written analysis with improvement recommendations\n- Complete text inventory and writing quality assessment\n- Ideal for documentation and content strategy\n\n📌 **Option 4: Annotations Only**\n- Focused annotations with writing improvements on text elements\n- Clean, minimal approach for quick reviews\n\nPlease respond with: **1**, **2**, **3**, or **4**"
+    },
+    "step2_contextGathering": {
+      "questions": [
+        "What is the primary purpose of this interface/content?",
+        "Who are the primary users reading this content?",
+        "What brand voice/tone should the content reflect?",
+        "Are there specific writing areas to focus on?"
+      ]
+    },
+    "step3_analysis": {
+      "process": [
+        "Load UX Writing guidelines from guide://general_uxw_rule.json",
+        "Reconfirm selected frame and scan text content",
+        "Analyze each text element against UX writing principles",
+        "Generate improved text versions with clear rationale",
+        "Score writing quality and calculate overall assessment",
+        "Implement chosen output format",
+        "For Option 1: Replace text directly in Figma using set_multiple_text_contents()",
+        "Create analysis documentation as specified"
+      ]
+    },
+    "step4_completion": {
+      "completion_message": "✅ **UX Writing Analysis Complete!**\n\nI've finished analyzing your text content and delivered improvements in your requested format.",
+      "next_action_prompt": "Would you like me to:\n\n📝 **Analyze Another Frame** - Select a different frame for UX writing analysis\n📋 **Change Output Format** - Re-analyze the same frame with a different format\n✨ **Refine Specific Text** - Focus on particular text elements for further improvement\n🔍 **Other Analysis** - Switch to Design Principles, Heuristic Evaluation, or other tasks\n✅ **Start Over** - Start a fresh analysis session\n\nWhat would you like to do next?"
+    }
   },
-  "evaluation_requirements": {
-    "heuristics": ["clarity", "empathy", "actionability", "consistency", "a11y"],
-    "output_variants": ["short", "standard", "extra_clear"],
-    "fit_checks": ["character_limits", "tone_match", "reading_level", "placeholder_safety"],
-    "edge_states": ["empty", "error", "offline", "rate_limited", "permission", "payment_fail"]
+  "outputConfiguration": {
+    "option1_textReplacement": {
+      "replaceTextInFigma": true,
+      "createAnalysisSummary": true,
+      "createAnnotations": true,
+      "analysisFrameWidth": 1000,
+      "includeSections": ["overallAnalysis", "improvementsMade", "principlesApplied", "beforeAfterComparison"],
+      "textReplacementPriority": "user_experience_impact"
+    },
+    "option2_figmaFrame": {
+      "replaceTextInFigma": false,
+      "createAnalysisFrame": true,
+      "createAnnotations": true,
+      "frameWidth": 1200,
+      "includeSections": ["titleSection", "overallAnalysis", "beforeAfterComparison", "principlesApplied", "implementationNotes"]
+    },
+    "option3_markdownReport": {
+      "replaceTextInFigma": false,
+      "createAnalysisFrame": false,
+      "createAnnotations": true,
+      "generateMarkdownReport": true,
+      "reportSections": ["header", "executiveSummary", "detailedFindings", "implementationPlan"]
+    },
+    "option4_annotationsOnly": {
+      "replaceTextInFigma": false,
+      "createAnalysisFrame": false,
+      "createAnnotations": true,
+      "focusOnHighImpactImprovements": true,
+      "maxAnnotationsPerElement": 2
+    }
   },
-  "telemetry": {
-    "primary": ["task_completion", "error_recovery_rate"],
-    "secondary": ["resend_click_rate", "support_contact_rate"]
+  "usageInstructions": {
+    "critical_workflow_steps": [
+      "🚨 MANDATORY: Always verify selected frame and scan text content before analysis",
+      "Use get_selection() and scan_text_nodes() to validate frame and text elements",
+      "Load UX Writing guidelines from guide://general_uxw_rule.json",
+      "Display frame details and text overview to user for confirmation",
+      "Only start analysis after user confirms correct frame selection and guidelines loaded"
+    ],
+    "initialStep": [
+      "STEP 0: Check selected frame and scan text content using get_selection() and scan_text_nodes()",
+      "Load UX Writing guidelines from guide://general_uxw_rule.json",
+      "Display selected frame details and text content overview to user",
+      "Wait for user confirmation before proceeding",
+      "Present output format options only after frame confirmation",
+      "Gather contextual information about content purpose and audience"
+    ],
+    "analysisProcess": [
+      "1. RECONFIRM: Double-check selected frame and text content before analysis",
+      "2. Evaluate each text element against loaded UX writing principles",
+      "3. Generate improved text versions with clear improvement rationale",
+      "4. Score writing quality and calculate overall content assessment",
+      "5. Implement chosen output format (replace text, create frame, report, or annotate)",
+      "6. For text replacement: Use set_multiple_text_contents() for bulk updates",
+      "7. Create comprehensive documentation of changes and improvements made"
+    ],
+    "textReplacementProcess": [
+      "1. Prepare improved text that maintains design constraints and context",
+      "2. Use set_multiple_text_contents() to replace multiple text elements efficiently",
+      "3. Create analysis summary frame documenting all changes made",
+      "4. Add targeted annotations explaining key improvements",
+      "5. Ensure replaced text maintains consistent voice and brand guidelines"
+    ],
+    "qualityChecks": [
+      "Frame validation and text scanning completed before analysis",
+      "UX Writing guidelines successfully loaded from guide file",
+      "All improved text maintains original meaning while enhancing user experience",
+      "Text replacements respect design constraints and character limits",
+      "Analysis documentation clearly explains rationale for all changes",
+      "Consistent application of UX writing principles across all text elements",
+      "Post-analysis options clearly presented to user for continued workflow"
+    ]
   }
 }

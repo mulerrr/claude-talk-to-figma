@@ -84,14 +84,13 @@
         "3. Wait for user selection of next action",
         "4. For new analysis: restart from frame validation step",
         "5. For different format on same frame: skip to format selection",
-        "6. For other tasks: transition to appropriate workflow"
+        "6. For other tasks: run prompt on guide://instructions/started_prompt.json"
       ],
       "nextActionOptions": {
         "newFrameAnalysis": "🔍 Analyze Another Frame - I'll help you select and analyze a different frame",
         "differentFormat": "📋 Change Output Format - Re-analyze current frame with different output (Figma/Markdown/Annotations)",
         "focusedAnalysis": "🎯 Deep Dive Analysis - Focus on specific heuristics or problem areas",
-        "otherTasks": "✨ Other Analysis - Switch to Legion Design Principles, UX Writing review, or other tasks",
-        "endSession": "✅ End Session - Complete current analysis session"
+        "otherTasks": "✨ Other Analysis - Switch to Legion Design Principles, UX Writing review, or other tasks"
       }
     }
   },
@@ -836,7 +835,7 @@
       "2. Present completion message to user",
       "3. Offer next action options (analyze another frame, change format, focus analysis, other tasks)",
       "4. Wait for user response to determine next steps",
-      "5. If user wants another analysis, restart from frame validation step"
+      "5. If user wants other tasks or start over, run prompt on guide://instructions/started_prompt.json"
     ],
     "frameValidationProtocol": {
       "mandatory_checks": [
