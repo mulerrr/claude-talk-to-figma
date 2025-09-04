@@ -324,7 +324,7 @@
           "layout": {
             "direction": "VERTICAL",
             "width": "FIXED",
-            "width_value": 1000,
+            "width_value": 600,
             "height": "HUG",
             "spacing": 20,
             "padding": {
@@ -359,6 +359,7 @@
                 "name": "Analysis Title",
                 "type": "TEXT",
                 "content": "{analysisTitle}",
+                "layout": { "width": "FILL", "height": "HUG" },
                 "styling": {
                   "fontFamily": "Inter",
                   "fontWeight": 700,
@@ -371,6 +372,7 @@
                 "name": "Page",
                 "type": "TEXT",
                 "content": "{componentName}",
+                "layout": { "width": "FILL", "height": "HUG" },
                 "styling": {
                   "fontFamily": "Inter",
                   "fontWeight": 500,
@@ -453,6 +455,7 @@
               {
                 "name": "Section Title",
                 "type": "TEXT",
+                "layout": { "width": "FILL", "height": "HUG" },
                 "styling": {
                   "fontFamily": "Inter",
                   "fontWeight": 700,
@@ -464,6 +467,7 @@
               {
                 "name": "Section Content",
                 "type": "TEXT",
+                "layout": { "width": "FILL", "height": "HUG" },
                 "styling": {
                   "fontFamily": "Inter",
                   "fontWeight": 400,
@@ -769,7 +773,7 @@
     "option1_figmaFrame": {
       "createAnalysisFrame": true,
       "createAnnotations": true,
-      "frameWidth": 1000,
+      "frameWidth": 600,
       "frameLayout": "vertical_autolayout",
       "includeColorCoding": true,
       "includeSections": [

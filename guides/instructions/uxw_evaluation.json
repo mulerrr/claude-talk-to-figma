@@ -28,7 +28,8 @@
         "title": "Analysis Frame + Improved Copy",
         "description": "Create a detailed UX Writing analysis frame with original vs. improved text comparisons, writing principles evaluation, and recommendations",
         "deliverables": [
-          "Structured analysis frame in Figma (1200px width, auto-layout)",
+          "Direct text replacement in all text nodes within the frame",
+          "Structured analysis frame in Figma (500px width, auto-layout), next to selected frame",
           "Original vs. improved text side-by-side comparisons",
           "UX Writing principles evaluation and scoring",
           "Detailed improvement rationale and writing guidelines applied",
@@ -42,6 +43,7 @@
         "title": "Markdown Report + Text Suggestions",
         "description": "Generate a detailed markdown writing analysis report with text inventory, improvements, and UX writing guidelines compliance",
         "deliverables": [
+          "Direct text replacement in all text nodes within the frame",
           "Comprehensive markdown UX writing analysis report",
           "Text inventory with quality assessment and improvements",
           "UX writing principles compliance evaluation",
@@ -56,6 +58,7 @@
         "title": "Text Annotations Only",
         "description": "Place targeted UX writing improvement annotations directly on text elements without replacing content",
         "deliverables": [
+          "Direct text replacement in all text nodes within the frame",
           "Focused annotations on specific text elements",
           "Writing improvement suggestions with rationale",
           "UX writing principle violations and recommendations",
@@ -256,7 +259,7 @@
           "layout": {
             "direction": "VERTICAL",
             "width": "FIXED",
-            "width_value": 1200,
+            "width_value": 600,
             "height": "HUG",
             "spacing": 20,
             "padding": { "all": 20 },
@@ -267,6 +270,7 @@
           "titleSection": {
             "name": "Analysis Title",
             "content": "UX Writing Analysis Results",
+            "layout": { "width": "FILL", "height": "HUG" },
             "styling": {
               "fontSize": 32,
               "fontWeight": 700,
@@ -411,7 +415,7 @@
       "replaceTextInFigma": true,
       "createAnalysisSummary": true,
       "createAnnotations": true,
-      "analysisFrameWidth": 1000,
+      "analysisFrameWidth": 600,
       "includeSections": ["overallAnalysis", "improvementsMade", "principlesApplied", "beforeAfterComparison"],
       "textReplacementPriority": "user_experience_impact"
     },
@@ -419,7 +423,7 @@
       "replaceTextInFigma": false,
       "createAnalysisFrame": true,
       "createAnnotations": true,
-      "frameWidth": 1200,
+      "frameWidth": 600,
       "includeSections": ["titleSection", "overallAnalysis", "beforeAfterComparison", "principlesApplied", "implementationNotes"]
     },
     "option3_markdownReport": {

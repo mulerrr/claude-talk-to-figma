@@ -14,7 +14,7 @@
         "title": "Figma Frame + Annotations",
         "description": "Create a detailed analysis frame in Figma with structured sections (Component Usage Statistics, Legion DS Coverage, Custom Component Analysis, Recommendations, Implementation Roadmap) plus annotations on UI elements",
         "deliverables": [
-          "Structured analysis frame in Figma (1000px width, auto-layout)",
+          "Structured analysis frame in Figma (500px width, auto-layout), next to selected frame",
           "Component usage percentage breakdowns and statistics", 
           "Color-coded annotations identifying Legion DS vs custom components",
           "Visual charts showing DS adoption rates and recommendations"
@@ -236,7 +236,7 @@
       "1. Scan the selected frame and identify all UI components and their types",
       "2. Categorize components as Legion DS, Custom, Mixed, or Needs Review", 
       "3. Count instances and calculate usage percentages for each category",
-      "4. Assess design token compliance (colors, spacing, typography)",
+      "4. Assess design token compliance (colors, spacing, typography), just check if already use token or variables, not the actual value",
       "5. Identify opportunities for Legion component adoption",
       "6. Evaluate UI pattern appropriateness (e.g., radio vs select)",
       "7. Create output based on user's selected format preference",
@@ -261,7 +261,7 @@
           "layout": {
             "direction": "VERTICAL",
             "width": "FIXED",
-            "width_value": 1000,
+            "width_value": 500,
             "height": "HUG",
             "spacing": 20,
             "padding": {
