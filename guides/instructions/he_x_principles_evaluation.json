@@ -389,9 +389,9 @@
           "type": "FRAME",
           "layout": {
             "direction": "VERTICAL",
-            "width": "FIXED", 
+            "layoutSizingHorizontal": "FIXED", 
             "width_value": 600,
-            "height": "HUG",
+            "layoutSizingVertical": "HUG",
             "spacing": 20,
             "padding": {
               "top": 20,

@@ -258,9 +258,9 @@
           "type": "FRAME",
           "layout": {
             "direction": "VERTICAL",
-            "width": "FIXED",
+            "layoutSizingHorizontal": "FIXED",
             "width_value": 600,
-            "height": "HUG",
+            "layoutSizingVertical": "HUG",
             "spacing": 20,
             "padding": { "all": 20 },
             "alignment": "MIN"
@@ -269,8 +269,9 @@
         "sectionTemplates": {
           "titleSection": {
             "name": "Analysis Title",
+            "type": "TEXT",
             "content": "UX Writing Analysis Results",
-            "layout": { "width": "FILL", "height": "HUG" },
+            "layout": { "layoutSizingHorizontal": "FILL", "layoutSizingVertical": "HUG" },
             "styling": {
               "fontSize": 32,
               "fontWeight": 700,

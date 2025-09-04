@@ -323,9 +323,9 @@
           "type": "FRAME",
           "layout": {
             "direction": "VERTICAL",
-            "width": "FIXED",
+            "layoutSizingHorizontal": "FIXED",
             "width_value": 600,
-            "height": "HUG",
+            "layoutSizingVertical": "HUG",
             "spacing": 20,
             "padding": {
               "top": 20,
@@ -345,8 +345,8 @@
             "type": "FRAME",
             "layout": {
               "direction": "VERTICAL",
-              "width": "FILL",
-              "height": "HUG",
+              "layoutSizingHorizontal": "FILL",
+              "layoutSizingVertical": "HUG",
               "spacing": 4,
               "padding": { "all": 0 },
               "alignment": "MIN",
@@ -359,7 +359,7 @@
                 "name": "Analysis Title",
                 "type": "TEXT",
                 "content": "{analysisTitle}",
-                "layout": { "width": "FILL", "height": "HUG" },
+                "layout": { "layoutSizingHorizontal": "FILL", "layoutSizingVertical": "HUG" },
                 "styling": {
                   "fontFamily": "Inter",
                   "fontWeight": 700,
@@ -372,7 +372,7 @@
                 "name": "Page",
                 "type": "TEXT",
                 "content": "{componentName}",
-                "layout": { "width": "FILL", "height": "HUG" },
+                "layout": { "layoutSizingHorizontal": "FILL", "layoutSizingVertical": "HUG" },
                 "styling": {
                   "fontFamily": "Inter",
                   "fontWeight": 500,
@@ -388,8 +388,8 @@
             "type": "FRAME",
             "layout": {
               "direction": "VERTICAL",
-              "width": "FILL",
-              "height": "HUG",
+              "layoutSizingHorizontal": "FILL",
+              "layoutSizingVertical": "HUG",
               "spacing": 15,
               "padding": { "all": 15 },
               "alignment": "MIN",
@@ -402,7 +402,7 @@
               {
                 "name": "Section Title",
                 "type": "TEXT",
-                "layout": { "width": "FILL", "height": "HUG" },
+                "layout": { "layoutSizingHorizontal": "FILL", "layoutSizingVertical": "HUG" },
                 "styling": {
                   "fontFamily": "Inter",
                   "fontWeight": 700,
@@ -414,7 +414,7 @@
               {
                 "name": "Section Score", 
                 "type": "TEXT",
-                "layout": { "width": "FILL", "height": "HUG" },
+                "layout": { "layoutSizingHorizontal": "FILL", "layoutSizingVertical": "HUG" },
                 "styling": {
                   "fontFamily": "Inter",
                   "fontWeight": 800,
@@ -426,7 +426,7 @@
               {
                 "name": "Section Content",
                 "type": "TEXT", 
-                "layout": { "width": "FILL", "height": "HUG" },
+                "layout": { "layoutSizingHorizontal": "FILL", "layoutSizingVertical": "HUG" },
                 "styling": {
                   "fontFamily": "Inter",
                   "fontWeight": 400,
@@ -441,8 +441,8 @@
             "type": "FRAME",
             "layout": {
               "direction": "VERTICAL",
-              "width": "FILL",
-              "height": "HUG",
+              "layoutSizingHorizontal": "FILL",
+              "layoutSizingVertical": "HUG",
               "spacing": 15,
               "padding": { "all": 15 },
               "alignment": "MIN",
@@ -455,7 +455,7 @@
               {
                 "name": "Section Title",
                 "type": "TEXT",
-                "layout": { "width": "FILL", "height": "HUG" },
+                "layout": { "layoutSizingHorizontal": "FILL", "layoutSizingVertical": "HUG" },
                 "styling": {
                   "fontFamily": "Inter",
                   "fontWeight": 700,
@@ -467,7 +467,7 @@
               {
                 "name": "Section Content",
                 "type": "TEXT",
-                "layout": { "width": "FILL", "height": "HUG" },
+                "layout": { "widlayoutSizingHorizontalth": "FILL", "layoutSizingVertical": "HUG" },
                 "styling": {
                   "fontFamily": "Inter",
                   "fontWeight": 400,
