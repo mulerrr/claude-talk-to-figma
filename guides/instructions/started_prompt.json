@@ -9,36 +9,31 @@
       "id": "nng_analysis",
       "name": "NNG Heuristic Evaluation",
       "description": "Comprehensive usability analysis based on Jakob Nielsen's 10 usability heuristics",
-      "prompt": "Follow the task's instruction in JSON file task (guide://instructions/heuristic_evaluation_task.json)",
-      "task": "guide://instructions/heuristic_evaluation_task.json"
+      "prompt": "Follow the task's instruction in JSON file heuristic_evaluation_task.json"
     },
     "legion_design_compliance": {
       "id": "legion_compliance",
       "name": "Legion Design Principle Analysis",
       "description": "Evaluate design compliance with Legion Design Principles",
-      "prompt": "Follow the task's instruction in JSON file task (guide://instructions/legion_principles_evaluation.json)",
-      "task": "guide://instructions/legion_principles_evaluation.json"
+      "prompt": "Follow the task's instruction in JSON file legion_principles_evaluation.json"
     },
     "combined_analysis": {
       "id": "combined_nng_legion",
       "name": "Combined NNG & Legion Analysis",
       "description": "Comprehensive evaluation using both NNG Heuristics and Legion Design Principles",
-      "prompt": "Follow the task's instruction in JSON file task (guide://instructions/he_x_principles_evaluation.json)",
-      "task": "guide://instructions/he_x_principles_evaluation.json"
+      "prompt": "Follow the task's instruction in JSON file he_x_principles_evaluation.json"
     },
     "component_usage_analysis": {
       "id": "component_analysis",
       "name": "Legion Design System vs Custom Component Analysis",
       "description": "Analyze the percentage and usage of Legion Design System components versus custom components",
-      "prompt": "Follow the task's instruction in JSON file task (guide://instructions/legion_component_adoption.json)",
-      "task": "guide://instructions/legion_component_adoption.json"
+      "prompt": "Follow the task's instruction in JSON file legion_component_adoption.json"
     },
     "ux_writing_analysis": {
       "id": "ux_writing",
       "name": "UX Writing Analysis",
       "description": "Evaluate UX writing quality based on style guide and user persona alignment",
-      "prompt": "Follow the task's instruction in JSON file task (guide://instructions/uxw_evaluation.json)",
-      "task": "guide://instructions/uxw_evaluation.json"
+      "prompt": "Follow the task's instruction in JSON file uxw_evaluation.json"
     }
   },
   "interaction_flow": {
