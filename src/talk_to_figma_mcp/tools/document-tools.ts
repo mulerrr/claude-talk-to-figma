@@ -510,9 +510,9 @@ export function registerDocumentTools(server: McpServer): void {
               type: "text",
               text: [
                 `Successfully joined channel: ${channel}`,
-                "",
-                "Next step (do NOT start analysis yet)",
-                "Follow the task's instruction in JSON file task (guide://instructions/started_prompt.json)"
+                // "",
+                // "Next step (do NOT start analysis yet)",
+                // "Follow the task's instruction in JSON file task (guide://instructions/started_prompt.json)"
               ].join("\n"),
             },
           ],

@@ -1,7 +1,7 @@
 {
-  "dxt_version": "0.1",
-  "name": "Claude Figma Analysis",
-  "version": "1.0.0",
+  "manifest_version": "0.2",
+  "name": "testing plugin project",
+  "version": "0.6.1",
   "description": "Claude Desktop Talk to Figma MCP",
   "author": {
     "name": "mulerrr"

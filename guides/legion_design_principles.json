@@ -1,585 +1,1071 @@
 {
-  "document": {
-    "title": "Legion Design Principles",
-    "subtitle": "Guideline Implementasi",
-    "version": "V1.0",
-    "last_updated": "23 Desember 2024",
-    "description": "Guideline ini kami rumuskan untuk membantu memberikan gambaran bagaimana menerapkan desain yang selaras dengan principles yang ada di DEX, yaitu Dynamic, Empowerment, dan Harmoni.",
-    "note": "dokumen ini bukanlah suatu peraturan yang ketat dan mengikat, melainkan berupa panduan implementasi yang dapat disesuaikan dengan kebutuhan desain pada produk masing-masing."
-  },
-  "overview": {
-    "description": "Legion Design Principle adalah seperangkat panduan yang bertindak layaknya kompas untuk memastikan produk di Telkom fungsional, menarik, dan mudah digunakan. Prinsip-prinsip ini menyatukan visi tim dalam menciptakan pengalaman user yang lebih baik.",
-    "mantras": {
-      "Dynamic": ["Honest and Inviting", "Simple and Flexible", "Control and Freedom"],
-      "Empowerment": ["Embrace Anyone", "Powerful, Not Magical", "Give People Superpowers"],
-      "Harmony": ["Natural Mental Model", "Consistency and Standards", "Purpose and Function"]
-    }
-  },
-  "principles": [
-    {
-      "id": "dynamic",
-      "name": "Dynamic",
-      "description": "Desain yang tetap relevan dengan mempertimbangkan secara cermat elemen dan informasi yang akan berikan, kepada siapa, dan dalam konteks apa. Senantiasa beradaptasi dan memberikan dukungan serta solusi yang tepat untuk setiap situasi yang user hadapi.",
-      "approaches": [
+  "legion_guidelines": {
+    "metadata": {
+      "title": "Legion Design & Accessibility Guidelines",
+      "organization": "DEX Design Principle - Telkom",
+      "description": "Comprehensive guidelines combining design principles and accessibility standards for the Legion Design System",
+      "last_updated": "23 Desember 2024"
+    },
+    "design_principles": {
+      "document": {
+        "title": "Legion Design Principles",
+        "subtitle": "Guideline Implementasi",
+        "version": "V1.0",
+        "last_updated": "23 Desember 2024",
+        "description": "Guideline ini kami rumuskan untuk membantu memberikan gambaran bagaimana menerapkan desain yang selaras dengan principles yang ada di DEX, yaitu Dynamic, Empowerment, dan Harmoni.",
+        "note": "dokumen ini bukanlah suatu peraturan yang ketat dan mengikat, melainkan berupa panduan implementasi yang dapat disesuaikan dengan kebutuhan desain pada produk masing-masing."
+      },
+      "overview": {
+        "description": "Legion Design Principle adalah seperangkat panduan yang bertindak layaknya kompas untuk memastikan produk di Telkom fungsional, menarik, dan mudah digunakan. Prinsip-prinsip ini menyatukan visi tim dalam menciptakan pengalaman user yang lebih baik.",
+        "mantras": {
+          "Dynamic": ["Honest and Inviting", "Simple and Flexible", "Control and Freedom"],
+          "Empowerment": ["Embrace Anyone", "Powerful, Not Magical", "Give People Superpowers"],
+          "Harmony": ["Natural Mental Model", "Consistency and Standards", "Purpose and Function"]
+        }
+      },
+      "principles": [
         {
-          "id": "honest-and-inviting",
-          "name": "Honest and Inviting",
-          "description": "Merasa disambut, bukan terintimidasi, sehingga pengguna dapat dengan mudah terlibat secara aktif dengan produk. Menyesuaikan dengan data dan riset yang tersedia, desain dibuat dengan mengutamakan transparansi, kejelasan konteks, dan rasa nyaman untuk menarik perhatian user tanpa berlebihan menyajikan konten atau memberikan ekspektasi yang keliru.",
-          "keywords": ["Mudah digunakan", "visual yang atraktif", "relevan"],
-          "implementations": [
+          "id": "dynamic",
+          "name": "Dynamic",
+          "description": "Desain yang tetap relevan dengan mempertimbangkan secara cermat elemen dan informasi yang akan berikan, kepada siapa, dan dalam konteks apa. Senantiasa beradaptasi dan memberikan dukungan serta solusi yang tepat untuk setiap situasi yang user hadapi.",
+          "approaches": [
             {
-              "type": "visual",
-              "icon": "🎨",
-              "title": "Implementasi Visual",
-              "description": "Visual harus menarik dan informatif serta membangun ikatan personal dengan user.",
-              "dos": [
-                "Desain yang clean dan terstruktur",
-                "Tambahkan elemen visual yang mendukung konteks",
-                "Foto/visual harus merepresentasikan kebudayaan target audience",
-                "Teks harus mudah terbaca"
-              ],
-              "donts": [
-                "Membuat desain yang rumit atau terlalu banyak elemen yang tumpang tindih",
-                "Menggunakan elemen visual yang tidak ada hubungannya dengan konteks",
-                "Menggunakan gambar yang tidak sesuai dengan kebudayaan user",
-                "Menggunakan ukuran teks terlalu kecil dan huruf script untuk body text"
+              "id": "honest-and-inviting",
+              "name": "Honest and Inviting",
+              "description": "Merasa disambut, bukan terintimidasi, sehingga pengguna dapat dengan mudah terlibat secara aktif dengan produk. Menyesuaikan dengan data dan riset yang tersedia, desain dibuat dengan mengutamakan transparansi, kejelasan konteks, dan rasa nyaman untuk menarik perhatian user tanpa berlebihan menyajikan konten atau memberikan ekspektasi yang keliru.",
+              "keywords": ["Mudah digunakan", "visual yang atraktif", "relevan"],
+              "implementations": [
+                {
+                  "type": "visual",
+                  "icon": "🎨",
+                  "title": "Implementasi Visual",
+                  "description": "Visual harus menarik dan informatif serta membangun ikatan personal dengan user.",
+                  "dos": [
+                    "Desain yang clean dan terstruktur",
+                    "Tambahkan elemen visual yang mendukung konteks",
+                    "Foto/visual harus merepresentasikan kebudayaan target audience",
+                    "Teks harus mudah terbaca"
+                  ],
+                  "donts": [
+                    "Membuat desain yang rumit atau terlalu banyak elemen yang tumpang tindih",
+                    "Menggunakan elemen visual yang tidak ada hubungannya dengan konteks",
+                    "Menggunakan gambar yang tidak sesuai dengan kebudayaan user",
+                    "Menggunakan ukuran teks terlalu kecil dan huruf script untuk body text"
+                  ]
+                },
+                {
+                  "type": "content",
+                  "icon": "📝",
+                  "title": "Implementasi Konten",
+                  "description": "Bahasa dan konten harus sesuai dengan target audience dan disusun berdasarkan kebutuhan utama user saat mereka berada di halaman atau layar tertentu.",
+                  "dos": [
+                    "Tone of voice/penulisan kata kata harus positif dan mendorong",
+                    "Tambahkan elemen visual yang mendukung konteks",
+                    "Foto/visual merepresentasikan kebudayaan target audience"
+                  ],
+                  "donts": [
+                    "Membuat desain yang rumit atau terlalu banyak elemen yang tumpang tindih",
+                    "Menggunakan elemen visual yang tidak ada hubungannya dengan konteks",
+                    "Menggunakan gambar yang tidak sesuai dengan kebudayaan user"
+                  ]
+                },
+                {
+                  "type": "flow",
+                  "icon": "🛤",
+                  "title": "Implementasi Flow",
+                  "description": "Memberikan transparansi kepada user, menjelaskan apa yang akan terjadi di setiap langkah, dan membangun kepercayaan user.",
+                  "dos": [
+                    "Website harus memiliki alur Attract, Interest, Desire, dan Action yang sesuai",
+                    "Gunakan primary CTA untuk mengindikasikan flow utama pada page",
+                    "Label link/button harus jelas dan mengarahkan user dengan tepat"
+                  ],
+                  "donts": [
+                    "Menjejal hero section dengan daftar layanan/call to action tanpa konteks yang cukup",
+                    "Memasukkan banyak primary CTA dalam satu page sehingga membingungkan user",
+                    "Antara label pada link/button tidak sesuai dengan aksi yang diaktifkan"
+                  ]
+                }
               ]
             },
             {
-              "type": "content",
-              "icon": "📝",
-              "title": "Implementasi Konten",
-              "description": "Bahasa dan konten harus sesuai dengan target audience dan disusun berdasarkan kebutuhan utama user saat mereka berada di halaman atau layar tertentu.",
-              "dos": [
-                "Tone of voice/penulisan kata kata harus positif dan mendorong",
-                "Tambahkan elemen visual yang mendukung konteks",
-                "Foto/visual merepresentasikan kebudayaan target audience"
-              ],
-              "donts": [
-                "Membuat desain yang rumit atau terlalu banyak elemen yang tumpang tindih",
-                "Menggunakan elemen visual yang tidak ada hubungannya dengan konteks",
-                "Menggunakan gambar yang tidak sesuai dengan kebudayaan user"
+              "id": "simple-and-flexible",
+              "name": "Simple and Flexible",
+              "description": "Selalu dapat beradaptasi dengan perubahan dan beragam kebutuhan seiring waktu. Desain dibuat ringkas sesuai dengan kegunaan fitur yang mendukung user dalam menyelesaikan masalah dan mencapai tujuannya.",
+              "keywords": ["Adaptif", "responsif", "ringkas"],
+              "implementations": [
+                {
+                  "type": "visual",
+                  "icon": "🎨",
+                  "title": "Implementasi Visual",
+                  "description": "Penggunaan elemen visual yang fleksibel, responsif, dan mampu menyesuaikan dengan berbagai kondisi, baik itu perubahan konteks user, device, maupun kebutuhan bisnis.",
+                  "dos": [
+                    "Menggunakan komponen design system yang adaptif",
+                    "Menggunakan white space di sekitar elemen UI untuk meningkatkan keterbacaan dan fokus",
+                    "Provide desain yang dapat beradaptasi di berbagai perangkat/responsive design"
+                  ],
+                  "donts": [
+                    "Tidak menggunakan komponen yang terintegrasi (detached element) untuk case produk yang kompleks",
+                    "Menumpuk elemen dalam satu space sehingga tampilan terlihat sesak",
+                    "Tidak mempertimbangkan ukuran perangkat lain dalam mendesain"
+                  ]
+                },
+                {
+                  "type": "content",
+                  "icon": "📝",
+                  "title": "Implementasi Konten",
+                  "description": "Penyajian informasi yang dibutuhkan user yang ditampilkan dengan ringkas saat dibutuhkan.",
+                  "dos": [
+                    "Sajikan informasi atau fitur yang relevan untuk konteks user pada saat menggunakan produk",
+                    "Utamakan menampilkan informasi yang paling dibutuhkan user",
+                    "Pilih kata kata yang ringkas, jelas, dan mudah dipahami"
+                  ],
+                  "donts": [
+                    "Memaksakan CTA untuk fitur utama bahkan di page yang tidak relevan",
+                    "Membanjiri user dengan terlalu banyak informasi sekaligus",
+                    "Jangan gunakan jargon atau istilah teknis yang sulit dipahami tanpa penjelasan"
+                  ]
+                },
+                {
+                  "type": "flow",
+                  "icon": "🛤",
+                  "title": "Implementasi Flow",
+                  "description": "Flow yang efisien dan fungsional. Mempermudah user untuk mencapai tujuan, sambil memberikan opsi untuk penyesuaian sesuai kebutuhan.",
+                  "dos": [
+                    "Flow seminimal mungkin tanpa mengorbankan informasi yang penting",
+                    "Sediakan pilihan fleksibel untuk kebutuhan yang berbeda",
+                    "Buat user dapat kembali ke halaman sebelumnya atau mengedit informasi tanpa memulai ulang flow"
+                  ],
+                  "donts": [
+                    "Memaksa user menyelesaikan semua langkah dalam satu waktu",
+                    "Memaksakan satu opsi untuk fitur yang umumnya memiliki conditional flow",
+                    "Membatasi akses untuk revisi informasi"
+                  ]
+                }
               ]
             },
             {
-              "type": "flow",
-              "icon": "🛤",
-              "title": "Implementasi Flow",
-              "description": "Memberikan transparansi kepada user, menjelaskan apa yang akan terjadi di setiap langkah, dan membangun kepercayaan user.",
-              "dos": [
-                "Website harus memiliki alur Attract, Interest, Desire, dan Action yang sesuai",
-                "Gunakan primary CTA untuk mengindikasikan flow utama pada page",
-                "Label link/button harus jelas dan mengarahkan user dengan tepat"
-              ],
-              "donts": [
-                "Menjejal hero section dengan daftar layanan/call to action tanpa konteks yang cukup",
-                "Memasukkan banyak primary CTA dalam satu page sehingga membingungkan user",
-                "Antara label pada link/button tidak sesuai dengan aksi yang diaktifkan"
+              "id": "control-and-freedom",
+              "name": "Control and Freedom",
+              "description": "Desain yang memberikan kebebasan untuk menjelajahi, personalisasi, mengambil keputusan, dan mengoreksi kesalahan dengan mudah.",
+              "keywords": ["Enabling", "personalisasi"],
+              "implementations": [
+                {
+                  "type": "visual",
+                  "icon": "🎨",
+                  "title": "Implementasi Visual",
+                  "description": "Tampilan yang menawarkan personalisasi dan memberikan visual feedback yang real-time.",
+                  "dos": [
+                    "Tampilkan pengaturan untuk kustomisasi langsung di area yang relevan",
+                    "Tambahkan opsi preview sebelum menyimpan perubahan",
+                    "Desain pengaturan dengan slider atau checkbox yang mudah diubah",
+                    "Berikan tooltip untuk membantu user memahami fitur",
+                    "Berikan visual feedback untuk menunjukkan aksi berhasil/pending/gagal"
+                  ],
+                  "donts": [
+                    "Menyembunyikan pengaturan di menu yang terlalu dalam atau sulit ditemukan",
+                    "Tidak menyediakan opsi preview, sehingga user tidak bisa melihat hasil perubahan yang dilakukan",
+                    "Membuat pengaturan dengan elemen visual yang menyulitkan seperti angka",
+                    "Tidak menyediakan penjelasan di bagian fitur yang kompleks",
+                    "Tidak menunjukkan feedback yang menandai aksi"
+                  ]
+                },
+                {
+                  "type": "content",
+                  "icon": "📝",
+                  "title": "Implementasi Konten",
+                  "description": "Memberikan opsi untuk user untuk memilih, menyesuaikan, dan memahami informasi sesuai kebutuhan, sambil tetap memberikan panduan yang memudahkan navigasi.",
+                  "dos": [
+                    "Sediakan menu Bantuan atau FAQ yang dapat membantu user menggunakan fitur",
+                    "Tampilkan validasi langsung di form untuk menandai apabila form diisi dengan benar/salah",
+                    "Tampilkan ikon sinkronisasi atau pesan 'Tersimpan secara otomatis.'"
+                  ],
+                  "donts": [
+                    "Menempatkan menu Bantuan di lokasi yang sulit ditemukan",
+                    "Menampilkan validasi yang terlalu cepat sehingga tidak sempat dibaca oleh user",
+                    "Membiarkan proses sinkronisasi berlangsung lama tanpa feedback apapun"
+                  ]
+                },
+                {
+                  "type": "flow",
+                  "icon": "🛤",
+                  "title": "Implementasi Flow",
+                  "description": "Alur useran produk yang menyesuaikan interaksi sesuai preferensi user, mengeksplorasi tanpa paksaan, dan mudah memperbaiki kesalahan.",
+                  "dos": [
+                    "Bila memungkinkan, berikan user akses untuk melakukan eksplorasi tanpa harus registrasi",
+                    "Berikan user kebebasan untuk menghapus data pribadi",
+                    "Mudahkan user untuk menggunakan shortcut menuju page/task tertentu yang berulang",
+                    "Berikan undo/redo untuk tindakan sensitif"
+                  ],
+                  "donts": [
+                    "Memaksa user untuk melakukan registrasi",
+                    "Tidak menyediakan flow untuk menghapus data pribadi",
+                    "Hanya menyediakan satu jalur untuk menuju page/task yang dipakai berulang",
+                    "Tidak memberikan akses untuk membatalkan tindakan sensitif"
+                  ]
+                }
               ]
             }
           ]
         },
         {
-          "id": "simple-and-flexible",
-          "name": "Simple and Flexible",
-          "description": "Selalu dapat beradaptasi dengan perubahan dan beragam kebutuhan seiring waktu. Desain dibuat ringkas sesuai dengan kegunaan fitur yang mendukung user dalam menyelesaikan masalah dan mencapai tujuannya.",
-          "keywords": ["Adaptif", "responsif", "ringkas"],
-          "implementations": [
+          "id": "empowerment",
+          "name": "Empowerment",
+          "description": "Tujuan desain lebih dari sekadar keren; tapi juga berguna, berfungsi sebagai wadah untuk pembelajaran dan pengembangan diri. Karena itu, karya yang dibuat mengutamakan kualitas, pengalaman, sehingga hasil yang dibuat menjadi bernilai dalam semua aspek, baik itu bisnis, teknologi, atau desain.",
+          "approaches": [
             {
-              "type": "visual",
-              "icon": "🎨",
-              "title": "Implementasi Visual",
-              "description": "Penggunaan elemen visual yang fleksibel, responsif, dan mampu menyesuaikan dengan berbagai kondisi, baik itu perubahan konteks user, device, maupun kebutuhan bisnis.",
-              "dos": [
-                "Menggunakan komponen design system yang adaptif",
-                "Menggunakan white space di sekitar elemen UI untuk meningkatkan keterbacaan dan fokus",
-                "Provide desain yang dapat beradaptasi di berbagai perangkat/responsive design"
-              ],
-              "donts": [
-                "Tidak menggunakan komponen yang terintegrasi (detached element) untuk case produk yang kompleks",
-                "Menumpuk elemen dalam satu space sehingga tampilan terlihat sesak",
-                "Tidak mempertimbangkan ukuran perangkat lain dalam mendesain"
+              "id": "embrace-anyone",
+              "name": "Embrace Anyone",
+              "description": "Mengutamakan inklusivitas dan aksesibilitas dalam desain untuk memastikan semua user, terlepas dari keterbatasan fisik atau mental, dapat dengan mudah menggunakan produk. Pendekatan ini berfokus pada menciptakan pengalaman yang ramah, intuitif, dan adaptif sehingga setiap user merasa didukung dan mampu memanfaatkan produk secara maksimal.",
+              "keywords": ["Desain inklusif", "aksesibilitas", "adaptif", "user-friendly"],
+              "implementations": [
+                {
+                  "type": "visual",
+                  "icon": "🎨",
+                  "title": "Implementasi Visual",
+                  "description": "Visual harus mudah dan nyaman dengan berfokus pada inklusivitas dan aksesibilitas.",
+                  "dos": [
+                    "Gunakan kontras warna yang tinggi",
+                    "Gunakan jenis tipografi yang mudah dibaca",
+                    "Buat setiap ukuran elemen sesuai dengan kemudahan user",
+                    "Bila memungkinkan, sediakan opsi bagi user untuk menyesuaikan tampilan sesuai preferensi mereka"
+                  ],
+                  "donts": [
+                    "Menggunakan warna dengan kontras rendah",
+                    "Menggunakan jenis tipografi yang kompleks",
+                    "Menggunakan visual yang terlalu berlebihan. Jangan buat ukuran terlalu kecil",
+                    "Memaksakan preferensi visual tertentu tanpa memberikan opsi untuk menyesuaikan"
+                  ]
+                },
+                {
+                  "type": "content",
+                  "icon": "📝",
+                  "title": "Implementasi Konten",
+                  "description": "Tidak hanya fokus pada fungsionalitas, tapi juga mementingkan segi emosional dari sisi penggunaan bahasa maupun visual.",
+                  "dos": [
+                    "Universal, mempertimbangkan berbagai jenis pengguna",
+                    "Tambahkan copy dan elemen visual yang mendukung konteks",
+                    "Optimalkan untuk berbagai perangkat",
+                    "Tulis konten dengan format yang terstruktur"
+                  ],
+                  "donts": [
+                    "Menggunakan konten dengan copy yang terlalu teknis",
+                    "Informasi tidak diberikan copy dan elemen visual pendukung",
+                    "Interface hanya dapat diakses dalam satu resolusi spesifik",
+                    "Menggunakan kalimat yang terlalu rumit dan panjang"
+                  ]
+                },
+                {
+                  "type": "flow",
+                  "icon": "🛤",
+                  "title": "Implementasi Flow",
+                  "description": "Flow yang mudah diikuti, dan memungkinkan semua user untuk merasa nyaman, terlibat, serta percaya diri dalam menggunakan produk.",
+                  "dos": [
+                    "Mengusahakan lebih dari satu cara untuk mengakses fitur",
+                    "Berikan opsi yang fleksibel dan pintu keluar/masuk yang jelas",
+                    "Gunakan flow sederhana dan sesuai dengan aktivitas nyata",
+                    "Tampilkan umpan balik dan progress untuk menjaga motivasi"
+                  ],
+                  "donts": [
+                    "Hanya menyediakan satu akses spesifik untuk mengoperasikan fitur",
+                    "Tidak menyediakan akses navigasi sehingga membuat user terjebak ditempat tertentu",
+                    "Membuat flow yang kompleks tanpa mengujikan tingkat acceptance user",
+                    "Jangan memaksa user menyelesaikan proses panjang sekaligus"
+                  ]
+                }
               ]
             },
             {
-              "type": "content",
-              "icon": "📝",
-              "title": "Implementasi Konten",
-              "description": "Penyajian informasi yang dibutuhkan user yang ditampilkan dengan ringkas saat dibutuhkan.",
-              "dos": [
-                "Sajikan informasi atau fitur yang relevan untuk konteks user pada saat menggunakan produk",
-                "Utamakan menampilkan informasi yang paling dibutuhkan user",
-                "Pilih kata kata yang ringkas, jelas, dan mudah dipahami"
-              ],
-              "donts": [
-                "Memaksakan CTA untuk fitur utama bahkan di page yang tidak relevan",
-                "Membanjiri user dengan terlalu banyak informasi sekaligus",
-                "Jangan gunakan jargon atau istilah teknis yang sulit dipahami tanpa penjelasan"
+              "id": "powerful-not-magical",
+              "name": "Powerful, Not Magical",
+              "description": "Prinsip Empowerment dengan nilai Powerful, Not Magical berfokus pada memberikan pengalaman yang jelas, dapat diprediksi, dan bermanfaat untuk user. Tujuan dari prinsip ini adalah menciptakan interaksi yang tidak membuat user merasa seperti mereka bermain sihir dengan feedback interaksi yang di luar dugaan, tetapi merasa diberdayakan dengan memberikan kontrol yang lebih baik atas keputusan dan tindakan mereka.",
+              "keywords": ["Dapat diprediksi", "aksi jelas", "dapat diandalkan"],
+              "implementations": [
+                {
+                  "type": "visual",
+                  "icon": "🎨",
+                  "title": "Implementasi Visual",
+                  "description": "Elemen elemen visual harus berfungsi dengan tujuan yang jelas, seperti tombol dan ikon yang mudah dikenali.",
+                  "dos": [
+                    "Element desain jelas dan mudah dipahami",
+                    "Feedback visual yang informatif",
+                    "Gunakan grid dan tataletak yang terstruktur",
+                    "Terapkan warna yang sesuai dengan konteks"
+                  ],
+                  "donts": [
+                    "Menggunakan elemen visual yang rumit dan sulit dipahami",
+                    "Menggunakan visual yang tidak relevan",
+                    "Tataletak yang tidak beraturan sehingga sulit dipahami",
+                    "Menggunakan warna yang tidak sesuai dengan ketentuan konvensional"
+                  ]
+                },
+                {
+                  "type": "content",
+                  "icon": "📝",
+                  "title": "Implementasi Konten",
+                  "description": "Konten harus singkat, jelas, dan langsung pada intinya. Instruksi dan pesan yang disampaikan harus mudah dipahami, dengan memberikan konteks yang relevan.",
+                  "dos": [
+                    "Gunakan bahasa yang sederhana, lugas, dan mudah dipahami",
+                    "Berikan konteks yang relevan pada setiap bagian konten",
+                    "Gunakan data dan bukti untuk mendukung keputusan atau tindakan yang diambil user",
+                    "Berikan instruksi yang jelas dan konsisten untuk membantu user menyelesaikan tugas dengan mudah"
+                  ],
+                  "donts": [
+                    "Penggunaan jargon teknis atau bahasa yang sulit dimengerti oleh audiens umum",
+                    "Penggunaan konten yang bersifat pemasaran atau promosi berlebihan tanpa konteks yang jelas",
+                    "Menyampaikan informasi atau petunjuk yang kurang jelas sumbernya",
+                    "Menggunakan kalimat yang bertele-tele atau tidak relevan dengan tugas user"
+                  ]
+                },
+                {
+                  "type": "flow",
+                  "icon": "🛤",
+                  "title": "Implementasi Flow",
+                  "description": "Alur interaksi harus terstruktur dengan baik, logis, dan mudah diikuti. Setiap langkah dalam flow harus memberikan umpan balik yang jelas, serta memberi kontrol kepada user untuk mengedit atau membatalkan tindakan.",
+                  "dos": [
+                    "Buat alur yang logis dan intuitif dengan langkah yang mudah dipahami",
+                    "Berikan kontrol penuh kepada user di setiap tahap alur",
+                    "Pastikan setiap interaksi memberi umpan balik yang jelas",
+                    "Gunakan label dan teks petunjuk yang jelas untuk membantu user memahami apa yang perlu mereka lakukan"
+                  ],
+                  "donts": [
+                    "Penggunaan alur yang terlalu rumit atau langkah langkah yang tidak konsisten",
+                    "Membuat user menebak nebak tindakan berikutnya dengan desain yang ambigu",
+                    "Meniadakan kontrol user atau memberi terlalu sedikit umpan balik tentang tindakan yang diambil",
+                    "Perbedaan mencolok dalam flow atau antara satu fitur dan fitur lain tanpa alasan yang jelas"
+                  ]
+                }
               ]
             },
             {
-              "type": "flow",
-              "icon": "🛤",
-              "title": "Implementasi Flow",
-              "description": "Flow yang efisien dan fungsional. Mempermudah user untuk mencapai tujuan, sambil memberikan opsi untuk penyesuaian sesuai kebutuhan.",
-              "dos": [
-                "Flow seminimal mungkin tanpa mengorbankan informasi yang penting",
-                "Sediakan pilihan fleksibel untuk kebutuhan yang berbeda",
-                "Buat user dapat kembali ke halaman sebelumnya atau mengedit informasi tanpa memulai ulang flow"
-              ],
-              "donts": [
-                "Memaksa user menyelesaikan semua langkah dalam satu waktu",
-                "Memaksakan satu opsi untuk fitur yang umumnya memiliki conditional flow",
-                "Membatasi akses untuk revisi informasi"
+              "id": "give-people-superpowers",
+              "name": "Give People Superpowers",
+              "description": "Desain meningkatkan kepercayaan diri user dalam mengambil keputusan, sehingga memberikan user superpower dalam menyelesaikan tugas mereka dengan efektif. User merasa diberi kekuatan untuk mengatasi tantangan dengan kontrol penuh atas pengalaman mereka.",
+              "keywords": ["Kepercayaan diri", "pemberdayaan", "kejelasan dalam pengambilan keputusan", "umpan balik"],
+              "implementations": [
+                {
+                  "type": "visual",
+                  "icon": "🎨",
+                  "title": "Implementasi Visual",
+                  "description": "Harus dirancang untuk mendukung rasa kontrol dan percaya diri user.",
+                  "dos": [
+                    "Gunakan elemen desain yang jelas dan mudah diidentifikasi",
+                    "Terapkan visual yang menginspirasi rasa percaya diri",
+                    "Pastikan tombol dan kontrol interaktif cukup besar dan dapat dijangkau",
+                    "Sertakan elemen desain yang memberikan umpan balik langsung"
+                  ],
+                  "donts": [
+                    "Hindari desain yang membingungkan atau tidak jelas",
+                    "Jangan menggunakan elemen visual yang terlalu kecil atau sulit dijangkau",
+                    "Jangan batasi kontrol user",
+                    "Hindari elemen visual yang terlalu sederhana sehingga tidak menggambarkan konteks"
+                  ]
+                },
+                {
+                  "type": "content",
+                  "icon": "📝",
+                  "title": "Implementasi Konten",
+                  "description": "Deskripsi dan pesan harus mengkomunikasikan dengan tegas bahwa user memiliki kontrol penuh atas tindakan mereka.",
+                  "dos": [
+                    "Gunakan bahasa yang membangun rasa percaya diri, seperti memberi penguatan positif",
+                    "Berikan petunjuk yang jelas dan langkah langkah yang dapat diikuti",
+                    "Gunakan pesan yang menekankan bahwa user memiliki kekuatan dan kontrol",
+                    "Berikan konten yang relevan dan memberikan solusi"
+                  ],
+                  "donts": [
+                    "Hindari bahasa yang meragukan kemampuan user atau membuat mereka merasa tidak mampu",
+                    "Jangan gunakan kalimat yang menyarankan bahwa user harus mengandalkan bantuan eksternal",
+                    "Jangan berikan informasi yang membingungkan atau penuh jargon",
+                    "Hindari instruksi yang terlalu rumit atau membingungkan"
+                  ]
+                },
+                {
+                  "type": "flow",
+                  "icon": "🛤",
+                  "title": "Implementasi Flow",
+                  "description": "User harus merasa diberdayakan dalam setiap keputusan dan memiliki kontrol penuh dalam setiap interaksi.",
+                  "dos": [
+                    "Bangun alur interaksi yang sederhana namun kuat",
+                    "Pastikan transisi antar halaman atau langkah dilakukan dengan halus",
+                    "Berikan opsi untuk membatalkan atau mengedit keputusan di setiap langkah",
+                    "Pastikan setiap umpan balik dari tindakan user langsung dan mudah dipahami"
+                  ],
+                  "donts": [
+                    "Hindari alur yang membingungkan atau membatasi pilihan user",
+                    "Jangan biarkan user terjebak dalam alur tanpa opsi untuk kembali atau mengubah",
+                    "Jangan membuat user merasa bahwa mereka kehilangan kontrol atas proses",
+                    "Hindari memberi petunjuk yang tidak jelas atau tidak memberi informasi yang cukup"
+                  ]
+                }
               ]
             }
           ]
         },
         {
-          "id": "control-and-freedom",
-          "name": "Control and Freedom",
-          "description": "Desain yang memberikan kebebasan untuk menjelajahi, personalisasi, mengambil keputusan, dan mengoreksi kesalahan dengan mudah.",
-          "keywords": ["Enabling", "personalisasi"],
-          "implementations": [
+          "id": "harmony",
+          "name": "Harmony",
+          "description": "Komitmen untuk menciptakan harmoni dan konsistensi dalam pengalaman user. Produk dirancang untuk mengintegrasikan berbagai elemen secara mulus, termasuk semua stakeholders yang terlibat, sehingga tumbuh hubungan yang kuat antara user dan produk.",
+          "approaches": [
             {
-              "type": "visual",
-              "icon": "🎨",
-              "title": "Implementasi Visual",
-              "description": "Tampilan yang menawarkan personalisasi dan memberikan visual feedback yang real-time.",
-              "dos": [
-                "Tampilkan pengaturan untuk kustomisasi langsung di area yang relevan",
-                "Tambahkan opsi preview sebelum menyimpan perubahan",
-                "Desain pengaturan dengan slider atau checkbox yang mudah diubah",
-                "Berikan tooltip untuk membantu user memahami fitur",
-                "Berikan visual feedback untuk menunjukkan aksi berhasil/pending/gagal"
-              ],
-              "donts": [
-                "Menyembunyikan pengaturan di menu yang terlalu dalam atau sulit ditemukan",
-                "Tidak menyediakan opsi preview, sehingga user tidak bisa melihat hasil perubahan yang dilakukan",
-                "Membuat pengaturan dengan elemen visual yang menyulitkan seperti angka",
-                "Tidak menyediakan penjelasan di bagian fitur yang kompleks",
-                "Tidak menunjukkan feedback yang menandai aksi"
+              "id": "natural-mental-model",
+              "name": "Natural Mental Model",
+              "description": "Mencerminkan cara user berpikir, bertindak, dan memahami hal layaknya di dunia nyata. Experience pada desain intuitif, mudah dipahami, dan nyaman.",
+              "keywords": ["Intuitif", "Familiar", "Relevan"],
+              "implementations": [
+                {
+                  "type": "visual",
+                  "icon": "🎨",
+                  "title": "Implementasi Visual",
+                  "description": "User friendly, intuitif, dan selaras dengan cara user berpikir dan bertindak di dunia nyata. Elemen visual memanfaatkan metafora, hierarki, dan pola yang sudah dikenal user sehingga interaksi terasa logis dan nyaman.",
+                  "dos": [
+                    "Gunakan elemen visual yang menyerupai objek atau tindakan di dunia nyata",
+                    "Kelompokkan konten yang relevan dengan satu sama lain",
+                    "Penggunaan warna yang harmonis dalam desain"
+                  ],
+                  "donts": [
+                    "Menggunakan ikon yang tidak relevan dengan dunia nyata",
+                    "Mencampur konten yang tidak berhubungan dalam satu kelompok",
+                    "Memilih warna tanpa memperhatikan maknanya"
+                  ]
+                },
+                {
+                  "type": "content",
+                  "icon": "📝",
+                  "title": "Implementasi Konten",
+                  "description": "Konten menggunakan istilah, struktur, dan pola yang akrab bagi user sehingga terasa intuitif, meminimalkan kebingungan, dan meningkatkan kenyamanan dalam menggunakan produk.",
+                  "dos": [
+                    "Pilih kata kata yang familiar bagi user, sesuai dengan persona, aktivitas, atau konteks mereka",
+                    "Manfaatkan heading, bullet points, dan visual cues agar konten mudah dicerna",
+                    "Fokus pada informasi atau tindakan yang sering digunakan user terlebih dahulu"
+                  ],
+                  "donts": [
+                    "Menggunakan istilah yang hanya dipahami oleh kalangan tertentu (jargon)",
+                    "Membanjiri user dengan terlalu banyak detail",
+                    "Mengabaikan ekspektasi atau kebiasaan user"
+                  ]
+                },
+                {
+                  "type": "flow",
+                  "icon": "🛤",
+                  "title": "Implementasi Flow",
+                  "description": "Mencerminkan logika, kebiasaan, dan ekspektasi user di dunia nyata. Flow dibuat seintuitif mungkin sehingga user dapat memahami alur tanpa perlu berpikir keras atau membaca panduan.",
+                  "dos": [
+                    "Merujuk kepada hasil riset, ikuti alur yang wajar bagi user sesuai kebiasaan mereka",
+                    "Pilih kata kata yang mudah dipahami tanpa jargon teknis",
+                    "Berikan indikator seperti progress bar atau konfirmasi di setiap langkah alur",
+                    "Sediakan tombol Kembali atau 'Ubah' agar user merasa memiliki kendali"
+                  ],
+                  "donts": [
+                    "Memaksa user untuk menyelesaikan langkah tambahan yang tidak relevan",
+                    "Mengubah istilah atau elemen UI, sehingga istilah berbeda dari satu flow ke flow yang lain",
+                    "Membuat alur yang melompat atau tidak sesuai dengan ekspektasi user",
+                    "Menghilangkan feedback visual seperti indikator progres"
+                  ]
+                }
               ]
             },
             {
-              "type": "content",
-              "icon": "📝",
-              "title": "Implementasi Konten",
-              "description": "Memberikan opsi untuk user untuk memilih, menyesuaikan, dan memahami informasi sesuai kebutuhan, sambil tetap memberikan panduan yang memudahkan navigasi.",
-              "dos": [
-                "Sediakan menu Bantuan atau FAQ yang dapat membantu user menggunakan fitur",
-                "Tampilkan validasi langsung di form untuk menandai apabila form diisi dengan benar/salah",
-                "Tampilkan ikon sinkronisasi atau pesan 'Tersimpan secara otomatis.'"
-              ],
-              "donts": [
-                "Menempatkan menu Bantuan di lokasi yang sulit ditemukan",
-                "Menampilkan validasi yang terlalu cepat sehingga tidak sempat dibaca oleh user",
-                "Membiarkan proses sinkronisasi berlangsung lama tanpa feedback apapun"
+              "id": "consistency-and-standards",
+              "name": "Consistency and Standards",
+              "description": "Memastikan pengalaman user terstruktur, dapat diprediksi, dan konsisten di seluruh elemen, fitur, serta produk. Pendekatan ini memperhatikan elemen visual, perilaku interaksi, dan useran brand voice yang seragam untuk menciptakan identitas desain yang kuat.",
+              "keywords": ["Design system", "Guideline", "Foundation", "Hirarki", "Modularity"],
+              "implementations": [
+                {
+                  "type": "visual",
+                  "icon": "🎨",
+                  "title": "Implementasi Visual",
+                  "description": "Mencerminkan desain yang seragam, mudah dikenali, dan harmonis di seluruh elemen serta fitur produk. Visual tidak hanya mengikuti design system dan guideline, tetapi juga menerapkan elemen visual secara strategis untuk membuat user merasa familiar dengan useran produk.",
+                  "dos": [
+                    "Menerapkan komponen seperti tombol, warna, ikon, dan tipografi sesuai dengan design system",
+                    "Menerapkan hierarki tipografi yang jelas dengan font, ukuran, dan gaya yang seragam",
+                    "Menggunakan warna yang sesuai dengan palet resmi dalam design system",
+                    "Gunakan margin, padding, dan grid layout yang ditetapkan dalam guideline untuk menjaga layout yang rapi dan seragam"
+                  ],
+                  "donts": [
+                    "Menggunakan elemen visual yang tidak didefinisikan dalam design system",
+                    "Menggunakan font yang berbeda beda tanpa hierarki yang jelas",
+                    "Menggunakan warna primary yang berbeda beda atau yang tidak ada dalam palet desain resmi",
+                    "Membuat jarak antar elemen yang tidak konsisten atau memindahkan elemen dari grid layout"
+                  ]
+                },
+                {
+                  "type": "content",
+                  "icon": "📝",
+                  "title": "Implementasi Konten",
+                  "description": "Memastikan konten terstruktur, mengikuti brand guideline dan desain, serta memberikan pengalaman yang seragam di semua titik interaksi user.",
+                  "dos": [
+                    "Menggunakan istilah yang sama di seluruh fitur dan platform",
+                    "Memastikan nada dan gaya penulisan konsisten sesuai brand guideline",
+                    "Menerapkan hierarki konten yang jelas menggunakan heading, subheading, dan bullet points",
+                    "Menggunakan font, ukuran, warna, dan elemen visual sesuai design system"
+                  ],
+                  "donts": [
+                    "Menggunakan terminologi berbeda untuk aksi atau fitur yang sama",
+                    "Menyusun konten tanpa struktur yang jelas",
+                    "Mencampur mencampur font atau ukuran teks yang tidak sesuai dengan design system",
+                    "Menambahkan warna, ikon, atau elemen visual yang tidak didefinisikan dalam design system"
+                  ]
+                },
+                {
+                  "type": "flow",
+                  "icon": "🛤",
+                  "title": "Implementasi Flow",
+                  "description": "Memastikan experience user yang mulus dan seragam di seluruh fitur atau produk. Flow ini didesain terstruktur, mudah dinavigasi, dan interaksi yang sesuai dengan design system dan brand guideline.",
+                  "dos": [
+                    "Menerapkan elemen visual, tombol, dan interaksi yang sesuai dengan design system",
+                    "Membuat navigasi yang konsisten sehingga lebih predictable",
+                    "Menampilkan pesan atau instruksi yang sesuai dengan tone of voice brand dan mudah dibaca",
+                    "Melakukan sinkronisasi flow di seluruh fitur untuk memastikan keseragaman style dan elemen"
+                  ],
+                  "donts": [
+                    "Terlalu sering menggunakan elemen improvisasi yang tidak didefinisikan dalam design system",
+                    "Melakukan perubahan pada alur atau posisi elemen navigasi antara satu page dengan page yang lain",
+                    "Menggunakan istilah atau gaya penulisan yang berbeda di setiap langkah flow",
+                    "Membuat alur yang sangat berbeda antar fitur tanpa justifikasi kuat"
+                  ]
+                }
               ]
             },
             {
-              "type": "flow",
-              "icon": "🛤",
-              "title": "Implementasi Flow",
-              "description": "Alur useran produk yang menyesuaikan interaksi sesuai preferensi user, mengeksplorasi tanpa paksaan, dan mudah memperbaiki kesalahan.",
-              "dos": [
-                "Bila memungkinkan, berikan user akses untuk melakukan eksplorasi tanpa harus registrasi",
-                "Berikan user kebebasan untuk menghapus data pribadi",
-                "Mudahkan user untuk menggunakan shortcut menuju page/task tertentu yang berulang",
-                "Berikan undo/redo untuk tindakan sensitif"
-              ],
-              "donts": [
-                "Memaksa user untuk melakukan registrasi",
-                "Tidak menyediakan flow untuk menghapus data pribadi",
-                "Hanya menyediakan satu jalur untuk menuju page/task yang dipakai berulang",
-                "Tidak memberikan akses untuk membatalkan tindakan sensitif"
+              "id": "purpose-and-function",
+              "name": "Purpose and Function",
+              "description": "Pendekatan ini memperhatikan fungsi utama, mengutamakan informasi yang concise, dan berorientasi pada user, sehingga fungsi utama suatu produk dan servis dapat dikomunikasikan dengan baik. Desain yang dibuat diujikan ke user, dan memiliki success metrics yang sesuai dengan goals dari produk/servis.",
+              "keywords": ["Business Process", "User driven", "Testing & Analytic", "Struktur sesuai Goals"],
+              "implementations": [
+                {
+                  "type": "visual",
+                  "icon": "🎨",
+                  "title": "Implementasi Visual",
+                  "description": "Visual menonjolkan elemen penting dan meminimalisir distraksi dengan desain yang bersih dan fokus pada informasi relevan. Hierarki visual memastikan semua elemen mendukung user journey dan senantiasa fokus pada fungsi utama.",
+                  "dos": [
+                    "Gunakan warna kontras, ukuran lebih besar, atau posisi strategis untuk menonjolkan fungsi utama",
+                    "Maksimalkan useran component UI sesuai dengan fitur",
+                    "Gunakan teks pendek dan langsung yang relevan dengan fungsi utama",
+                    "Aplikasikan tata letak dan hirarki yang disesuaikan dengan tujuan produk",
+                    "Utamakan desain yang menjawab purpose dan function sebelum estetika"
+                  ],
+                  "donts": [
+                    "Menggunakan warna atau elemen yang membuat fungsi utama menyatu dengan elemen lainnya",
+                    "Menampilkan paragraf panjang atau informasi teknis yang membingungkan di layar utama",
+                    "Membuat semua elemen terlihat sama pentingnya dengan ukuran atau warna yang sama",
+                    "Memaksakan estetika interaksi dan elemen visual dan mengorbankan fungsi utama dari desain"
+                  ]
+                },
+                {
+                  "type": "content",
+                  "icon": "📝",
+                  "title": "Implementasi Konten",
+                  "description": "Menyampaikan pesan utama dengan singkat dan jelas dan mengurangi noise pada desain yang dapat menghalangi visibilitas fitur utama.",
+                  "dos": [
+                    "Tulis teks yang langsung ke inti, mengurangi jargon atau istilah teknis yang tidak perlu",
+                    "Tampilkan hanya informasi yang mendukung fungsi utama pada layar saat itu",
+                    "Gunakan heading, bullet points, atau angka untuk memecah informasi menjadi bagian yang lebih kecil"
+                  ],
+                  "donts": [
+                    "Menggunakan kalimat panjang atau rumit yang membingungkan user",
+                    "Menyajikan informasi tambahan yang mengalihkan perhatian, seperti promosi tidak relevan",
+                    "Menyajikan semua informasi dalam satu paragraf panjang yang sulit dipahami"
+                  ]
+                },
+                {
+                  "type": "flow",
+                  "icon": "🛤",
+                  "title": "Implementasi Flow",
+                  "description": "Memastikan langkah langkah user efisien dan bebas dari hambatan. Hasil desain berangkat dari requirement document yang selaras dengan tujuan bisnis.",
+                  "dos": [
+                    "Mempertimbangkan user goals dan business goals",
+                    "Menyediakan jalur langsung untuk menyelesaikan tugas",
+                    "Gunakan tombol atau opsi yang jelas untuk tindakan utama",
+                    "Tampilkan pesan sukses, error, atau status di tiap langkah untuk memastikan user memahami prosesnya",
+                    "Berikan informasi yang relevan sesuai langkah"
+                  ],
+                  "donts": [
+                    "Memaksakan langkah seperti Tambah Akun Baru saat user bisa langsung checkout sebagai guest user",
+                    "Menyembunyikan langkah selanjutnya dalam menu dropdown atau elemen tersembunyi",
+                    "Membiarkan user menebak apakah tindakan mereka berhasil tanpa feedback apa pun",
+                    "Membanjiri user dengan informasi yang tidak diperlukan"
+                  ]
+                }
               ]
             }
           ]
         }
       ]
     },
-    {
-      "id": "empowerment",
-      "name": "Empowerment",
-      "description": "Tujuan desain lebih dari sekadar keren; tapi juga berguna, berfungsi sebagai wadah untuk pembelajaran dan pengembangan diri. Karena itu, karya yang dibuat mengutamakan kualitas, pengalaman, sehingga hasil yang dibuat menjadi bernilai dalam semua aspek, baik itu bisnis, teknologi, atau desain.",
-      "approaches": [
+    "accessibility_guidelines": {
+      "document": {
+        "title": "Legion Accessibility Guidelines",
+        "subtitle": "By DEX Design Principle",
+        "version": "v2.0",
+        "description": "Comprehensive accessibility guidelines for the Legion Design System to ensure WCAG 2.1 AA compliance and usability for all users, including individuals with disabilities."
+      },
+      "overview": {
+        "description": "Accessibility is a foundational value of the Legion Design System. Legion Design System meets WCAG 2.1 AA standards, as accessibility goals and requirements are integrated into component guidelines and documentation. Embracing accessibility ensures usability for all users, including individuals with low vision, blindness, hearing impairments, cognitive or motor challenges, and temporary or situational disabilities (like an injured arm).",
+        "compliance_standard": "WCAG 2.1 AA",
+        "principles": ["Perceivable", "Operable", "Understandable", "Robust"]
+      },
+      "what_is_accessibility": {
+        "definition": "Web accessibility ensures that people with disabilities can perceive, understand, navigate, interact with, and contribute to the applications you create. This means that pages are Perceivable, Operable, Understandable and Robust.",
+        "includes": [
+          "Providing keyboard interaction alternatives for all mouse-based actions",
+          "Properly identifying all form fields and buttons",
+          "Providing text based alternatives for all images, videos, icons and SVGs",
+          "Building components that properly convey their identity, operation model, and state to assistive technologies"
+        ],
+        "design_system_role": "The Design System enables accessible development by providing a set of semantically correct components, each with appropriate ARIA markup so they can be identified correctly to users of assistive technologies."
+      },
+      "guidelines": [
         {
-          "id": "embrace-anyone",
-          "name": "Embrace Anyone",
-          "description": "Mengutamakan inklusivitas dan aksesibilitas dalam desain untuk memastikan semua user, terlepas dari keterbatasan fisik atau mental, dapat dengan mudah menggunakan produk. Pendekatan ini berfokus pada menciptakan pengalaman yang ramah, intuitif, dan adaptif sehingga setiap user merasa didukung dan mampu memanfaatkan produk secara maksimal.",
-          "keywords": ["Desain inklusif", "aksesibilitas", "adaptif", "user-friendly"],
-          "implementations": [
+          "id": "structure-hierarchy-navigation",
+          "name": "Structure, Hierarchy, and Navigation",
+          "description": "A consistent hierarchy helps people navigate the page using links or headers. Use headings and titles to outline the page so people can see the structure and how sections relate to each other.",
+          "categories": [
             {
-              "type": "visual",
-              "icon": "🎨",
-              "title": "Implementasi Visual",
-              "description": "Visual harus mudah dan nyaman dengan berfokus pada inklusivitas dan aksesibilitas.",
-              "dos": [
-                "Gunakan kontras warna yang tinggi",
-                "Gunakan jenis tipografi yang mudah dibaca",
-                "Buat setiap ukuran elemen sesuai dengan kemudahan user",
-                "Bila memungkinkan, sediakan opsi bagi user untuk menyesuaikan tampilan sesuai preferensi mereka"
-              ],
-              "donts": [
-                "Menggunakan warna dengan kontras rendah",
-                "Menggunakan jenis tipografi yang kompleks",
-                "Menggunakan visual yang terlalu berlebihan. Jangan buat ukuran terlalu kecil",
-                "Memaksakan preferensi visual tertentu tanpa memberikan opsi untuk menyesuaikan"
+              "name": "Structure",
+              "requirements": [
+                {
+                  "title": "Clear Heading Structure",
+                  "description": "Use headings (H1-H6) to organize content in a logical order. This helps users understand the page's structure and find information quickly, particularly those using screen readers."
+                },
+                {
+                  "title": "Semantic HTML",
+                  "description": "Use HTML5 elements for their intended purpose (e.g., <nav> for navigation, <article> for main content, <aside> for sidebars). This provides meaning to the content and helps assistive technologies interpret the page correctly."
+                },
+                {
+                  "title": "Lists",
+                  "description": "Use lists (<ul>, <ol>, <dl>) to structure related items. This makes content easier to scan and understand."
+                }
               ]
             },
             {
-              "type": "content",
-              "icon": "📝",
-              "title": "Implementasi Konten",
-              "description": "Tidak hanya fokus pada fungsionalitas, tapi juga mementingkan segi emosional dari sisi penggunaan bahasa maupun visual.",
-              "dos": [
-                "Universal, mempertimbangkan berbagai jenis pengguna",
-                "Tambahkan copy dan elemen visual yang mendukung konteks",
-                "Optimalkan untuk berbagai perangkat",
-                "Tulis konten dengan format yang terstruktur"
-              ],
-              "donts": [
-                "Menggunakan konten dengan copy yang terlalu teknis",
-                "Informasi tidak diberikan copy dan elemen visual pendukung",
-                "Interface hanya dapat diakses dalam satu resolusi spesifik",
-                "Menggunakan kalimat yang terlalu rumit dan panjang"
+              "name": "Hierarchy",
+              "requirements": [
+                {
+                  "title": "Visual Hierarchy",
+                  "description": "Use visual cues like font size, color, and spacing to show the relationship between different elements. This helps users understand the importance and order of information."
+                },
+                {
+                  "title": "Heading Order",
+                  "description": "Headings should follow a logical order (H1, then H2, then H3, etc.) to create a clear hierarchy of information. Skipping heading levels can be confusing."
+                }
               ]
             },
             {
-              "type": "flow",
-              "icon": "🛤",
-              "title": "Implementasi Flow",
-              "description": "Flow yang mudah diikuti, dan memungkinkan semua user untuk merasa nyaman, terlibat, serta percaya diri dalam menggunakan produk.",
-              "dos": [
-                "Mengusahakan lebih dari satu cara untuk mengakses fitur",
-                "Berikan opsi yang fleksibel dan pintu keluar/masuk yang jelas",
-                "Gunakan flow sederhana dan sesuai dengan aktivitas nyata",
-                "Tampilkan umpan balik dan progress untuk menjaga motivasi"
-              ],
-              "donts": [
-                "Hanya menyediakan satu akses spesifik untuk mengoperasikan fitur",
-                "Tidak menyediakan akses navigasi sehingga membuat user terjebak ditempat tertentu",
-                "Membuat flow yang kompleks tanpa mengujikan tingkat acceptance user",
-                "Jangan memaksa user menyelesaikan proses panjang sekaligus"
+              "name": "Navigation",
+              "requirements": [
+                {
+                  "title": "Consistent Navigation",
+                  "description": "Keep your navigation menus in the same location and order across all pages. This helps users predict where to find things."
+                },
+                {
+                  "title": "Keyboard Accessibility",
+                  "description": "Ensure all navigation elements can be accessed and used with a keyboard alone. This is essential for users who cannot use a mouse."
+                },
+                {
+                  "title": "Clear Link Text",
+                  "description": "Use descriptive link text that explains where the link leads. Avoid vague phrases like 'click here.'"
+                },
+                {
+                  "title": "Skip Links",
+                  "description": "Provide 'skip links' that allow users to bypass repetitive content (like navigation menus) and jump directly to the main content."
+                }
               ]
             }
+          ],
+          "importance": {
+            "for_visual_impairments": "Screen reader users rely on proper structure and headings to understand the content.",
+            "for_cognitive_disabilities": "Clear hierarchy and navigation help users with cognitive disabilities focus on the content and avoid distractions.",
+            "for_motor_impairments": "Keyboard-only users need to be able to navigate the website without a mouse."
+          },
+          "sources": [
+            "WCAG 2.1",
+            "Usability & Web Accessibility – Yale University"
           ]
         },
         {
-          "id": "powerful-not-magical",
-          "name": "Powerful, Not Magical",
-          "description": "Prinsip Empowerment dengan nilai Powerful, Not Magical berfokus pada memberikan pengalaman yang jelas, dapat diprediksi, dan bermanfaat untuk user. Tujuan dari prinsip ini adalah menciptakan interaksi yang tidak membuat user merasa seperti mereka bermain sihir dengan feedback interaksi yang di luar dugaan, tetapi merasa diberdayakan dengan memberikan kontrol yang lebih baik atas keputusan dan tindakan mereka.",
-          "keywords": ["Dapat diprediksi", "aksi jelas", "dapat diandalkan"],
-          "implementations": [
+          "id": "colors",
+          "name": "Colors",
+          "description": "To comply with the standard AA contrast ratio. Use primary, secondary, and extended color to support usability and ensure sufficient color contrast between elements so that people with visual impairments can see and use our products.",
+          "requirements": [
             {
-              "type": "visual",
-              "icon": "🎨",
-              "title": "Implementasi Visual",
-              "description": "Elemen elemen visual harus berfungsi dengan tujuan yang jelas, seperti tombol dan ikon yang mudah dikenali.",
-              "dos": [
-                "Element desain jelas dan mudah dipahami",
-                "Feedback visual yang informatif",
-                "Gunakan grid dan tataletak yang terstruktur",
-                "Terapkan warna yang sesuai dengan konteks"
-              ],
-              "donts": [
-                "Menggunakan elemen visual yang rumit dan sulit dipahami",
-                "Menggunakan visual yang tidak relevan",
-                "Tataletak yang tidak beraturan sehingga sulit dipahami",
-                "Menggunakan warna yang tidak sesuai dengan ketentuan konvensional"
+              "category": "Color Contrast",
+              "standards": [
+                {
+                  "title": "Minimum Contrast Ratio",
+                  "description": "The most critical aspect is sufficient contrast between text and its background.",
+                  "wcag_requirements": {
+                    "normal_text": "4.5:1 for normal text - This applies to most text content.",
+                    "large_text": "3:1 for large text - This applies to text that is at least 18pt or 14pt and bold."
+                  },
+                  "purpose": "Adequate contrast makes it easier for users with low vision or color blindness to read and understand the text."
+                }
               ]
             },
             {
-              "type": "content",
-              "icon": "📝",
-              "title": "Implementasi Konten",
-              "description": "Konten harus singkat, jelas, dan langsung pada intinya. Instruksi dan pesan yang disampaikan harus mudah dipahami, dengan memberikan konteks yang relevan.",
-              "dos": [
-                "Gunakan bahasa yang sederhana, lugas, dan mudah dipahami",
-                "Berikan konteks yang relevan pada setiap bagian konten",
-                "Gunakan data dan bukti untuk mendukung keputusan atau tindakan yang diambil user",
-                "Berikan instruksi yang jelas dan konsisten untuk membantu user menyelesaikan tugas dengan mudah"
-              ],
-              "donts": [
-                "Penggunaan jargon teknis atau bahasa yang sulit dimengerti oleh audiens umum",
-                "Penggunaan konten yang bersifat pemasaran atau promosi berlebihan tanpa konteks yang jelas",
-                "Menyampaikan informasi atau petunjuk yang kurang jelas sumbernya",
-                "Menggunakan kalimat yang bertele-tele atau tidak relevan dengan tugas user"
+              "category": "Color as the Sole Indicator",
+              "standards": [
+                {
+                  "title": "Avoid Reliance on Color Alone",
+                  "description": "Color shouldn't be the only way to convey information, indicate an action, prompt a response, or distinguish a visual element."
+                },
+                {
+                  "title": "Provide Alternatives",
+                  "description": "Use additional visual cues like patterns, symbols, or text labels along with color.",
+                  "examples": [
+                    {
+                      "type": "Error messages",
+                      "guideline": "Don't just highlight errors in red; add an error icon or descriptive text."
+                    },
+                    {
+                      "type": "Links",
+                      "guideline": "Don't rely solely on blue underlined text; use clear link text and other visual indicators."
+                    },
+                    {
+                      "type": "Status indicators",
+                      "guideline": "If using color to show status (e.g., red for inactive, green for active), include text labels or icons."
+                    }
+                  ]
+                }
               ]
             },
             {
-              "type": "flow",
-              "icon": "🛤",
-              "title": "Implementasi Flow",
-              "description": "Alur interaksi harus terstruktur dengan baik, logis, dan mudah diikuti. Setiap langkah dalam flow harus memberikan umpan balik yang jelas, serta memberi kontrol kepada user untuk mengedit atau membatalkan tindakan.",
-              "dos": [
-                "Buat alur yang logis dan intuitif dengan langkah yang mudah dipahami",
-                "Berikan kontrol penuh kepada user di setiap tahap alur",
-                "Pastikan setiap interaksi memberi umpan balik yang jelas",
-                "Gunakan label dan teks petunjuk yang jelas untuk membantu user memahami apa yang perlu mereka lakukan"
-              ],
-              "donts": [
-                "Penggunaan alur yang terlalu rumit atau langkah langkah yang tidak konsisten",
-                "Membuat user menebak nebak tindakan berikutnya dengan desain yang ambigu",
-                "Meniadakan kontrol user atau memberi terlalu sedikit umpan balik tentang tindakan yang diambil",
-                "Perbedaan mencolok dalam flow atau antara satu fitur dan fitur lain tanpa alasan yang jelas"
+              "category": "Tools and Resources",
+              "tools": [
+                {
+                  "name": "Color Contrast Checkers",
+                  "description": "Several online tools (e.g., WebAIM Color Contrast Checker, Contrast Ratio) can help you check the contrast ratio of your color combinations."
+                },
+                {
+                  "name": "Colorblindness Simulators",
+                  "description": "Simulate how your website appears to people with different types of color blindness to identify potential issues."
+                }
               ]
             }
+          ],
+          "importance": {
+            "for_low_vision": "Sufficient contrast makes text much easier to read.",
+            "for_color_blindness": "People with color blindness may have difficulty distinguishing certain color combinations. Providing alternatives ensures they can understand the information."
+          },
+          "sources": [
+            "WCAG 2.1",
+            "Contrast and Color Accessibility"
           ]
         },
         {
-          "id": "give-people-superpowers",
-          "name": "Give People Superpowers",
-          "description": "Desain meningkatkan kepercayaan diri user dalam mengambil keputusan, sehingga memberikan user superpower dalam menyelesaikan tugas mereka dengan efektif. User merasa diberi kekuatan untuk mengatasi tantangan dengan kontrol penuh atas pengalaman mereka.",
-          "keywords": ["Kepercayaan diri", "pemberdayaan", "kejelasan dalam pengambilan keputusan", "umpan balik"],
-          "implementations": [
+          "id": "typography",
+          "name": "Typography",
+          "description": "Clear typography helps ensure the content is readable and everyone can follow the flow of the text. This means making sure the text is big enough to read and the spacing around the text makes it easy to distinguish what should be read.",
+          "requirements": [
             {
-              "type": "visual",
-              "icon": "🎨",
-              "title": "Implementasi Visual",
-              "description": "Harus dirancang untuk mendukung rasa kontrol dan percaya diri user.",
-              "dos": [
-                "Gunakan elemen desain yang jelas dan mudah diidentifikasi",
-                "Terapkan visual yang menginspirasi rasa percaya diri",
-                "Pastikan tombol dan kontrol interaktif cukup besar dan dapat dijangkau",
-                "Sertakan elemen desain yang memberikan umpan balik langsung"
-              ],
-              "donts": [
-                "Hindari desain yang membingungkan atau tidak jelas",
-                "Jangan menggunakan elemen visual yang terlalu kecil atau sulit dijangkau",
-                "Jangan batasi kontrol user",
-                "Hindari elemen visual yang terlalu sederhana sehingga tidak menggambarkan konteks"
+              "category": "Font Size and Scalability",
+              "standards": [
+                {
+                  "title": "Minimum Size",
+                  "description": "While WCAG 2.1 AA doesn't specify an exact minimum font size, it's generally recommended to use at least 16px (or 1em/1rem) for body text."
+                },
+                {
+                  "title": "Scalability",
+                  "description": "Users should be able to zoom in up to 200% without the text spilling out of the container or requiring horizontal scrolling. This allows users with low vision to enlarge the text to a comfortable size."
+                }
               ]
             },
             {
-              "type": "content",
-              "icon": "📝",
-              "title": "Implementasi Konten",
-              "description": "Deskripsi dan pesan harus mengkomunikasikan dengan tegas bahwa user memiliki kontrol penuh atas tindakan mereka.",
-              "dos": [
-                "Gunakan bahasa yang membangun rasa percaya diri, seperti memberi penguatan positif",
-                "Berikan petunjuk yang jelas dan langkah langkah yang dapat diikuti",
-                "Gunakan pesan yang menekankan bahwa user memiliki kekuatan dan kontrol",
-                "Berikan konten yang relevan dan memberikan solusi"
-              ],
-              "donts": [
-                "Hindari bahasa yang meragukan kemampuan user atau membuat mereka merasa tidak mampu",
-                "Jangan gunakan kalimat yang menyarankan bahwa user harus mengandalkan bantuan eksternal",
-                "Jangan berikan informasi yang membingungkan atau penuh jargon",
-                "Hindari instruksi yang terlalu rumit atau membingungkan"
+              "category": "Font Family and Style",
+              "standards": [
+                {
+                  "title": "Legible Fonts",
+                  "description": "Choose fonts that are easy to read, with clear distinctions between characters. Avoid overly decorative or stylized fonts that may be difficult to decipher."
+                },
+                {
+                  "title": "Font Weight",
+                  "description": "Use sufficient font weight (boldness) to improve readability, especially for users with low vision."
+                },
+                {
+                  "title": "Avoid All Caps",
+                  "description": "Text in all capital letters is harder to read, especially for users with dyslexia. Use sentence case or title case instead."
+                }
               ]
             },
             {
-              "type": "flow",
-              "icon": "🛤",
-              "title": "Implementasi Flow",
-              "description": "User harus merasa diberdayakan dalam setiap keputusan dan memiliki kontrol penuh dalam setiap interaksi.",
-              "dos": [
-                "Bangun alur interaksi yang sederhana namun kuat",
-                "Pastikan transisi antar halaman atau langkah dilakukan dengan halus",
-                "Berikan opsi untuk membatalkan atau mengedit keputusan di setiap langkah",
-                "Pastikan setiap umpan balik dari tindakan user langsung dan mudah dipahami"
-              ],
-              "donts": [
-                "Hindari alur yang membingungkan atau membatasi pilihan user",
-                "Jangan biarkan user terjebak dalam alur tanpa opsi untuk kembali atau mengubah",
-                "Jangan membuat user merasa bahwa mereka kehilangan kontrol atas proses",
-                "Hindari memberi petunjuk yang tidak jelas atau tidak memberi informasi yang cukup"
+              "category": "Line Height and Spacing",
+              "standards": [
+                {
+                  "title": "Line Height",
+                  "description": "Use sufficient line spacing (leading) to prevent lines of text from appearing crowded. A line height of at least 1.5 times the font size is recommended."
+                },
+                {
+                  "title": "Paragraph Spacing",
+                  "description": "Include adequate space between paragraphs to improve visual separation and readability."
+                },
+                {
+                  "title": "Letter Spacing",
+                  "description": "Appropriate letter spacing (tracking) can further enhance readability, especially for users with dyslexia."
+                }
+              ]
+            },
+            {
+              "category": "Text Alignment and Justification",
+              "standards": [
+                {
+                  "title": "Avoid Justified Text",
+                  "description": "Justified text (aligned to both left and right margins) can create uneven spacing between words, making it harder to read. Use left-aligned text instead."
+                }
+              ]
+            },
+            {
+              "category": "Color and Contrast",
+              "standards": [
+                {
+                  "title": "Sufficient Contrast",
+                  "description": "Ensure adequate color contrast between text and its background (4.5:1 for normal text, 3:1 for large text)."
+                }
               ]
             }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "harmony",
-      "name": "Harmony",
-      "description": "Komitmen untuk menciptakan harmoni dan konsistensi dalam pengalaman user. Produk dirancang untuk mengintegrasikan berbagai elemen secara mulus, termasuk semua stakeholders yang terlibat, sehingga tumbuh hubungan yang kuat antara user dan produk.",
-      "approaches": [
-        {
-          "id": "natural-mental-model",
-          "name": "Natural Mental Model",
-          "description": "Mencerminkan cara user berpikir, bertindak, dan memahami hal layaknya di dunia nyata. Experience pada desain intuitif, mudah dipahami, dan nyaman.",
-          "keywords": ["Intuitif", "Familiar", "Relevan"],
-          "implementations": [
-            {
-              "type": "visual",
-              "icon": "🎨",
-              "title": "Implementasi Visual",
-              "description": "User friendly, intuitif, dan selaras dengan cara user berpikir dan bertindak di dunia nyata. Elemen visual memanfaatkan metafora, hierarki, dan pola yang sudah dikenal user sehingga interaksi terasa logis dan nyaman.",
-              "dos": [
-                "Gunakan elemen visual yang menyerupai objek atau tindakan di dunia nyata",
-                "Kelompokkan konten yang relevan dengan satu sama lain",
-                "Penggunaan warna yang harmonis dalam desain"
-              ],
-              "donts": [
-                "Menggunakan ikon yang tidak relevan dengan dunia nyata",
-                "Mencampur konten yang tidak berhubungan dalam satu kelompok",
-                "Memilih warna tanpa memperhatikan maknanya"
-              ]
-            },
-            {
-              "type": "content",
-              "icon": "📝",
-              "title": "Implementasi Konten",
-              "description": "Konten menggunakan istilah, struktur, dan pola yang akrab bagi user sehingga terasa intuitif, meminimalkan kebingungan, dan meningkatkan kenyamanan dalam menggunakan produk.",
-              "dos": [
-                "Pilih kata kata yang familiar bagi user, sesuai dengan persona, aktivitas, atau konteks mereka",
-                "Manfaatkan heading, bullet points, dan visual cues agar konten mudah dicerna",
-                "Fokus pada informasi atau tindakan yang sering digunakan user terlebih dahulu"
-              ],
-              "donts": [
-                "Menggunakan istilah yang hanya dipahami oleh kalangan tertentu (jargon)",
-                "Membanjiri user dengan terlalu banyak detail",
-                "Mengabaikan ekspektasi atau kebiasaan user"
-              ]
-            },
-            {
-              "type": "flow",
-              "icon": "🛤",
-              "title": "Implementasi Flow",
-              "description": "Mencerminkan logika, kebiasaan, dan ekspektasi user di dunia nyata. Flow dibuat seintuitif mungkin sehingga user dapat memahami alur tanpa perlu berpikir keras atau membaca panduan.",
-              "dos": [
-                "Merujuk kepada hasil riset, ikuti alur yang wajar bagi user sesuai kebiasaan mereka",
-                "Pilih kata kata yang mudah dipahami tanpa jargon teknis",
-                "Berikan indikator seperti progress bar atau konfirmasi di setiap langkah alur",
-                "Sediakan tombol Kembali atau 'Ubah' agar user merasa memiliki kendali"
-              ],
-              "donts": [
-                "Memaksa user untuk menyelesaikan langkah tambahan yang tidak relevan",
-                "Mengubah istilah atau elemen UI, sehingga istilah berbeda dari satu flow ke flow yang lain",
-                "Membuat alur yang melompat atau tidak sesuai dengan ekspektasi user",
-                "Menghilangkan feedback visual seperti indikator progres"
-              ]
-            }
+          ],
+          "importance": {
+            "for_low_vision": "Larger font sizes, clear fonts, and proper spacing make text much easier to read.",
+            "for_dyslexia": "Certain fonts and formatting choices can significantly improve readability for people with dyslexia.",
+            "for_cognitive_disabilities": "Clear and well-formatted text makes it easier for users with cognitive disabilities to process information."
+          },
+          "sources": [
+            "WCAG 2.1",
+            "How to Pick the Perfect Font Size: A Guide to WCAG Accessibility"
           ]
         },
         {
-          "id": "consistency-and-standards",
-          "name": "Consistency and Standards",
-          "description": "Memastikan pengalaman user terstruktur, dapat diprediksi, dan konsisten di seluruh elemen, fitur, serta produk. Pendekatan ini memperhatikan elemen visual, perilaku interaksi, dan useran brand voice yang seragam untuk menciptakan identitas desain yang kuat.",
-          "keywords": ["Design system", "Guideline", "Foundation", "Hirarki", "Modularity"],
-          "implementations": [
+          "id": "content",
+          "name": "Content",
+          "description": "Visual elements like images, graphics, and videos can enhance understanding, especially for individuals with cognitive or learning disabilities, while also aiding navigation for those with visual impairments. To ensure inclusivity, always provide alternatives to rich media, allowing everyone to access the same content regardless of their ability to perceive visual or audio information.",
+          "principles": [
             {
-              "type": "visual",
-              "icon": "🎨",
-              "title": "Implementasi Visual",
-              "description": "Mencerminkan desain yang seragam, mudah dikenali, dan harmonis di seluruh elemen serta fitur produk. Visual tidak hanya mengikuti design system dan guideline, tetapi juga menerapkan elemen visual secara strategis untuk membuat user merasa familiar dengan useran produk.",
-              "dos": [
-                "Menerapkan komponen seperti tombol, warna, ikon, dan tipografi sesuai dengan design system",
-                "Menerapkan hierarki tipografi yang jelas dengan font, ukuran, dan gaya yang seragam",
-                "Menggunakan warna yang sesuai dengan palet resmi dalam design system",
-                "Gunakan margin, padding, dan grid layout yang ditetapkan dalam guideline untuk menjaga layout yang rapi dan seragam"
-              ],
-              "donts": [
-                "Menggunakan elemen visual yang tidak didefinisikan dalam design system",
-                "Menggunakan font yang berbeda beda tanpa hierarki yang jelas",
-                "Menggunakan warna primary yang berbeda beda atau yang tidak ada dalam palet desain resmi",
-                "Membuat jarak antar elemen yang tidak konsisten atau memindahkan elemen dari grid layout"
+              "name": "Perceivable",
+              "requirements": [
+                {
+                  "title": "Alternative Text for Images",
+                  "description": "Provide alternative text descriptions for all images, so users who cannot see them can understand their purpose."
+                },
+                {
+                  "title": "Captions and Transcripts for Multimedia",
+                  "description": "Provide captions for audio content and transcripts for video content to make them accessible to users who are deaf or hard of hearing."
+                },
+                {
+                  "title": "Audio Description",
+                  "description": "Provide audio descriptions for video content to convey visual information to users who are blind or have low vision."
+                },
+                {
+                  "title": "Adaptable Content",
+                  "description": "Ensure content can be presented in different ways (e.g., simpler layout) without losing information or structure."
+                }
               ]
             },
             {
-              "type": "content",
-              "icon": "📝",
-              "title": "Implementasi Konten",
-              "description": "Memastikan konten terstruktur, mengikuti brand guideline dan desain, serta memberikan pengalaman yang seragam di semua titik interaksi user.",
-              "dos": [
-                "Menggunakan istilah yang sama di seluruh fitur dan platform",
-                "Memastikan nada dan gaya penulisan konsisten sesuai brand guideline",
-                "Menerapkan hierarki konten yang jelas menggunakan heading, subheading, dan bullet points",
-                "Menggunakan font, ukuran, warna, dan elemen visual sesuai design system"
-              ],
-              "donts": [
-                "Menggunakan terminologi berbeda untuk aksi atau fitur yang sama",
-                "Menyusun konten tanpa struktur yang jelas",
-                "Mencampur mencampur font atau ukuran teks yang tidak sesuai dengan design system",
-                "Menambahkan warna, ikon, atau elemen visual yang tidak didefinisikan dalam design system"
+              "name": "Operable",
+              "requirements": [
+                {
+                  "title": "Keyboard Accessibility",
+                  "description": "Make all functionality available via keyboard for users who cannot use a mouse."
+                },
+                {
+                  "title": "No Time Limits",
+                  "description": "Avoid unnecessary time limits for tasks unless essential. Provide users with the option to extend or turn off time limits."
+                },
+                {
+                  "title": "Seizure Prevention",
+                  "description": "Avoid content that flashes rapidly, as it can trigger seizures in some users."
+                },
+                {
+                  "title": "Navigable",
+                  "description": "Provide clear and consistent navigation mechanisms (as discussed earlier)."
+                }
               ]
             },
             {
-              "type": "flow",
-              "icon": "🛤",
-              "title": "Implementasi Flow",
-              "description": "Memastikan experience user yang mulus dan seragam di seluruh fitur atau produk. Flow ini didesain terstruktur, mudah dinavigasi, dan interaksi yang sesuai dengan design system dan brand guideline.",
-              "dos": [
-                "Menerapkan elemen visual, tombol, dan interaksi yang sesuai dengan design system",
-                "Membuat navigasi yang konsisten sehingga lebih predictable",
-                "Menampilkan pesan atau instruksi yang sesuai dengan tone of voice brand dan mudah dibaca",
-                "Melakukan sinkronisasi flow di seluruh fitur untuk memastikan keseragaman style dan elemen"
-              ],
-              "donts": [
-                "Terlalu sering menggunakan elemen improvisasi yang tidak didefinisikan dalam design system",
-                "Melakukan perubahan pada alur atau posisi elemen navigasi antara satu page dengan page yang lain",
-                "Menggunakan istilah atau gaya penulisan yang berbeda di setiap langkah flow",
-                "Membuat alur yang sangat berbeda antar fitur tanpa justifikasi kuat"
+              "name": "Understandable",
+              "requirements": [
+                {
+                  "title": "Readable Language",
+                  "description": "Use clear and simple language that is easy to understand. Avoid jargon or technical terms unless necessary."
+                },
+                {
+                  "title": "Predictable",
+                  "description": "Make web pages appear and operate in predictable ways."
+                },
+                {
+                  "title": "Input Assistance",
+                  "description": "Help users avoid and correct mistakes."
+                }
+              ]
+            },
+            {
+              "name": "Robust",
+              "requirements": [
+                {
+                  "title": "Compatible with Assistive Technologies",
+                  "description": "Ensure content is compatible with a wide range of assistive technologies (e.g., screen readers)."
+                }
               ]
             }
+          ],
+          "importance": {
+            "perceive_information": "People with visual, auditory, or cognitive disabilities can access and understand content in ways that work for them.",
+            "interact_with_website": "People with motor impairments or other disabilities can navigate and use all website features.",
+            "understand_information": "Content is clear, concise, and easy to comprehend for users with different cognitive abilities and language backgrounds."
+          },
+          "sources": [
+            "WCAG 2.1",
+            "Pedoman Layanan Komunikasi dan Informasi Publik (LKIP) yang Inklusif Bagi Penyandang Disabilitas"
           ]
         },
         {
-          "id": "purpose-and-function",
-          "name": "Purpose and Function",
-          "description": "Pendekatan ini memperhatikan fungsi utama, mengutamakan informasi yang concise, dan berorientasi pada user, sehingga fungsi utama suatu produk dan servis dapat dikomunikasikan dengan baik. Desain yang dibuat diujikan ke user, dan memiliki success metrics yang sesuai dengan goals dari produk/servis.",
-          "keywords": ["Business Process", "User driven", "Testing & Analytic", "Struktur sesuai Goals"],
-          "implementations": [
+          "id": "interaction",
+          "name": "Interaction",
+          "description": "Guidelines for ensuring all interactive elements are accessible and usable by everyone, including users with disabilities.",
+          "requirements": [
             {
-              "type": "visual",
-              "icon": "🎨",
-              "title": "Implementasi Visual",
-              "description": "Visual menonjolkan elemen penting dan meminimalisir distraksi dengan desain yang bersih dan fokus pada informasi relevan. Hierarki visual memastikan semua elemen mendukung user journey dan senantiasa fokus pada fungsi utama.",
-              "dos": [
-                "Gunakan warna kontras, ukuran lebih besar, atau posisi strategis untuk menonjolkan fungsi utama",
-                "Maksimalkan useran component UI sesuai dengan fitur",
-                "Gunakan teks pendek dan langsung yang relevan dengan fungsi utama",
-                "Aplikasikan tata letak dan hirarki yang disesuaikan dengan tujuan produk",
-                "Utamakan desain yang menjawab purpose dan function sebelum estetika"
-              ],
-              "donts": [
-                "Menggunakan warna atau elemen yang membuat fungsi utama menyatu dengan elemen lainnya",
-                "Menampilkan paragraf panjang atau informasi teknis yang membingungkan di layar utama",
-                "Membuat semua elemen terlihat sama pentingnya dengan ukuran atau warna yang sama",
-                "Memaksakan estetika interaksi dan elemen visual dan mengorbankan fungsi utama dari desain"
+              "category": "Keyboard Accessibility",
+              "standards": [
+                {
+                  "title": "Full Keyboard Control",
+                  "description": "All website functionalities should be operable using only a keyboard. This is essential for users who cannot use a mouse or have limited fine motor control."
+                },
+                {
+                  "title": "Logical Tab Order",
+                  "description": "The tab order (the order in which elements are focused when using the Tab key) should follow a logical and intuitive sequence."
+                },
+                {
+                  "title": "No Keyboard Traps",
+                  "description": "Users should be able to navigate freely with the keyboard and not get 'trapped' in a particular area of the page."
+                }
               ]
             },
             {
-              "type": "content",
-              "icon": "📝",
-              "title": "Implementasi Konten",
-              "description": "Menyampaikan pesan utama dengan singkat dan jelas dan mengurangi noise pada desain yang dapat menghalangi visibilitas fitur utama.",
-              "dos": [
-                "Tulis teks yang langsung ke inti, mengurangi jargon atau istilah teknis yang tidak perlu",
-                "Tampilkan hanya informasi yang mendukung fungsi utama pada layar saat itu",
-                "Gunakan heading, bullet points, atau angka untuk memecah informasi menjadi bagian yang lebih kecil"
-              ],
-              "donts": [
-                "Menggunakan kalimat panjang atau rumit yang membingungkan user",
-                "Menyajikan informasi tambahan yang mengalihkan perhatian, seperti promosi tidak relevan",
-                "Menyajikan semua informasi dalam satu paragraf panjang yang sulit dipahami"
+              "category": "Clear and Consistent Navigation",
+              "standards": [
+                {
+                  "title": "Predictable Navigation",
+                  "description": "Navigation menus and links should be consistently located and labeled throughout the website."
+                },
+                {
+                  "title": "Meaningful Link Text",
+                  "description": "Link text should clearly describe the destination or purpose of the link."
+                },
+                {
+                  "title": "Skip Links",
+                  "description": "Provide 'skip links' that allow users to bypass repetitive content (like navigation) and jump directly to the main content."
+                }
               ]
             },
             {
-              "type": "flow",
-              "icon": "🛤",
-              "title": "Implementasi Flow",
-              "description": "Memastikan langkah langkah user efisien dan bebas dari hambatan. Hasil desain berangkat dari requirement document yang selaras dengan tujuan bisnis.",
-              "dos": [
-                "Mempertimbangkan user goals dan business goals",
-                "Menyediakan jalur langsung untuk menyelesaikan tugas",
-                "Gunakan tombol atau opsi yang jelas untuk tindakan utama",
-                "Tampilkan pesan sukses, error, atau status di tiap langkah untuk memastikan user memahami prosesnya",
-                "Berikan informasi yang relevan sesuai langkah"
-              ],
-              "donts": [
-                "Memaksakan langkah seperti Tambah Akun Baru saat user bisa langsung checkout sebagai guest user",
-                "Menyembunyikan langkah selanjutnya dalam menu dropdown atau elemen tersembunyi",
-                "Membiarkan user menebak apakah tindakan mereka berhasil tanpa feedback apa pun",
-                "Membanjiri user dengan informasi yang tidak diperlukan"
+              "category": "Error Prevention and Handling",
+              "standards": [
+                {
+                  "title": "Error Identification",
+                  "description": "Clearly indicate errors in forms or input fields."
+                },
+                {
+                  "title": "Error Suggestions",
+                  "description": "Provide suggestions for correcting errors."
+                },
+                {
+                  "title": "Error Prevention",
+                  "description": "For critical tasks (like legal or financial transactions), offer mechanisms to prevent errors or allow users to review and confirm actions before submission."
+                }
+              ]
+            },
+            {
+              "category": "Time Limits and User Control",
+              "standards": [
+                {
+                  "title": "Timing Adjustable",
+                  "description": "Avoid unnecessary time limits. If time limits are essential, provide users with options to adjust, extend, or turn them off."
+                },
+                {
+                  "title": "Pause, Stop, Hide",
+                  "description": "Give users control over moving, blinking, scrolling, or auto-updating content. They should be able to pause, stop, or hide such content."
+                }
+              ]
+            },
+            {
+              "category": "Pointer and Gesture Recognition",
+              "standards": [
+                {
+                  "title": "Single Pointer Activation",
+                  "description": "Users should be able to complete actions with a single pointer (e.g., mouse click, touch). Avoid complex gestures that require multiple simultaneous points of contact."
+                },
+                {
+                  "title": "Target Size",
+                  "description": "Interactive elements (buttons, links) should have a sufficiently large target size to make them easier to click or tap."
+                }
               ]
             }
+          ],
+          "importance": {
+            "for_motor_impairments": "People with limited dexterity or who use assistive technologies can interact with the website effectively.",
+            "reduces_cognitive_load": "Clear navigation and error prevention help users with cognitive differences understand and complete tasks.",
+            "improves_ux_for_everyone": "A website that is easy to navigate and use benefits all users, regardless of their abilities."
+          },
+          "sources": [
+            "WCAG 2.1",
+            "Pedoman Layanan Komunikasi dan Informasi Publik (LKIP) yang Inklusif Bagi Penyandang Disabilitas"
           ]
+        },
+        {
+          "id": "declaring-accessibility",
+          "name": "Declaring Accessibility",
+          "description": "Guidelines for creating a comprehensive WCAG accessibility statement for your website.",
+          "required_elements": [
+            {
+              "element": "Commitment to Accessibility",
+              "description": "A statement of the organization's/company's commitment to achieving accessibility for users with disabilities."
+            },
+            {
+              "element": "Compliance with WCAG",
+              "description": "Specify the WCAG version being followed (e.g., WCAG 2.1) and the compliance level (Level A, AA, or AAA)."
+            },
+            {
+              "element": "Current Compliance Status",
+              "description": "Explain the current extent to which the website adheres to WCAG guidelines. Specify whether the website is fully compliant or only partially compliant."
+            },
+            {
+              "element": "Regular Audits and Monitoring",
+              "description": "Describe whether the website is regularly audited and monitored to ensure WCAG compliance. Include information about plans for improvement or addressing areas of non-compliance."
+            },
+            {
+              "element": "Content Exemptions",
+              "description": "Mention if there is any content or functionality excluded from the accessibility guidelines."
+            },
+            {
+              "element": "Improvement Plans",
+              "description": "Outline the plans and timeline for enhancing website accessibility to achieve full compliance with WCAG."
+            },
+            {
+              "element": "Contact Information",
+              "description": "Provide contact details (email, form, etc.) for users to report accessibility issues or give feedback about the website's accessibility."
+            }
+          ],
+          "example_statement": {
+            "title": "Accessibility Statement",
+            "commitment": "We are committed to ensuring this website is accessible and usable by all users, including individuals with disabilities. We are taking the following steps to enhance the website's accessibility:",
+            "sections": [
+              {
+                "heading": "Compliance with WCAG 2.2",
+                "content": "This website largely complies with the Web Content Accessibility Guidelines (WCAG) 2.2 Level AA. We continuously monitor the website to achieve full compliance and address identified accessibility issues."
+              },
+              {
+                "heading": "Accessible Design",
+                "content": "We incorporate universal design principles in the planning and design of the website, content, and digital services."
+              },
+              {
+                "heading": "Assistive Technology Support",
+                "content": "We work to ensure compatibility with screen readers and other assistive technologies."
+              },
+              {
+                "heading": "Feedback",
+                "content": "We value feedback and suggestions regarding the accessibility of this website. Please contact us at email@example.com for further information."
+              }
+            ]
+          }
         }
       ]
     }
-  ]
+  }
 }

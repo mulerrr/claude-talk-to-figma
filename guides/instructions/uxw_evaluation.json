@@ -193,7 +193,7 @@
     "principlesLoadingPrompt": "Loading UX Writing guidelines from guide://general_uxw_rule.json to ensure accurate content evaluation...",
     "mainPrompt": "Conduct a comprehensive UX Writing analysis of all text content in the CONFIRMED selected Figma frame. For each text element:\n\n1. **Evaluate against UX writing principles** loaded from the guide file\n2. **Score writing quality from 1-5** based on clarity, effectiveness, and user experience impact\n3. **Generate improved text versions** that better align with UX writing best practices\n4. **Provide specific improvement rationale** explaining why changes enhance user experience\n5. **Implement chosen output format** (Text replacement/Analysis frame/Report/Annotations)\n\n**Focus Areas:**\n- Clarity and immediate user comprehension\n- Consistent voice and appropriate tone for context\n- Action-oriented, user-benefit focused language\n- Accessibility and inclusive writing practices\n- Information hierarchy and scannability\n- Error prevention through clear guidance\n- Brand voice consistency and style guide alignment\n\n**Text Improvement Requirements:**\n- Base improvements on specific UX writing principles from the loaded guide\n- Prioritize user task completion and comprehension\n- Maintain brand voice while enhancing clarity\n- Ensure improved text fits within design constraints\n- Provide clear rationale for each text change\n- Consider context and user emotional state\n\n**Post-Analysis:** After completing the evaluation, always offer next action options to continue the workflow.",
     "evaluationSteps": [
-      "1. Load UX Writing guidelines from guide://general_uxw_rule.json and understand each principle",
+      "1. Load UX Writing guidelines from guide://general_uxw_rule.json (general_uxw_rule.json) and understand each principle",
       "2. Scan all text nodes in the selected frame using scan_text_nodes()",
       "3. Categorize text elements by type (headers, body, buttons, labels, etc.)",
       "4. Evaluate each text element against UX writing principles systematically",
@@ -202,7 +202,8 @@
       "7. Calculate overall writing quality score and assessment level",
       "8. Create output based on user's selected format preference",
       "9. For text replacement: use set_text_content() or set_multiple_text_contents()",
-      "10. For analysis formats: organize findings into structured, actionable format"
+      "10. For analysis formats: organize findings into structured, actionable format",
+      "10. For annotation output: catagorize annotations by type and priority"
     ],
     "textImprovementGuidelines": [
       "Maintain original meaning while enhancing clarity and user experience",
