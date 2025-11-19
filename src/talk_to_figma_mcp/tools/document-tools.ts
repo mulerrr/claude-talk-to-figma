@@ -45,67 +45,67 @@ function buildCandidateDirs(): string[] {
   return [...new Set(candidates)];
 }
 
-async function readGuideFile(basenameOrSlug: string): Promise<{ text: string; from: string; tried: string[] }> {
-  const tried: string[] = [];
-  const candidates = buildCandidateDirs();
+// async function readGuideFile(basenameOrSlug: string): Promise<{ text: string; from: string; tried: string[] }> {
+//   const tried: string[] = [];
+//   const candidates = buildCandidateDirs();
 
-  // normalize filename candidates (accept slug or filename)
-  const base = basenameOrSlug.replace(/\.(md|markdown|json)$/i, "");
-  const nameCandidates = [
-    `${base}.md`,
-    `${base}.markdown`,
-    `${base}.json`,
-    base // allow full filename passed in
-  ];
+//   // normalize filename candidates (accept slug or filename)
+//   const base = basenameOrSlug.replace(/\.(md|markdown|json)$/i, "");
+//   const nameCandidates = [
+//     `${base}.md`,
+//     `${base}.markdown`,
+//     `${base}.json`,
+//     base // allow full filename passed in
+//   ];
 
-  for (const dir of candidates) {
-    for (const name of nameCandidates) {
-      const full = path.join(dir, name);
-      tried.push(full);
-      try {
-        const buf = await fs.readFile(full);
-        let text: string;
+//   for (const dir of candidates) {
+//     for (const name of nameCandidates) {
+//       const full = path.join(dir, name);
+//       tried.push(full);
+//       try {
+//         const buf = await fs.readFile(full);
+//         let text: string;
 
-        // UTF-16 LE BOM
-        if (buf.length >= 2 && buf[0] === 0xFF && buf[1] === 0xFE) {
-          text = Buffer.from(buf).toString("utf16le");
+//         // UTF-16 LE BOM
+//         if (buf.length >= 2 && buf[0] === 0xFF && buf[1] === 0xFE) {
+//           text = Buffer.from(buf).toString("utf16le");
 
-        // UTF-16 BE BOM -> byte-swap, then decode as LE
-        } else if (buf.length >= 2 && buf[0] === 0xFE && buf[1] === 0xFF) {
-          const swapped = Buffer.allocUnsafe(buf.length);
-          for (let i = 0; i < buf.length; i += 2) {
-            swapped[i] = buf[i + 1];
-            swapped[i + 1] = buf[i];
-          }
-          text = swapped.toString("utf16le");
+//         // UTF-16 BE BOM -> byte-swap, then decode as LE
+//         } else if (buf.length >= 2 && buf[0] === 0xFE && buf[1] === 0xFF) {
+//           const swapped = Buffer.allocUnsafe(buf.length);
+//           for (let i = 0; i < buf.length; i += 2) {
+//             swapped[i] = buf[i + 1];
+//             swapped[i + 1] = buf[i];
+//           }
+//           text = swapped.toString("utf16le");
 
-        // UTF-8 (with or without BOM)
-        } else {
-          text = buf.toString("utf8");
-          // strip UTF-8 BOM if present
-          if (text.charCodeAt(0) === 0xFEFF) {
-            text = text.slice(1);
-          }
-        }
+//         // UTF-8 (with or without BOM)
+//         } else {
+//           text = buf.toString("utf8");
+//           // strip UTF-8 BOM if present
+//           if (text.charCodeAt(0) === 0xFEFF) {
+//             text = text.slice(1);
+//           }
+//         }
 
-        // Normalize CRLF to LF for consistent rendering
-        text = text.replace(/\r\n/g, "\n");
+//         // Normalize CRLF to LF for consistent rendering
+//         text = text.replace(/\r\n/g, "\n");
 
-        return { text, from: dir, tried };
-      } catch (e: any) {
-        if (e?.code !== "ENOENT") {
-          // escalate non-not-found errors (permissions, EISDIR, etc.)
-          throw new Error(`Failed to read "${full}": ${e.message}`);
-        }
-      }
-    }
-  }
+//         return { text, from: dir, tried };
+//       } catch (e: any) {
+//         if (e?.code !== "ENOENT") {
+//           // escalate non-not-found errors (permissions, EISDIR, etc.)
+//           throw new Error(`Failed to read "${full}": ${e.message}`);
+//         }
+//       }
+//     }
+//   }
 
-  throw new Error(
-    `Guide "${basenameOrSlug}" not found. Tried:\n` + tried.map(p => `- ${p}`).join("\n") +
-    `\nTip: place your files under a "guides" folder in the repo root, or set GUIDES_DIR env to an absolute path.`
-  );
-}
+//   throw new Error(
+//     `Guide "${basenameOrSlug}" not found. Tried:\n` + tried.map(p => `- ${p}`).join("\n") +
+//     `\nTip: place your files under a "guides" folder in the repo root, or set GUIDES_DIR env to an absolute path.`
+//   );
+// }
 
 /**
  * Register document-related tools to the MCP server
@@ -113,45 +113,45 @@ async function readGuideFile(basenameOrSlug: string): Promise<{ text: string; fr
  */
 export function registerDocumentTools(server: McpServer): void {
   // --- Guide utilities (local file references) ---
-  server.tool(
-    "list_guides",
-    "List markdown/json guides discovered by the server (first 50 files per directory).",
-    {},
-    async () => {
-      const dirs = buildCandidateDirs();
-      const out: any[] = [];
-      for (const d of dirs) {
-        try {
-          const entries = await fs.readdir(d);
-          const md = entries.filter(f => /\.md$|\.markdown$|\.json$/i.test(f)).slice(0, 50);
-          if (md.length) out.push({ dir: d, files: md });
-        } catch {
-          // ignore non-existent dirs
-        }
-      }
-      if (!out.length) {
-        return { content: [{ type: "text", text: "No guides found in any candidate directory." }] };
-      }
-      return { content: [{ type: "text", text: JSON.stringify(out, null, 2) }] };
-    }
-  );
+  // server.tool(
+  //   "list_guides",
+  //   "List markdown/json guides discovered by the server (first 50 files per directory).",
+  //   {},
+  //   async () => {
+  //     const dirs = buildCandidateDirs();
+  //     const out: any[] = [];
+  //     for (const d of dirs) {
+  //       try {
+  //         const entries = await fs.readdir(d);
+  //         const md = entries.filter(f => /\.md$|\.markdown$|\.json$/i.test(f)).slice(0, 50);
+  //         if (md.length) out.push({ dir: d, files: md });
+  //       } catch {
+  //         // ignore non-existent dirs
+  //       }
+  //     }
+  //     if (!out.length) {
+  //       return { content: [{ type: "text", text: "No guides found in any candidate directory." }] };
+  //     }
+  //     return { content: [{ type: "text", text: JSON.stringify(out, null, 2) }] };
+  //   }
+  // );
 
-  server.tool(
-    "read_guide",
-    "Read a guide file by slug or filename (e.g., 'legion-design-principles', 'uxw-rule', or 'general_uxw_rule.json').",
-    { slug: z.string().describe("Slug or filename inside the guides folder") },
-    async ({ slug }) => {
-      const { text, from } = await readGuideFile(slug);
-      // choose mime based on extension for client hints
-      const isJson = /\.json$/i.test(slug);
-      return {
-        content: [
-          { type: "text", text: isJson ? text : text }, // clients interpret markdown from text
-          { type: "text", text: `(Loaded from: ${from})` },
-        ],
-      };
-    }
-  );
+  // server.tool(
+  //   "read_guide",
+  //   "Read a guide file by slug or filename (e.g., 'legion-design-principles', 'uxw-rule', or 'general_uxw_rule.json').",
+  //   { slug: z.string().describe("Slug or filename inside the guides folder") },
+  //   async ({ slug }) => {
+  //     const { text, from } = await readGuideFile(slug);
+  //     // choose mime based on extension for client hints
+  //     const isJson = /\.json$/i.test(slug);
+  //     return {
+  //       content: [
+  //         { type: "text", text: isJson ? text : text }, // clients interpret markdown from text
+  //         { type: "text", text: `(Loaded from: ${from})` },
+  //       ],
+  //     };
+  //   }
+  // );
   // --- end Guide utilities ---
   
   // Document Info Tool
@@ -573,104 +573,104 @@ export function registerDocumentTools(server: McpServer): void {
     }
   );
   // --- Local guide resources (URI-based) ---
-  server.resource(
-    "guide-legion",
-    "guide://legion-design-principles.md",
-    {
-      title: "Legion Design Principles",
-      description: "Markdown guide for design-principles analysis (local file)",
-      mimeType: "text/plain",
-    },
-    async (uri) => {
-      const { text } = await readGuideFile("legion-design-principles");
-      return {
-        contents: [{
-          uri: uri.href,
-          mimeType: "text/plain",
-          text,
-        }],
-      };
-    }
-  );
+  // server.resource(
+  //   "guide-legion",
+  //   "guide://legion-design-principles.md",
+  //   {
+  //     title: "Legion Design Principles",
+  //     description: "Markdown guide for design-principles analysis (local file)",
+  //     mimeType: "text/plain",
+  //   },
+  //   async (uri) => {
+  //     const { text } = await readGuideFile("legion-design-principles");
+  //     return {
+  //       contents: [{
+  //         uri: uri.href,
+  //         mimeType: "text/plain",
+  //         text,
+  //       }],
+  //     };
+  //   }
+  // );
 
-  server.resource(
-    "legion-design-principles-json",
-    "guide://legion_design_principles.json",
-    {
-      title: "Legion Design Principles (JSON)",
-      description: "JSON rules for design analysis compliance with Legion Design Principles (local file)",
-      mimeType: "application/json",
-    },
-    async (uri) => {
-      const { text } = await readGuideFile("legion_design_principles.json");
-      return {
-        contents: [{
-          uri: uri.href,
-          mimeType: "application/json",
-          text,
-        }],
-      };
-    }
-  );
+  // server.resource(
+  //   "legion-design-principles-json",
+  //   "guide://legion_design_principles.json",
+  //   {
+  //     title: "Legion Design Principles (JSON)",
+  //     description: "JSON rules for design analysis compliance with Legion Design Principles (local file)",
+  //     mimeType: "application/json",
+  //   },
+  //   async (uri) => {
+  //     const { text } = await readGuideFile("legion_design_principles.json");
+  //     return {
+  //       contents: [{
+  //         uri: uri.href,
+  //         mimeType: "application/json",
+  //         text,
+  //       }],
+  //     };
+  //   }
+  // );
 
-  server.resource(
-    "guide-uxw",
-    "guide://uxw-rule.md",
-    {
-      title: "UX Writing Rules",
-      description: "Markdown guide for UX writing analysis (local file)",
-      mimeType: "text/plain",
-    },
-    async (uri) => {
-      const { text } = await readGuideFile("uxw-rule");
-      return {
-        contents: [{
-          uri: uri.href,
-          mimeType: "text/plain",
-          text,
-        }],
-      };
-    }
-  );
+  // server.resource(
+  //   "guide-uxw",
+  //   "guide://uxw-rule.md",
+  //   {
+  //     title: "UX Writing Rules",
+  //     description: "Markdown guide for UX writing analysis (local file)",
+  //     mimeType: "text/plain",
+  //   },
+  //   async (uri) => {
+  //     const { text } = await readGuideFile("uxw-rule");
+  //     return {
+  //       contents: [{
+  //         uri: uri.href,
+  //         mimeType: "text/plain",
+  //         text,
+  //       }],
+  //     };
+  //   }
+  // );
 
-  server.resource(
-    "guide-uxw-json",
-    "guide://general_uxw_rule.json",
-    {
-      title: "UX Writing Rules (JSON)",
-      description: "JSON rules for UX writing analysis (local file)",
-      mimeType: "application/json",
-    },
-    async (uri) => {
-      const { text } = await readGuideFile("general_uxw_rule.json");
-      return {
-        contents: [{
-          uri: uri.href,
-          mimeType: "application/json",
-          text,
-        }],
-      };
-    }
-  );
+  // server.resource(
+  //   "guide-uxw-json",
+  //   "guide://general_uxw_rule.json",
+  //   {
+  //     title: "UX Writing Rules (JSON)",
+  //     description: "JSON rules for UX writing analysis (local file)",
+  //     mimeType: "application/json",
+  //   },
+  //   async (uri) => {
+  //     const { text } = await readGuideFile("general_uxw_rule.json");
+  //     return {
+  //       contents: [{
+  //         uri: uri.href,
+  //         mimeType: "application/json",
+  //         text,
+  //       }],
+  //     };
+  //   }
+  // );
 
-  server.resource(
-    "heuristic-evaluation-task-json",
-    "guide://instructios/heuristic_evaluation_task.json",
-    {
-      title: "NNG Heuristic Evaluation Analysis Task (JSON)",
-      description: "JSON contains prompt and task detail to heuristic evaluation (local file)",
-      mimeType: "application/json",
-    },
-    async (uri) => {
-      const { text } = await readGuideFile("instructions/heuristic_evaluation_task.json");
-      return {
-        contents: [{
-          uri: uri.href,
-          mimeType: "application/json",
-          text,
-        }],
-      };
-    }
-  );
+  // server.resource(
+  //   "heuristic-evaluation-task-json",
+  //   "guide://instructios/heuristic_evaluation_task.json",
+  //   {
+  //     title: "NNG Heuristic Evaluation Analysis Task (JSON)",
+  //     description: "JSON contains prompt and task detail to heuristic evaluation (local file)",
+  //     mimeType: "application/json",
+  //   },
+  //   async (uri) => {
+  //     const { text } = await readGuideFile("instructions/heuristic_evaluation_task.json");
+  //     return {
+  //       contents: [{
+  //         uri: uri.href,
+  //         mimeType: "application/json",
+  //         text,
+  //       }],
+  //     };
+  //   }
+  // );
   // --- end Local guide resources ---
 }

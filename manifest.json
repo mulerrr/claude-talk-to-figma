@@ -1,21 +1,7 @@
 {
-  "manifest_version": "0.2",
-  "name": "testing plugin project",
-  "version": "0.6.1",
-  "description": "Claude Desktop Talk to Figma MCP",
-  "author": {
-    "name": "mulerrr"
-  },
-  "server": {
-    "type": "node",
-    "entry_point": "dist/talk_to_figma_mcp/server.js",
-    "mcp_config": {
-      "command": "node",
-      "args": [
-        "${__dirname}/dist/talk_to_figma_mcp/server.js"
-      ],
-      "env": {}
-    }
-  },
-  "license": "MIT"
+  "name": "Figma Analysis Mini",
+  "api": "1.0.0",
+  "editorType": ["figma", "figjam"],
+  "main": "src/claude_mcp_plugin/code.js",
+  "ui": "src/claude_mcp_plugin/ui.html"
 }
